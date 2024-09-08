@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root{
+    --bg-main-color : #f5f9f9
+}
+
+*{
+    font-family: "Cairo", sans-serif;
+    transition: 200ms;
+}
+
+body{
+    background-color: var(--bg-main-color);
+}
+
+a{
+    cursor: pointer;
+    user-select: none;
+}
+
+input:focus{
+    outline: none;
+}
+
+@layer components{
+    .custom-container {
+        @apply max-w-[1170px] mx-auto px-4
+    }
+
+    .custom-border {
+        @apply border-[2px] border-gray-200
+    }
+
+    .custom-dimming {
+        @apply fixed top-0 left-0 w-full h-full bg-[#000000b3]/70 z-10
+    }
+
+    .custom-side-menu{
+        @apply absolute bg-white top-0 left-0 h-full sm:w-[340px] w-full flex flex-col
+    }
+
+    .custom-text-truncate {
+        @apply whitespace-nowrap text-ellipsis overflow-hidden
+    }
+
+    .custom-img-cover {
+        @apply w-full h-full object-cover
+    }
+
+    .custom-products-grid{
+        @apply custom-container grid lg:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-4
+    }
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 300,
+  'GRAD' 0,
+  'opsz' 48
+}
+.material-symbols-outlined{
+    user-select: none;
+}
