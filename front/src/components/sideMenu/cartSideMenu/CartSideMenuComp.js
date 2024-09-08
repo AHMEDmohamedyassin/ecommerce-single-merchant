@@ -1,6 +1,6 @@
 import React from 'react'
-import CardComp from 'components/cartSideMenu/CardComp'
-import CheckOutComp from 'components/cartSideMenu/CheckOutComp'
+import CardComp from 'components/sideMenu/cartSideMenu/CardComp'
+import CheckOutComp from 'components/sideMenu/cartSideMenu/CheckOutComp'
 
 const CartSideMenuComp = () => {
   return (

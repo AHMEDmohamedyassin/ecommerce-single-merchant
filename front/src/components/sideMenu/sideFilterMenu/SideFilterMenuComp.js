@@ -1,5 +1,5 @@
 import { useState } from "react"
-import "components/sideFilterMenu/sliderStyle.css"
+import "components/sideMenu/sideFilterMenu/sliderStyle.css"
 
 const SideFilterMenuComp = () => {
 

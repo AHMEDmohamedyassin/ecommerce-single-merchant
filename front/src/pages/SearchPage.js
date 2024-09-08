@@ -1,6 +1,6 @@
 import CardComp from 'components/search/CardComp'
 import SelectionComp from 'components/search/SelectionComp'
-import SideFilterMenuComp from 'components/sideFilterMenu/SideFilterMenuComp'
+import SideFilterMenuComp from 'components/sideMenu/sideFilterMenu/SideFilterMenuComp'
 import React from 'react'
 
 const SearchPage = () => {

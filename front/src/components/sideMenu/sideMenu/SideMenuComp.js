@@ -1,5 +1,5 @@
 import React from 'react'
-import ListComp from 'components/SideMenu/ListComp'
+import ListComp from 'components/sideMenu/sideMenu/ListComp'
 import PrefInfoComp from './PrefInfoComp'
 
 const SideMenuComp = () => {

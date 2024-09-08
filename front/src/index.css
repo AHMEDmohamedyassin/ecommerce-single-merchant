@@ -72,6 +72,10 @@ input:focus{
     .custom-accountcontainer{
         @apply custom-container grid lg:grid-cols-4 gap-8
     }
+
+    .custom-productsection{
+        @apply bg-secondarybg p-8 rounded-xl shadow-xl my-6
+    }
 }
 
 .material-symbols-outlined {
@@ -84,3 +88,14 @@ input:focus{
 .material-symbols-outlined{
     user-select: none;
 }
+
+
+/* scroll bar styling */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Hides the scrollbar for WebKit browsers (Chrome, Safari) */
+  }
+  
+  .hide-scrollbar {
+    -ms-overflow-style: none;  /* Hides scrollbar for Internet Explorer and Edge */
+    scrollbar-width: none;     /* Hides scrollbar for Firefox */
+  }
