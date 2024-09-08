@@ -1,5 +1,6 @@
 import React from 'react'
 import SearchBarComp from 'components/header/SearchBarComp'
+import { Link } from 'react-router-dom'
 
 const HeaderComp = () => {
   return (
@@ -26,7 +27,9 @@ const HeaderComp = () => {
           <div className='flex justify-end items-center sm:gap-x-2 gap-x-1'>
             <span className="material-symbols-outlined hover:cursor-pointer max-sm:text-xl  lg:hidden">search</span>
             <span className="material-symbols-outlined hover:cursor-pointer max-sm:text-xl">shopping_cart</span>
-            <span className="material-symbols-outlined hover:cursor-pointer max-sm:text-xl max-sm:hidden">person</span>
+            <Link to={'/auth'}>
+              <span className="material-symbols-outlined hover:cursor-pointer max-sm:text-xl max-sm:hidden">person</span>
+            </Link>
             <span className="material-symbols-outlined hover:cursor-pointer max-sm:text-xl max-sm:hidden">favorite</span>
           </div>
 

@@ -1,6 +1,6 @@
 import CardComp from 'components/search/CardComp'
 import SelectionComp from 'components/search/SelectionComp'
-import SideFilterMenuComp from 'components/search/SideFilterMenuComp'
+import SideFilterMenuComp from 'components/sideFilterMenu/SideFilterMenuComp'
 import React from 'react'
 
 const SearchPage = () => {
@@ -8,8 +8,8 @@ const SearchPage = () => {
     <div>
 
         {/* side filtering menu  */}
-        <SideFilterMenuComp/>
-        
+        {/* <SideFilterMenuComp/> */}
+
         {/* controlling results section */}
         <section className='custom-container mb-6 flex justify-between items-center flex-wrap gap-4'> 
             

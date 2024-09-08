@@ -5,6 +5,12 @@ import { NotifyContainer } from "components/public/NotificationComp";
 import CartSideMenuComp from "components/cartSideMenu/CartSideMenuComp";
 import SideMenuComp from "components/SideMenu/SideMenuComp";
 import SearchPage from "pages/SearchPage";
+import LoginPage from "pages/Auth/LoginPage";
+import RegisterPage from "pages/Auth/RegisterPage";
+import ForgetPasswordPage from "pages/Auth/ForgetPasswordPage";
+import ResetPasswordPage from "pages/Auth/ResetPasswordPage";
+import AccountPage from "pages/Account/AccountPage";
+import AddressesPage from "pages/Account/AddressesPage";
 
 function App() {
   return (
@@ -17,6 +23,17 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage/>} />
             <Route path="/search" element={<SearchPage/>} />
+
+            {/* Authentication Routes */}
+            <Route path="/auth/login" element={<LoginPage/>} />
+            <Route path="/auth/register" element={<RegisterPage/>} />
+            <Route path="/auth/password/forget" element={<ForgetPasswordPage/>} />
+            <Route path="/auth/password/reset" element={<ResetPasswordPage/>} />
+
+            {/* user account router */}
+            <Route path="/account" element={<AccountPage/>}/>
+            <Route path="/account/addresses" element={<AddressesPage/>}/>
+
           </Routes>
         </BrowserRouter>
     </div>
