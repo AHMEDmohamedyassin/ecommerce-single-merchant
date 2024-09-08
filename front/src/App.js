@@ -12,6 +12,7 @@ import ResetPasswordPage from "pages/Auth/ResetPasswordPage";
 import AccountPage from "pages/Account/AccountPage";
 import AddressesPage from "pages/Account/AddressesPage";
 import ProductPage from "pages/ProductPage";
+import FooterComp from "components/footer/FooterComp";
 
 function App() {
   return (
@@ -37,6 +38,8 @@ function App() {
             <Route path="/account/addresses" element={<AddressesPage/>}/>
 
           </Routes>
+
+          <FooterComp/>
         </BrowserRouter>
     </div>
   );
