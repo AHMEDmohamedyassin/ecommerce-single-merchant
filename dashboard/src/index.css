@@ -1,0 +1,136 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root{
+    --bg-main-color : #f5f9f9
+}
+
+*{
+    font-family: "Cairo", sans-serif;
+    transition: 200ms;
+}
+
+body{
+    background-color: var(--bg-main-color);
+}
+
+a{
+    cursor: pointer;
+    user-select: none;
+}
+
+input:focus{
+    outline: none;
+}
+
+@layer components{
+    .custom-container {
+        @apply max-w-[1170px] mx-auto px-4
+    }
+
+    .custom-border {
+        @apply border-[1px] border-gray-200
+    }
+
+    .custom-dimming {
+        @apply fixed top-0 left-0 w-full h-full bg-[#000000b3]/70 z-10
+    }
+
+    .custom-side-menu{
+        @apply absolute bg-white top-0  h-full sm:w-[340px] w-full flex flex-col
+    }
+
+    .custom-text-truncate {
+        @apply whitespace-nowrap text-ellipsis overflow-hidden
+    }
+
+    .custom-img-cover {
+        @apply w-full h-full object-contain
+    }
+
+    .custom-products-grid{
+        @apply custom-container grid lg:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-4
+    }
+
+    /* custom input style */
+    .custom-inputcontainer{
+        @apply relative custom-border sm:w-[410px] w-full h-[46px] bg-mainbg
+    }
+    .custom-inputcontainer label{
+        @apply text-[12px] font-light absolute top-2/4 right-4 -translate-y-2/4  bg-inherit 
+    }
+    .custom-inputcontainer input{
+        @apply   bg-transparent w-full h-full px-4 absolute bottom-0 text-sm
+    }
+
+    /* custom input 2 style  */
+    .custom-inputcontainer2{
+        @apply flex flex-col items-start w-full
+    }
+    .custom-inputcontainer2 label {
+        @apply text-xs text-gray-500
+    }
+    .custom-inputcontainer2 input , .custom-inputcontainer2 textarea{
+        @apply w-full bg-secondarybg custom-border text-xs text-gray-500 px-4 py-2 focus:border-gray-300
+    }
+
+    .custom-button {
+        @apply custom-border px-4  hover:bg-maincolor hover:text-secondarybg py-2 text-sm font-semibold
+    }
+
+    .custom-accountcontainer{
+        @apply custom-container grid lg:grid-cols-4 gap-8
+    }
+
+    .custom-productsection{
+        @apply bg-secondarybg p-8 rounded-xl shadow-xl my-6
+    }
+
+    .custom-dashcontainer{
+        @apply bg-secondarybg custom-border py-8 px-6 rounded-xl shadow
+    }
+    .custom-dashcontainer .title {
+        @apply text-sm font-bold text-gray-500 mb-8 w-full
+    }
+
+    /* table styling */
+    .custom-table {
+        @apply relative max-w-full max-h-[600px] w-fit overflow-auto custom-border border-l-0 border-b-0 mx-auto my-10
+    }
+    .custom-table .custom-tablerow {
+        @apply  flex w-max  
+    }
+    .custom-table .custom-tablerow p {
+        @apply px-2 custom-border border-r-0 border-t-0 text-start text-sm flex bg-secondarybg
+    }
+    .custom-table .custom-tablerow img {
+        @apply h-12
+    }
+    .custom-table .custom-tablehead {
+        @apply sticky top-0 right-0 bg-secondarybg
+    }
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 300,
+  'GRAD' 0,
+  'opsz' 48
+}
+.material-symbols-outlined{
+    user-select: none;
+}
+
+
+/* scroll bar styling */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Hides the scrollbar for WebKit browsers (Chrome, Safari) */
+}
+  
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* Hides scrollbar for Internet Explorer and Edge */
+  scrollbar-width: none;     /* Hides scrollbar for Firefox */
+}
