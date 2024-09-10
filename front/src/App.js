@@ -20,6 +20,7 @@ import FAQsPage from "pages/Static/FAQsPage";
 import "scripts/sideMenuScript"
 import "scripts/collabseScript"
 import "scripts/inputScript"
+import AboutPage from "pages/Static/AboutPage";
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
             <Route path="/shipping-policies" element={<ShippingPoliciesPage/>}/>
             <Route path="/contact" element={<ContactPage/>}/>
             <Route path="/faqs" element={<FAQsPage/>}/>
+            <Route path="/about" element={<AboutPage/>}/>
 
           </Routes>
 

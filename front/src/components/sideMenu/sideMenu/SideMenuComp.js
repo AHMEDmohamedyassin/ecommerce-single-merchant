@@ -1,8 +1,38 @@
 import React from 'react'
 import ListComp from 'components/sideMenu/sideMenu/ListComp'
 import PrefInfoComp from './PrefInfoComp'
+import { Link } from 'react-router-dom'
 
 const SideMenuComp = () => {
+    
+    const links = [
+        {
+          title : "خدمة العملاء" ,
+          links : [
+            {title : "سياسة الاستبدال و الاسترجاع" , url : "/exchange-policies"} ,
+            {title : "سياسة الشحن" , url : "/shipping-policies"} ,
+            {title : "الأسئلة الأكثر شيوعا" , url : "/faqs"} ,
+            {title : "الدعم و المساعدة" , url : "/contact"} ,
+            {title : "تواصل معنا" , url : "/contact"} ,
+          ]
+        },
+        {
+          title : "روابط هامة" ,
+          links : [
+            {title : "الفروع التابعة" , url : "/contact"} ,
+            {title : "قصة التوحيد و النور" , url : "/about"} ,
+          ]
+        },
+        {
+          title : "التصنيفات الأساسية" ,
+          links : [
+            {title : "ملابس" , url : ""} ,
+            {title : "المطبخ" , url : ""} ,
+            {title : "شنط" , url : ""} ,
+          ]
+        }
+      ]
+
   return (
 
     // class : custom-dimming
@@ -23,21 +53,23 @@ const SideMenuComp = () => {
 
             {/* container for : lists , links , pref informations */}
             <div className='flex-1 overflow-y-auto'>
-                <ListComp/>
-                <ListComp/>
-                <ListComp/>
+                {
+                    links && links.length ? links.map((e , index) => (
+                        <ListComp key={index} data={e}/>
+                    )) : null
+                }
 
 
                 {/* links */}
-                <div className='ms-4 text-sm flex items-center gap-2 border-b-[1px] border-gray-200 py-3'>
+                <Link to={'/search'} data-menubutton="sidemenu" className='ms-4 text-sm flex items-center gap-2 border-b-[1px] border-gray-200 py-3'>
                     <span className="material-symbols-outlined">search</span>
                     <span>بحث</span>
-                </div>
+                </Link>
 
-                <div className='ms-4 text-sm flex items-center gap-2 border-b-[1px] border-gray-200 py-3'>
+                <Link data-menubutton="sidemenu" to={'/auth/login'} className='ms-4 text-sm flex items-center gap-2 border-b-[1px] border-gray-200 py-3'>
                     <span className="material-symbols-outlined">person</span>
                     <span>دخول / تسجيل</span>
-                </div>
+                </Link>
 
 
                 {/* pref informations */}

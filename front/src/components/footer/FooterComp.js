@@ -21,7 +21,7 @@ const FooterComp = () => {
       title : "روابط هامة" ,
       links : [
         {title : "الفروع التابعة" , url : "/contact"} ,
-        {title : "قصة التوحيد و النور" , url : ""} ,
+        {title : "قصة التوحيد و النور" , url : "/about"} ,
       ]
     },
     {
