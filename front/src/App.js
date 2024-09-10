@@ -13,15 +13,31 @@ import AccountPage from "pages/Account/AccountPage";
 import AddressesPage from "pages/Account/AddressesPage";
 import ProductPage from "pages/ProductPage";
 import FooterComp from "components/footer/FooterComp";
+import ExchangePolicyPage from "pages/Static/ExchangePolicyPage";
+import ShippingPoliciesPage from "pages/Static/ShippingPoliciesPage";
+import ContactPage from "pages/Static/ContactPage";
+import FAQsPage from "pages/Static/FAQsPage";
+import "scripts/sideMenuScript"
+import "scripts/collabseScript"
+import "scripts/inputScript"
 
 function App() {
   return (
     <div>
         <BrowserRouter>
+
+          {/* notifications container */}
           <NotifyContainer/>
+
+          {/* app header */}
           <HeaderComp/>
-          {/* <CartSideMenuComp/> */}
-          {/* <SideMenuComp/> */}
+
+          {/* cart side menu */}
+          <CartSideMenuComp/>
+
+          {/* side menu */}
+          <SideMenuComp/>
+
           <Routes>
             <Route path="/" element={<HomePage/>} />
             <Route path="/search" element={<SearchPage/>} />
@@ -36,6 +52,12 @@ function App() {
             {/* user account router */}
             <Route path="/account" element={<AccountPage/>}/>
             <Route path="/account/addresses" element={<AddressesPage/>}/>
+
+            {/* static pages  */}
+            <Route path="/exchange-policies" element={<ExchangePolicyPage/>}/>
+            <Route path="/shipping-policies" element={<ShippingPoliciesPage/>}/>
+            <Route path="/contact" element={<ContactPage/>}/>
+            <Route path="/faqs" element={<FAQsPage/>}/>
 
           </Routes>
 

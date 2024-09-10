@@ -10,7 +10,7 @@ const HeaderComp = () => {
           
           {/* side menu icon */}
           <div className='flex items-center lg:hidden'>
-            <span className="material-symbols-outlined sm:text-3xl text-2xl hover:cursor-pointer">segment</span>
+            <span  data-menubutton="sidemenu" className="material-symbols-outlined sm:text-3xl text-2xl hover:cursor-pointer">segment</span>
           </div>
 
           {/* logo */}
@@ -26,8 +26,8 @@ const HeaderComp = () => {
           {/* icons */}
           <div className='flex justify-end items-center sm:gap-x-2 gap-x-1'>
             <span className="material-symbols-outlined hover:cursor-pointer max-sm:text-xl  lg:hidden">search</span>
-            <span className="material-symbols-outlined hover:cursor-pointer max-sm:text-xl">shopping_cart</span>
-            <Link to={'/auth'}>
+            <span data-menubutton="cartmenu" className="material-symbols-outlined hover:cursor-pointer max-sm:text-xl">shopping_cart</span>
+            <Link to={'/account'}>
               <span className="material-symbols-outlined hover:cursor-pointer max-sm:text-xl max-sm:hidden">person</span>
             </Link>
             <span className="material-symbols-outlined hover:cursor-pointer max-sm:text-xl max-sm:hidden">favorite</span>
@@ -38,6 +38,11 @@ const HeaderComp = () => {
         {/* categories ribbon */}
         <section className='max-lg:hidden bg-secondarybg'>
           <div className=' custom-container flex items-center gap-x-4 py-2'>
+            {/* side menu icon */}
+            <div className='flex items-center -my-10'>
+              <span  data-menubutton="sidemenu" className="material-symbols-outlined sm:text-3xl text-2xl hover:cursor-pointer">segment</span>
+            </div>
+
             <div>ahmed</div>
             <div className='w-[1px] h-[10px] bg-maincolor'></div>
             <div>ahmed</div>

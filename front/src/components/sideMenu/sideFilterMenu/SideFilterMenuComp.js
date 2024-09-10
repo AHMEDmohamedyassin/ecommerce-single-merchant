@@ -6,13 +6,13 @@ const SideFilterMenuComp = () => {
     const [slider , setSlider] = useState({min : 0 , max : 0})
 
   return (
-    <div className='custom-dimming'>
-        <div className='custom-side-menu right-0'>
+    <div data-menu="filtermenu" data-status="close" data-direction="right" className=''>
+        <div className='custom-side-menu -right-full'>
 
             {/* header section */}
             <section className='bg-mainbg h-14 flex justify-between items-center px-4 shadow border-b-secondarycolor border-[1px]'>
                 <span>التصفية</span>
-                <span className="material-symbols-outlined">close</span>
+                <span data-menubutton="filtermenu" className="material-symbols-outlined hover:cursor-pointer">close</span>
             </section>
 
             {/* pricing section */}

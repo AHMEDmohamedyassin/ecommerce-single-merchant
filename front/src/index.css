@@ -31,7 +31,7 @@ input:focus{
     }
 
     .custom-border {
-        @apply border-[2px] border-gray-200
+        @apply border-[1px] border-gray-200
     }
 
     .custom-dimming {
@@ -39,7 +39,7 @@ input:focus{
     }
 
     .custom-side-menu{
-        @apply absolute bg-white top-0 left-0 h-full sm:w-[340px] w-full flex flex-col
+        @apply absolute bg-white top-0  h-full sm:w-[340px] w-full flex flex-col
     }
 
     .custom-text-truncate {
@@ -56,13 +56,24 @@ input:focus{
 
     /* custom input style */
     .custom-inputcontainer{
-        @apply relative custom-border sm:w-[410px] w-full h-[46px]
+        @apply relative custom-border sm:w-[410px] w-full h-[46px] bg-mainbg
     }
     .custom-inputcontainer label{
-        @apply text-[10px] font-light absolute top-1/4 right-4 -translate-y-2/4 -z-10
+        @apply text-[12px] font-light absolute top-2/4 right-4 -translate-y-2/4  bg-inherit 
     }
     .custom-inputcontainer input{
-        @apply   bg-transparent w-full h-3/5 px-4 absolute bottom-0 text-sm
+        @apply   bg-transparent w-full h-full px-4 absolute bottom-0 text-sm
+    }
+
+    /* custom input 2 style  */
+    .custom-inputcontainer2{
+        @apply flex flex-col items-start w-full
+    }
+    .custom-inputcontainer2 label {
+        @apply text-xs text-gray-500
+    }
+    .custom-inputcontainer2 input , .custom-inputcontainer2 textarea{
+        @apply w-full bg-secondarybg custom-border text-xs text-gray-500 px-4 py-2 focus:border-gray-300
     }
 
     .custom-button {

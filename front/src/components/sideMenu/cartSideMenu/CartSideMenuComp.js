@@ -4,17 +4,17 @@ import CheckOutComp from 'components/sideMenu/cartSideMenu/CheckOutComp'
 
 const CartSideMenuComp = () => {
   return (
-    <div className='custom-dimming'>
-        <div className='custom-side-menu overflow-y-scroll'>
+    <div data-menu="cartmenu" data-status="close" data-direction="left" className='max-h-full hidden'>
+        <div className='custom-side-menu -left-full max-h-full'>
 
             {/* title */}
             <div className='flex justify-between items-center p-4 border-b-[1px] border-gray-200'>
                 <span>عربة التسوق</span>
-                <span className="material-symbols-outlined">close</span>
+                <span data-menubutton="cartmenu" className="material-symbols-outlined hover:cursor-pointer">close</span>
             </div>
 
             {/* products */}
-            <div className='px-4 pt-6 '>
+            <div className='px-4 h-max overflow-y-auto'>
                 <CardComp/>
                 <CardComp/>
                 <CardComp/>

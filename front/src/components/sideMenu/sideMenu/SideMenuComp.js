@@ -4,8 +4,10 @@ import PrefInfoComp from './PrefInfoComp'
 
 const SideMenuComp = () => {
   return (
-    <div className='custom-dimming'>
-        <div className='custom-side-menu right-0'>
+
+    // class : custom-dimming
+    <div data-menu="sidemenu" data-status="close" data-direction="right" className=''> 
+        <div className='custom-side-menu -right-full'>
 
             {/* sections choose */}
             {/* <div className='h-14 flex shadow text-sm'>
@@ -16,7 +18,7 @@ const SideMenuComp = () => {
             {/* header section */}
             <section className='bg-mainbg h-14 flex justify-between items-center px-4 shadow border-b-secondarycolor border-[1px]'>
                 <span>القائمة</span>
-                <span className="material-symbols-outlined">close</span>
+                <span data-menubutton="sidemenu" className="material-symbols-outlined hover:cursor-pointer">close</span>
             </section>
 
             {/* container for : lists , links , pref informations */}

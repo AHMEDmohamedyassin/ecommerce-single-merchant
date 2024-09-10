@@ -8,7 +8,7 @@ const SearchPage = () => {
     <div>
 
         {/* side filtering menu  */}
-        {/* <SideFilterMenuComp/> */}
+        <SideFilterMenuComp/>
 
         {/* controlling results section */}
         <section className='custom-container mb-6 flex justify-between items-center flex-wrap gap-4'> 
@@ -17,7 +17,7 @@ const SearchPage = () => {
             <SelectionComp/>
 
             {/* filtering button */}
-            <button className='flex justify-between items-center bg-secondarybg custom-border select-none px-4 py-2 rounded-full'>
+            <button data-menubutton="filtermenu" className='flex justify-between items-center bg-secondarybg custom-border select-none px-4 py-2 rounded-full'>
                 <span className="material-symbols-outlined">filter_alt</span>
                 <span>التصفية</span>
             </button>
