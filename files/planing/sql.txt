@@ -1,0 +1,135 @@
+users table (User) : 
+slug
+name
+phone
+email
+pass
+customer // check if user is customer or from working team
+
+addresses table (Address) :  // users addresses
+address 
+default // boolean to check if it is the default address for user
+user_id
+
+roles table (Role) : 
+title
+slug
+description
+
+permissions table (Permission) : 
+title
+slug
+description
+
+role_permission table : 
+role_id 
+permission_id
+
+user_role table : 
+role_id 
+user_id
+
+user_permission table : 
+user_id 
+permission_id
+
+
+products table (Product) :
+slug
+title
+description
+price
+old_price
+quantity           // available pieces 
+expire_date     // for controlling availability of publishing products of public
+publish_date	// for controlling availability of publishing products of public
+views
+ratting
+reviews
+paid_quantity
+
+categories table (Category) : // value like  بنطال قميص
+title
+slug
+description
+
+product_category table : 
+category_id               // from the categories table
+product_id
+
+
+reviews table (Review) : // only user paid for product can make review
+comment
+ratting   : 1-5
+user_id
+product_id
+
+
+coupons table (Coupon) :
+value 
+expire_date	// date when the coupon is expired
+paid	// check if coupon is paid for a user
+user_id // check if coupon is used
+
+
+orders table (Order) :  transactions
+user_id
+shipping_address_id : users address
+billing_address_id : store address 
+cartTotal
+invoice_status    // filed by payment gateway or by web application incase of coupon
+paid_at           // filed by payment gateway or by web application incase of coupon
+payment_method    // filed by payment gateway or by web application incase of coupon
+gateway_name      // fawaterk , coupon
+// payment gateway informations
+invoice_id
+invoice_key
+currency
+payment_reason
+referenceNumber
+hashKey       // hmac
+pay_load
+
+product_order table : // sold products 
+product_id
+order_id
+quantity
+price
+
+carts table (Cart) : 
+user_id
+product_id
+quantity
+
+favorites table (Favorite) :
+user_id
+product_id
+
+contacts table (Contact) : 
+user_id
+name
+phone
+email
+msg
+
+blocks table (Block) : {{{{{{{{stoped here}}}}}}}}
+user_id
+reasone
+expire_date
+
+settings table (Setting) :
+title 
+value
+private // boolean
+
+store_addresses table (StoreAddress) : 
+address
+primary  // فرع رئيسي أم لا
+
+
+//////////////////////////////summary////////////////////////////////////
+table : 
+users , addresses ( for users ) , roles , permissions , role_permission , user_role , user_permission
+products , categories , product_categrory
+coupons , orders , product_order , reviews 
+carts , favourites , contacts , store_addresses , blocks (blocking users account) , settings

@@ -1,0 +1,38 @@
+/products
+    /[product_id]
+        /json
+            json.json # json file contains extra informations about product
+        /images
+            images1.jpg
+            images1_500.jpg   # resized image 
+            images2.jpg
+            images3.jpg
+
+
+/users
+    /[user_id]
+        image1.jpg
+        image2.jpg
+
+
+/categories
+    /[category_id]
+        image1.jpg
+        image2.jpg
+
+
+/top_categories
+    json.json
+    image1.jpg
+    image2.jpg
+    image3.jpg
+
+/static # static content pages like contact , about pages
+    /[page_name]
+        /json
+            json.json
+        /images
+            image1.jpg
+            image2.jpg
+            image2_300.jpg  # resized image2.jpg
+            image3.jpg
