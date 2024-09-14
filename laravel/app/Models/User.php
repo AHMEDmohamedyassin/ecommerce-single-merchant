@@ -69,19 +69,19 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function role () {
-        return $this->belongsToMany(Role::class , 'user_role' , 'role_id' , 'user_id');
+        return $this->belongsToMany(Role::class , 'user_role' , 'user_id' , 'role_id');
     }
 
     public function permission () {
-        return $this->belongsToMany(Permission::class , 'user_permission' , 'permission_id' , 'user_id');
+        return $this->belongsToMany(Permission::class , 'user_permission' , 'user_id' , 'permission_id');
     }
 
     public function favorite () {
-        return $this->belongsToMany(Product::class , 'favorites' , 'product_id' , 'user_id');
+        return $this->belongsToMany(Product::class , 'favorites' , 'user_id' , 'product_id');
     }
 
     public function cart () {
-        return $this->belongsToMany(Product::class , 'carts' , 'product_id' , 'user_id');
+        return $this->belongsToMany(Product::class , 'carts' , 'user_id' , 'product_id');
     }
     
 }

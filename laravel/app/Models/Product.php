@@ -27,11 +27,11 @@ class Product extends Model
     // relations
 
     public function category () {
-        return $this->belongsToMany(Category::class , 'product_category' , 'category_id' , 'product_id');
+        return $this->belongsToMany(Category::class , 'product_category' , 'product_id' , 'category_id');
     }
 
     public function order () {
-        return $this->belongsToMany(Order::class , 'product_order' , 'order_id' , 'product_id');
+        return $this->belongsToMany(Order::class , 'product_order' , 'product_id' , 'order_id');
     }
 
     public function review () {
@@ -40,10 +40,10 @@ class Product extends Model
 
 
     public function favorite () {
-        return $this->belongsToMany(User::class , 'favorites' , 'user_id' , 'product_id');
+        return $this->belongsToMany(User::class , 'favorites' , 'product_id' , 'user_id');
     }
 
     public function cart () {
-        return $this->belongsToMany(User::class , 'carts' , 'user_id' , 'product_id');
+        return $this->belongsToMany(User::class , 'carts' , 'product_id' , 'user_id');
     }
 }

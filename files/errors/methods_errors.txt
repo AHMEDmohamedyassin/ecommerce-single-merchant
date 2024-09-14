@@ -1,16 +1,32 @@
-1001 => AuthController/LoginAuth
-1002 => AuthContorller/RegisterAuth
-1003 => AuthContorller/LogoutAuth
-1004 => AuthContorller/GetUserDataAuth
-1005 => AuthController/UpdateAuth
-1006 => AuthController/passwordForgetAuth
-1007 => AuthController/passwordResetAuth
-1008 => AuthController/emailValidationAuth
-1009 => AuthController/CheckEmailVerifyTempUrlAuth
+1001 => AuthController@LoginAuth
+1002 => AuthContorller@RegisterAuth
+1003 => AuthContorller@LogoutAuth
+1004 => AuthContorller@GetUserDataAuth
+1005 => AuthController@UpdateAuth
+1006 => AuthController@passwordForgetAuth
+1007 => AuthController@passwordResetAuth
+1008 => AuthController@emailValidationAuth
+1009 => AuthController@CheckEmailVerifyTempUrlAuth
 
-3001 => Filters/CategoryController/CreateCategory
-3002 => Filters/CategoryController/UpdateCategory
-3003 => Filters/CategoryController/DeleteImageCategory
-3004 => Filters/CategoryController/DeleteCategory
-3005 => Filters/CategoryController/ReadCategory
-3006 => Filters/CategoryController/SearchCategory
+2001 => Filters/TopCategoryController@CreateTopCategory
+2002 => Filters/TopCategoryController@AppendCategory
+2003 => Filters/TopCategoryController@DeleteTopCategory
+2004 => Filters/TopCategoryController@ReadTopCategory
+
+3001 => Filters/CategoryController@CreateCategory
+3002 => Filters/CategoryController@UpdateCategory
+3003 => Filters/CategoryController@DeleteImageCategory
+3004 => Filters/CategoryController@DeleteCategory
+3005 => Filters/CategoryController@ReadCategory
+3006 => Filters/CategoryController@SearchCategory
+
+
+4001 => Permissions/UserRolePermissionController@AttachUserPermission
+4002 => Permissions/UserRolePermissionController@AttachUserRole
+
+
+5001 => Permissions/UserRolePermissionController@CreateRole
+5002 => Permissions/UserRolePermissionController@DeleteRole
+5003 => Permissions/UserRolePermissionController@UpdateRole
+5004 => Permissions/UserRolePermissionController@ListRole
+5005 => Permissions/UserRolePermissionController@ReadRole

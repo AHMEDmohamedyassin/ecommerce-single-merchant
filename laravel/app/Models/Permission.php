@@ -19,10 +19,10 @@ class Permission extends Model
     // relations
 
     public function user () {
-        return $this->belongsToMany(User::class , 'user_permission' , 'user_id' , 'permission_id');
+        return $this->belongsToMany(User::class , 'user_permission' , 'permission_id' , 'user_id');
     }
 
     public function role () {
-        return $this->belongsToMany(Role::class , 'role_permission' , 'role_id' , 'permission_id');
+        return $this->belongsToMany(Role::class , 'role_permission' , 'permission_id' , 'role_id');
     }
 }

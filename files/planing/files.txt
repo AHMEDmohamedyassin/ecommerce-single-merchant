@@ -3,10 +3,12 @@
         /json
             json.json # json file contains extra informations about product
         /images
-            images1.jpg
-            images1_500.jpg   # resized image 
-            images2.jpg
-            images3.jpg
+	    /image1
+		main.jpg
+		480.jpg    # resized image
+	    /image2
+		main.jpg
+		180.jpg	   # resized image
 
 
 /users
@@ -32,7 +34,9 @@
         /json
             json.json
         /images
-            image1.jpg
-            image2.jpg
-            image2_300.jpg  # resized image2.jpg
-            image3.jpg
+	    /image1
+		main.jpg
+		480.jpg    # resized image
+	    /image2
+		main.jpg
+		180.jpg	   # resized image

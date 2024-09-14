@@ -8,7 +8,7 @@ Trait PaginateTrait {
         request()->validate(['page' => 'numeric']);
         $page = request('page') ?? 1;
 
-        if(!$perPage) $perPage = env('PER_PAGE');
+        if(!$perPage) $perPage = env('PER_PAGE' , 20);
 
         $data = $class->paginate($perPage , ['*'] , 'page' , $page);
 

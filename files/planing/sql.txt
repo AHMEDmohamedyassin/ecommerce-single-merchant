@@ -1,4 +1,4 @@
-users table (User) : 
+users table (User) :  done
 slug
 name
 phone
@@ -11,25 +11,25 @@ address
 default // boolean to check if it is the default address for user
 user_id
 
-roles table (Role) : 
+roles table (Role) : done
 title
 slug
 description
 
-permissions table (Permission) : 
+permissions table (Permission) : done
 title
 slug
 description
 
-role_permission table : 
+role_permission table : done
 role_id 
 permission_id
 
-user_role table : 
+user_role table : done
 role_id 
 user_id
 
-user_permission table : 
+user_permission table : done
 user_id 
 permission_id
 
@@ -48,7 +48,7 @@ ratting
 reviews
 paid_quantity
 
-categories table (Category) : // value like  بنطال قميص
+categories table (Category) : done // value like  بنطال قميص
 title
 slug
 description
