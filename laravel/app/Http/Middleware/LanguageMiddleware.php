@@ -4,12 +4,11 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Symfony\Component\HttpFoundation\Response;
-use App\Traits\ResponseTrait;
 
-class AdminMiddlware
+class LanguageMiddleware
 {
-    use ResponseTrait;
     /**
      * Handle an incoming request.
      *
@@ -17,11 +16,11 @@ class AdminMiddlware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(env('APP_DEBUG')) return $next($request);
-
-        if(request()->header('token_A') != env('token_A') || request()->header('token_B') != env('token_B'))
-            return $this->ErrorResponse('_1000' , 24 , 'admin tokens is not correct');
-
+        if(request()->header('lang') == 'en')
+            App::setLocale('en');
+        else 
+            App::setLocale('ar');
+        
         return $next($request);
     }
 }

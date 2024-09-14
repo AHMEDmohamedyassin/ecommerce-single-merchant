@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
+            $table->string('title')->nullable();
+            $table->string('value')->nullable();
+            $table->boolean('private')->default(1);
             $table->timestamps();
         });
     }

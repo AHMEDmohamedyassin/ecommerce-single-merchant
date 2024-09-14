@@ -5,17 +5,20 @@ namespace App\Http\Controllers\Filters;
 use App\Traits\ResponseTrait;
 use App\Traits\PaginateTrait;
 use App\Traits\SlugTrait;
-use App\Traits\FileTrait;
 use App\Models\Category;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController{
-    use ResponseTrait , PaginateTrait , SlugTrait , FileTrait;
+    use ResponseTrait , PaginateTrait , SlugTrait;
 
-    public $image_path = 'categories_images/';
-    public $images_size = [100 , 0];
 
-    public function __construct(){
-        $this->images_size = json_decode(env('Categories_images_size'));
+    public function storeCategoryImage ($category) {
+        $image = request()->file('image');
+
+        if(!$image) return;
+
+        $image_name = 'image.'.$image->getClientOriginalExtension();
+        $image->storeAs('/categories/'.$category->id.'/'.$image_name);
     }
 
     /**
@@ -37,8 +40,8 @@ class CategoryController{
                 'slug' => $this->MultiTextSlug(request('title') , request('description')) ,
             ]);
 
-            // store and resize image
-            $category['image'] = $this->StoreResizeImage(request()->file('image') , $this->image_path . $category->id , $this->images_size);
+            // storing image
+            $this->storeCategoryImage($category);
 
             return $this->SuccessResponse($category);
         }catch(\Exception $e){
@@ -55,25 +58,21 @@ class CategoryController{
     public function UpdateCategory(){
         try{
             $req = request()->validate([
-                'id' => 'required',
-                'title' => 'max:255|required',
-                'description' => 'max:255|required',
+                'id' => 'required|exists:categories,id',
+                'title' => 'max:255',
+                'description' => 'max:255',
                 'image' => 'file|mimes:jpeg,png,jpg|max:1024'
             ]);
 
             $category = Category::find(request('id'));
 
-            if(!$category) throw new \Exception('category not found' , 10);
-
             // update data of category
-            $category->update([
-                'title' => request('title'),
-                'description' => request('description'),
-                'slug' => $this->MultiTextSlug(request('title') , request('description'))
+            $category->update($req + [
+                'slug' => $this->MultiTextSlug(request('title') ?? $category->title , request('description') ?? $category->description)
             ]);
 
-            // store and resize image
-            $category['image'] = $this->StoreResizeImage(request()->file('image') , $this->image_path . $category->id , $this->images_size);
+            // storing image
+            $this->storeCategoryImage($category);
 
             return $this->SuccessResponse($category);
         }catch(\Exception $e){
@@ -89,14 +88,12 @@ class CategoryController{
      */
     public function DeleteImageCategory(){
         try{
-            request()->validate(['id' => 'required']);
+            request()->validate(['id' => 'required|exists:categories,id']);
 
             $category = Category::find(request('id'));
 
-            if(!$category) throw new \Exception('category not found' , 10);
-
             // delete image
-            $this->DeleteFile($this->image_path . $category->id . '.jpg');
+            Storage::deleteDirectory('/categories/'.$category->id);
 
             return $this->SuccessResponse($category);
         }catch(\Exception $e){
@@ -112,18 +109,16 @@ class CategoryController{
      */
     public function DeleteCategory(){
         try{
-            request()->validate(['id' => 'required']);
+            request()->validate(['id' => 'required|exists:categories,id']);
 
             $category = Category::find(request('id'));
 
-            if(!$category) throw new \Exception('category not found' , 10);
-
             // delete image
-            $this->DeleteFile($this->image_path . $category->id . '.jpg');
+            Storage::deleteDirectory('/categories/'.$category->id);
 
             $category->delete();
 
-            return $this->SuccessResponse();
+            return $this->SuccessResponse($category);
         }catch(\Exception $e){
             return $this->ErrorResponse(3004 , $e->getCode() , $e->getMessage());
         }
@@ -132,20 +127,24 @@ class CategoryController{
 
     /**
      * @code 3005
-     * read category
-     * @var id : category id
+     * with ids category
      */
     public function ReadCategory(){
         try{
-            request()->validate(['id' => 'required']);
+            $validatedData = request()->validate([
+                'id' => 'array|nullable',
+                'id.*' => 'integer|exists:categories,id'
+            ]);
+        
+            // Retrieve the 'ids' parameter
+            $id = $validatedData['id'] ?? [];
+        
+            if (empty($id)) 
+                return $this->SuccessResponse();
+            
+            $category = Category::whereIn('id', $id);
 
-            $category = Category::find(request('id'));
-
-            if(!$category) throw new \Exception('category not found' , 10);
-
-            $category['image'] = $this->FileUrl($this->image_path . $category->id . '.jpg');
-
-            return $this->SuccessResponse($category);
+            return $this->SuccessResponse($this->paginate($category));
         }catch(\Exception $e){
             return $this->ErrorResponse(3005 , $e->getCode() , $e->getMessage());
         }
@@ -161,26 +160,13 @@ class CategoryController{
         try{
             request()->validate([
                 'search' => 'max:255' ,
-                'withproducts' => 'boolean|nullable'
             ]);
 
             $category = new Category();
 
-            if(request('withproducts'))
-                $category = $category->whereHas('product' , function ($query) {
-                    $query->where('expire_date' , '>=' , \Carbon\Carbon::now());
-                });
-
             $category = $category->where('slug' , 'LIKE' , '%'.$this->CreateSlug(request('search')).'%')->orderBy('id' , 'desc');
 
             $data = $this->paginate($category);
-
-            $items = [];
-            foreach($data['items'] as $item){
-                $item['image'] = $this->FileUrl($this->image_path . $item['id'] . '.jpg');
-                $items[] = $item;
-            }
-            $data['items'] = $items;
 
             return $this->SuccessResponse($data);
         }catch(\Exception $e){
@@ -188,23 +174,4 @@ class CategoryController{
         }
     }
 
-
-    /**
-     * @code 3007
-     * with ids category
-     * @var search : search in slug
-     */
-    public function WithIdsCategory(){
-        try{
-            request()->validate(['ids' => 'array|nullable']);
-
-            if(!request('ids')) return $this->SuccessResponse();
-
-            $category = Category::whereIn('id' , request('ids'));
-
-            return $this->SuccessResponse($this->paginate($category));
-        }catch(\Exception $e){
-            return $this->ErrorResponse(3007 , $e->getCode() , $e->getMessage());
-        }
-    }
 }

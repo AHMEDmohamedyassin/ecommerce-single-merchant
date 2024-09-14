@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('blocks', function (Blueprint $table) {
             $table->id();
+            $table->string('reason')->nullable();
+            $table->dateTime('expire_date')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

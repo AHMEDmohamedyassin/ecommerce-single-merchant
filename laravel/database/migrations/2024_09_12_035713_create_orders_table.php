@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('shipping_address_id')->constrained()->onDelete('cascade');
-            $table->foreignId('billing_address_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable();
+            $table->foreignId('shipping_address_id')->nullable();
+            $table->foreignId('billing_address_id')->nullable();
             $table->unsignedFloat('cartTotal')->default(0);
             $table->char('invoice_status' , 20)->nullable();
             $table->char('payment_method' , 100)->nullable();

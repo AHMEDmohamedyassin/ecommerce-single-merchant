@@ -1,0 +1,16 @@
+1001 => AuthController/LoginAuth
+1002 => AuthContorller/RegisterAuth
+1003 => AuthContorller/LogoutAuth
+1004 => AuthContorller/GetUserDataAuth
+1005 => AuthController/UpdateAuth
+1006 => AuthController/passwordForgetAuth
+1007 => AuthController/passwordResetAuth
+1008 => AuthController/emailValidationAuth
+1009 => AuthController/CheckEmailVerifyTempUrlAuth
+
+3001 => Filters/CategoryController/CreateCategory
+3002 => Filters/CategoryController/UpdateCategory
+3003 => Filters/CategoryController/DeleteImageCategory
+3004 => Filters/CategoryController/DeleteCategory
+3005 => Filters/CategoryController/ReadCategory
+3006 => Filters/CategoryController/SearchCategory

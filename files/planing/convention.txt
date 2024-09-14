@@ -1,1 +1,2 @@
-Models names is first Char Upper Case , singular
+Models names  : is first Char Upper Case , singular
+relations between tables in models : singular , lowercase , camel

@@ -63,6 +63,7 @@ comment
 ratting   : 1-5
 user_id
 product_id
+public
 
 
 coupons table (Coupon) :
@@ -133,3 +134,25 @@ users , addresses ( for users ) , roles , permissions , role_permission , user_r
 products , categories , product_categrory
 coupons , orders , product_order , reviews 
 carts , favourites , contacts , store_addresses , blocks (blocking users account) , settings
+
+
+db relations : 
+user -> address                 => one to many
+user -> coupon                  => one to many
+user -> review                  => one to many
+user -> contact                 => one to many
+user -> block                   => one to many
+user -> role                    => many to many
+user -> permission              => many to many
+user -> order                   => one to many
+user -> product (cart)          => many to many
+user -> product (favorit)       => many to many
+
+role -> permission              => many to many
+
+product -> category             => many to many
+product -> order                => many to many
+product -> review               => one to many
+
+order -> address                => one to many
+order -> store_address          => one to many

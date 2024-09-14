@@ -1,0 +1,8 @@
+1 => bad credentials
+2 => token is required
+3 => token is invalid
+4 => email needs to be verified
+5 => wrong user password
+6 => email or phone not found
+7 => error in validation
+8 => email is already verified

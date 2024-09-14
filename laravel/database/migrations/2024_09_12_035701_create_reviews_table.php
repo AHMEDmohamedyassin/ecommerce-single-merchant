@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('slug')->nullable();
             $table->string('comment')->nullable();
+            $table->boolean('public')->default(0);
             $table->unsignedTinyInteger('ratting')->default(0);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
