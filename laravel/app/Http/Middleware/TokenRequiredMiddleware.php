@@ -20,12 +20,16 @@ class TokenRequiredMiddleware
     {
         try{
 
+            // get token from header or from request body
+            $token = $request->header('token');
+            if(!$token) $token = request('token');
+
             // check if token is provided
-            if(!request('token'))
+            if(!$token)
                 throw new CustomException('token is required' , 2);
     
             // check if token is valid
-            $user = auth()->setToken(request('token'))->user();
+            $user = auth()->setToken($token)->user();
             if(!$user) throw new CustomException('token is invalid' , 3);
     
             request()->merge([

@@ -119,6 +119,7 @@ return [
         "permission_id" => "رمز الإذن" ,
         "role_id" => "رمز الدور" ,
         "address" => 'العنوان' ,
+        "publish_date" => 'تاريخ النشر',
     ],
 
 ];

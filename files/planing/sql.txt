@@ -43,9 +43,9 @@ old_price
 quantity           // available pieces 
 expire_date     // for controlling availability of publishing products of public
 publish_date	// for controlling availability of publishing products of public
-views
-ratting
-reviews
+views		// count of view
+ratting		// average ratting
+reviews        // count of reviews
 paid_quantity
 
 categories table (Category) : done // value like  بنطال قميص

@@ -23,7 +23,6 @@ return new class extends Migration
             $table->unsignedInteger('views')->default(0);
             $table->unsignedInteger('reviews')->default(0);
             $table->unsignedInteger('paid_quantity')->default(0);
-            $table->dateTime('expire_date')->nullable();
             $table->dateTime('publish_date')->nullable();
             $table->timestamps();
         });

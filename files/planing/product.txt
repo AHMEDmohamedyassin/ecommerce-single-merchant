@@ -1,0 +1,22 @@
+{
+    sizes : ["xl" , "lg" , "30"],
+    colors : [
+        "أزرق",
+        "أحمر"
+    ] ,
+    images : [
+        image1_jpg : "أحمر" ,
+        image2_jpg : "null"
+    ]
+    "description" : "description description description description description",
+    "information": "information information information information information information ",
+    
+
+    ################## showing and hidding data of product #################################
+    
+    "reviews" : false # show or hidden reviews and people comments
+    "reviews_count" : false # show or hidden reviews count
+    "views" : false # show or hidden views count
+    "paid_quantity" : false # show or hidden sold quantity
+    "quantity" : false # show or hidden exists quantity
+}

@@ -4,6 +4,8 @@ use App\Http\Controllers\Filters\CategoryController;
 use App\Http\Controllers\Filters\TopCategoryController;
 use App\Http\Controllers\Permissions\PermissionController;
 use App\Http\Controllers\Permissions\RoleController;
+use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\Product\ProductImageController;
 use App\Http\Controllers\Users\AddressController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Users\AuthController;
@@ -59,6 +61,20 @@ Route::middleware('TokenRequiredMiddleware' , 'BlockCheckMiddleware' , 'EmailVer
     Route::post('/address/create' , [AddressController::class , 'CreateAddress']);
     Route::post('/address/update' , [AddressController::class , 'UpdateAddress']);
     Route::post('/address/delete' , [AddressController::class , 'DeleteAddress']);
+    Route::get('/address/list' , [AddressController::class , 'ListAddress']);
+    Route::get('/address/read' , [AddressController::class , 'ReadAddress']);
 });
-Route::get('/address/list' , [AddressController::class , 'ListAddress']);
-Route::get('/address/read' , [AddressController::class , 'ReadAddress']);
+
+
+// Product Controller 7000 
+Route::post('/product/create' , [ProductController::class , 'CreateProduct']);
+Route::post('/product/update' , [ProductController::class , 'UpdateProduct']);
+Route::post('/product/delete' , [ProductController::class , 'DeleteProduct']);
+Route::get('/product/search' , [ProductController::class , 'SearchProduct']);
+Route::get('/product/read' , [ProductController::class , 'ReadProduct']);
+
+
+// Product Image Controller 8000
+Route::post('/product/image/upload' , [ProductImageController::class , 'UploadImageProduct']);
+Route::post('/product/image/delete' , [ProductImageController::class , 'DeleteImageProduct']);
+Route::get('/product/image/retrieve' , [ProductImageController::class , 'ImageRetrieveProduct']);

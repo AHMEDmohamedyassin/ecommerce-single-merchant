@@ -20,7 +20,6 @@ class Product extends Model
         "views" ,
         "reviews" ,
         "paid_quantity" ,
-        "expire_date" ,
         "publish_date" ,
     ] ;
 

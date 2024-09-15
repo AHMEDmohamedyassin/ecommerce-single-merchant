@@ -104,8 +104,25 @@ class AddressController extends Controller
      */
     public function DeleteAddress () {
         try{
+            request()->validate([
+                'id' => 'required|exists:addresses,id' ,
+            ]);
 
-            return $this->SuccessResponse();
+            // check if user own the address of provided id
+            $address = request('user')->address()->find(request('id'));
+
+            if(!$address) throw new CustomException('address not found' , 11);
+
+            // delete json file if exists
+            $json_path = '/addresses/' . $address->id;
+            if(Storage::exists($json_path))
+                Storage::deleteDirectory($json_path);
+
+
+            // delete address
+            $address->delete();
+
+            return $this->SuccessResponse($address);
         }catch(\Exception $e){
             return $this->ErrorResponse(6003 , $e->getCode() , $e->getMessage());
         }
@@ -118,8 +135,9 @@ class AddressController extends Controller
      */
     public function ListAddress () {
         try{
+            $addresses = request('user')->address()->orderBy('id' , 'Desc')->get();
 
-            return $this->SuccessResponse();
+            return $this->SuccessResponse($addresses);
         }catch(\Exception $e){
             return $this->ErrorResponse(6004 , $e->getCode() , $e->getMessage());
         }
@@ -132,8 +150,23 @@ class AddressController extends Controller
      */
     public function ReadAddress () {
         try{
+            request()->validate([
+                'id' => 'required|exists:addresses,id' ,
+            ]);
 
-            return $this->SuccessResponse();
+            // check if user own the address of provided id
+            $address = request('user')->address()->find(request('id'));
+
+            if(!$address) throw new CustomException('address not found' , 11);
+
+            // append json file if exists
+            $json_path = '/addresses/' . $address->id . '/json.json';
+            if(Storage::exists($json_path)){
+                $json = Storage::read($json_path);
+                $address['json'] = json_decode($json);
+            }
+
+            return $this->SuccessResponse($address);
         }catch(\Exception $e){
             return $this->ErrorResponse(6005 , $e->getCode() , $e->getMessage());
         }
