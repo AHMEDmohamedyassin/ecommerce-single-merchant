@@ -2,8 +2,9 @@
 
 use App\Http\Controllers\Filters\CategoryController;
 use App\Http\Controllers\Filters\TopCategoryController;
-use App\Http\Controllers\Permissions\UserRolePermissionController;
+use App\Http\Controllers\Permissions\PermissionController;
 use App\Http\Controllers\Permissions\RoleController;
+use App\Http\Controllers\Users\AddressController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Users\AuthController;
 
@@ -40,13 +41,24 @@ Route::get('/category/search' , [CategoryController::class , 'SearchCategory']);
 
 
 // Permission Controller 4000
-Route::post('/permission/user/attach' , [UserRolePermissionController::class , 'AttachUserPermission']);
-Route::post('/role/user/attach' , [UserRolePermissionController::class , 'AttachUserRole']);
+Route::post('/permission/user/attach' , [PermissionController::class , 'AttachUserPermission']);
+Route::get('/permission/list' , [PermissionController::class , 'ListPermission']);
 
 
 // Role Controller 5000
 Route::post('/role/create' , [RoleController::class , 'CreateRole']);
 Route::post('/role/delete' , [RoleController::class , 'DeleteRole']);
 Route::post('/role/update' , [RoleController::class , 'UpdateRole']);
-Route::post('/role/list' , [RoleController::class , 'ListRole']);
-Route::post('/role/read' , [RoleController::class , 'ReadRole']);
+Route::get('/role/list' , [RoleController::class , 'ListRole']);
+Route::get('/role/read' , [RoleController::class , 'ReadRole']);
+Route::post('/role/user/attach' , [RoleController::class , 'AttachUserRole']);
+
+
+// Address controller 6000  ( addresses for users )
+Route::middleware('TokenRequiredMiddleware' , 'BlockCheckMiddleware' , 'EmailVerifyMiddleware')->group(function () {
+    Route::post('/address/create' , [AddressController::class , 'CreateAddress']);
+    Route::post('/address/update' , [AddressController::class , 'UpdateAddress']);
+    Route::post('/address/delete' , [AddressController::class , 'DeleteAddress']);
+});
+Route::get('/address/list' , [AddressController::class , 'ListAddress']);
+Route::get('/address/read' , [AddressController::class , 'ReadAddress']);

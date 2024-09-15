@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Permissions;
 
 use App\Http\Controllers\Controller;
 use App\Models\Role;
+use App\Models\User;
 use App\Traits\PaginateTrait;
 use App\Traits\ResponseTrait;
 use App\Traits\SlugTrait;
@@ -126,6 +127,35 @@ class RoleController extends Controller
             return $this->SuccessResponse($role);
         }catch(\Exception $e){
             return $this->ErrorResponse(5005 , $e->getCode() , $e->getMessage());
+        }
+    }
+
+
+    /**
+     * @code 5006
+     * Attach and detach role from user
+     * @Admin
+     */
+    public function AttachUserRole() {
+        try{
+            request()->validate([
+                'user_id' => 'required|exists:users,id' ,
+                'role_id' => 'nullable|array' ,
+                'role_id.*' => 'numeric|exists:roles,id'
+            ]);
+
+            // get user
+            $user = User::find(request('user_id'));
+            
+            // sync roles
+            $user->role()->sync(request('role_id'));
+
+            // get user role
+            $user_roles = $user->role;
+
+            return $this->SuccessResponse($user_roles);
+        }catch(\Exception $e){
+            return $this->ErrorResponse(5006 , $e->getCode() , $e->getMessage());
         }
     }
 

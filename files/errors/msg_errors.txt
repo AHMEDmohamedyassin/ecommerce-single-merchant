@@ -6,3 +6,6 @@
 6 => email or phone not found
 7 => error in validation
 8 => email is already verified
+9 => setting is not registered
+10=> reached maximum address number
+11=> address not found

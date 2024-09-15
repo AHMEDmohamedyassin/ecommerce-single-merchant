@@ -16,6 +16,10 @@
         image1.jpg
         image2.jpg
 
+/addresses
+    /[address_id]
+	json.json
+
 
 /categories
     /[category_id]

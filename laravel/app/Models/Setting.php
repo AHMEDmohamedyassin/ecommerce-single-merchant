@@ -10,8 +10,11 @@ class Setting extends Model
     use HasFactory;
 
     protected $fillable = [
-        "title" ,
-        "value" ,
-        "private" ,
+        "title" , 
+        "en_title" , 
+        "slug" , 
+        "value" , 
+        "private" , 
+        "deletable" , 
     ];
 }

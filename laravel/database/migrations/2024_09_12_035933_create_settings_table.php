@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable();
+            $table->char('title' , 50)->nullable();
+            $table->char('en_title' , 50)->nullable();
+            $table->char('slug' , 50)->nullable();
             $table->string('value')->nullable();
             $table->boolean('private')->default(1);
+            $table->boolean('deletable')->default(0);
             $table->timestamps();
         });
     }

@@ -21,12 +21,13 @@
 3006 => Filters/CategoryController@SearchCategory
 
 
-4001 => Permissions/UserRolePermissionController@AttachUserPermission
-4002 => Permissions/UserRolePermissionController@AttachUserRole
+4001 => Permissions/PermissionController@AttachUserPermission
+4002 => Permissions/PermissionController@ListPermission
 
 
-5001 => Permissions/UserRolePermissionController@CreateRole
-5002 => Permissions/UserRolePermissionController@DeleteRole
-5003 => Permissions/UserRolePermissionController@UpdateRole
-5004 => Permissions/UserRolePermissionController@ListRole
-5005 => Permissions/UserRolePermissionController@ReadRole
+5001 => Permissions/RoleController@CreateRole
+5002 => Permissions/RoleController@DeleteRole
+5003 => Permissions/RoleController@UpdateRole
+5004 => Permissions/RoleController@ListRole
+5005 => Permissions/RoleController@ReadRole
+5006 => Permissions/RoleController@AttachUserRole
