@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use App\Traits\PaginateTrait;
 use App\Traits\ResponseTrait;
@@ -15,14 +16,18 @@ class ProductController extends Controller
 {
     use ResponseTrait , SlugTrait , PaginateTrait;
 
+    // muilti used validation 
     public $validation = [
         "description" => "nullable|max:255|string",
         "old_price" => "nullable|max:999999.99" ,
         "quantity" => "nullable|max:65535" ,
-        "publish_date" => "nullable|date" ,
+        "publish_date" => "nullable|date_format:Y-m-d H:i:s" ,
+        "categories" => "array|nullable",
+        "categories.*" => "numeric|exists:categories,id",
         "json" => "nullable|array" ,
     ]; 
 
+    // writing json
     public function WritingJson ($product) {
         if(request()->has('json')){
             Storage::put('/products/' . $product->id . '/json/json.json' , json_encode(request('json')));
@@ -32,6 +37,7 @@ class ProductController extends Controller
         return $product;
     }
 
+    // reading json content
     public function ReadingJson ($product){
         $json_path = '/products/' . $product->id . '/json/json.json';
         if(!Storage::exists($json_path)) return [];
@@ -58,10 +64,13 @@ class ProductController extends Controller
                 'publish_date' => request('publish_date') ? Carbon::parse(request('publish_date')) : Carbon::now()
             ]);
             
+            // sync cateogries
+            $product->category()->sync(request('categories'));
+
             // writing json file and appending it with response
             $product = $this->WritingJson($product);
 
-            return $this->SuccessResponse($product);
+            return $this->SuccessResponse($product->load('category'));
         }catch(\Exception $e){
             return $this->ErrorResponse(7001 , $e->getCode() , $e->getMessage());
         }
@@ -88,10 +97,13 @@ class ProductController extends Controller
                 'publish_date' => request('publish_date') ? Carbon::parse(request('publish_date')) : $product->publish_date
             ]);
 
+            // sync cateogries
+            $product->category()->sync(request('categories'));
+
             // rewriting json file
             $product = $this->WritingJson($product);
 
-            return $this->SuccessResponse($product);
+            return $this->SuccessResponse($product->load('category'));
         }catch(\Exception $e){
             return $this->ErrorResponse(7002 , $e->getCode() , $e->getMessage());
         }
@@ -132,13 +144,24 @@ class ProductController extends Controller
             request()->validate([
                 'search' => 'nullable|max:255' , 
                 'orderby' => 'in:publish_date,price,ratting|nullable' , 
-                'order' => 'in:asc,desc'
+                'order' => 'in:asc,desc',
+                "categories" => "array|nullable",
+                "categories.*" => "numeric|exists:categories,id"
             ]);
 
             $orderby = request('orderby') ?? 'publish_date';
             $order = request('order') ?? 'desc';
 
-            $product = Product::where('slug' , 'LIKE' , '%' . $this->CreateSlug(request('search')) . '%')
+            $product = Product::query();
+
+            if(request()->has('categories')){
+                $categories = request('categories');
+                $product->whereHas('category' , function ($query) use ($categories) {
+                    $query->whereIn('category_id' , $categories);
+                });
+            }
+
+            $product = $product->where('slug' , 'LIKE' , '%' . $this->CreateSlug(request('search')) . '%')
                             ->orderBy($orderby , $order);
 
             return $this->SuccessResponse($this->paginate($product));
@@ -166,7 +189,7 @@ class ProductController extends Controller
             if(Storage::exists($json_path))
                 $product['json'] = json_decode(Storage::read($json_path , true));
 
-            return $this->SuccessResponse($product);
+            return $this->SuccessResponse($product->load('category'));
         }catch(\Exception $e){
             return $this->ErrorResponse(7005 , $e->getCode() , $e->getMessage());
         }

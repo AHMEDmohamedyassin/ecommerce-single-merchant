@@ -120,6 +120,7 @@ return [
         "role_id" => "رمز الدور" ,
         "address" => 'العنوان' ,
         "publish_date" => 'تاريخ النشر',
+        "ratting" => "التقييم" ,
     ],
 
 ];

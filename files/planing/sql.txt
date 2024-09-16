@@ -6,7 +6,7 @@ email
 pass
 customer // check if user is customer or from working team
 
-addresses table (Address) :  // users addresses
+addresses table (Address) : done  // users addresses
 address 
 default // boolean to check if it is the default address for user
 user_id
@@ -34,7 +34,7 @@ user_id
 permission_id
 
 
-products table (Product) :
+products table (Product) : done
 slug
 title
 description
@@ -53,12 +53,12 @@ title
 slug
 description
 
-product_category table : 
+product_category table : done
 category_id               // from the categories table
 product_id
 
 
-reviews table (Review) : // only user paid for product can make review
+reviews table (Review) : done // only user paid for product can make review
 comment
 ratting   : 1-5
 user_id
@@ -97,12 +97,12 @@ order_id
 quantity
 price
 
-carts table (Cart) : 
+carts table (Cart) : done
 user_id
 product_id
 quantity
 
-favorites table (Favorite) :
+favorites table (Favorite) : done
 user_id
 product_id
 

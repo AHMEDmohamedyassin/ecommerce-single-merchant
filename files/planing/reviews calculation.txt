@@ -1,0 +1,25 @@
+************* updating average review in product table **********************
+
+products.reviews : count of reviews
+products.ratting : average reviews
+
+############## Adding Review to average ########################
+
+products.ratting = ( ratting sum ) / products.reviews
+( ratting sum ) = products.ratting * products.reviews
+new ratting sum = ( ratting sum ) + ( new ratting )
+new.products.ratting = ( new ratting sum ) / ( products.reviews + 1 )
+
+overall:
+new.products.ratting = ( ( products.ratting * products.reviews ) + ( new ratting ) ) / ( products.reviews + 1 )
+
+
+############## remove Review from average ########################
+
+products.ratting = ( ratting sum ) / products.reviews
+( ratting sum ) = products.ratting * products.reviews
+new ratting sum = ( ratting sum ) - ( new ratting )
+new.products.ratting = ( new ratting sum ) / ( products.reviews - 1 )
+
+overall : 
+new.products.ratting = ( ( products.ratting * products.reviews ) - ( new ratting ) ) / ( products.reviews - 1 )

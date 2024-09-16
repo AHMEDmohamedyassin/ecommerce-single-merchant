@@ -31,3 +31,11 @@
 5004 => Permissions/RoleController@ListRole
 5005 => Permissions/RoleController@ReadRole
 5006 => Permissions/RoleController@AttachUserRole
+
+11001 => UserExperience/ReviewContrller@CreateReview
+11002 => UserExperience/ReviewContrller@DeleteReview
+11003 => UserExperience/ReviewContrller@ListReview
+11004 => UserExperience/ReviewContrller@ListProductReview
+11005 => UserExperience/ReviewContrller@AdminListReview
+11006 => UserExperience/ReviewContrller@AdminPublishReview
+11007 => UserExperience/ReviewContrller@AdminDeleteReview
