@@ -10,21 +10,13 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        "user_id" ,
-        "shipping_address_id" ,
-        "billing_address_id" ,
-        "cartTotal" ,
-        "invoice_status" ,
-        "payment_method" ,
-        "gateway_name" ,
-        "paid_at" ,
-        "invoice_id" ,
-        "invoice_key" ,
-        "currency" ,
-        "payment_reason" ,
-        "referenceNumber" ,
-        "hashKey" ,
-        "pay_load" ,
+        "user_id" , 
+        "shipping_address_id" , 
+        "billing_address_id" , 
+        "cart_total" , 
+        "currency" , 
+        "pay_on_diliver" , 
+        "status" , 
     ];
 
     
@@ -35,7 +27,7 @@ class Order extends Model
     }
 
     public function product () {
-        return $this->belongsToMany(Product::class , 'product_order' , 'order_id' , 'product_id');
+        return $this->belongsToMany(Product::class , 'product_order' , 'order_id' , 'product_id')->withPivot('id' , 'quantity');
     }
 
     public function address () {
@@ -44,5 +36,9 @@ class Order extends Model
 
     public function store_address () {
         return $this->belongsTo(StoreAddress::class , 'billing_address_id' , 'id');
+    }
+
+    public function transaction () {
+        return $this->hasMany(Transaction::class , 'order_id' , 'id');
     }
 }

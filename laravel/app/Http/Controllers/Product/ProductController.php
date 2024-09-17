@@ -184,6 +184,10 @@ class ProductController extends Controller
 
             $product = Product::find(request('id'));
 
+            $product->update([
+                'views' => $product->views + 1
+            ]);
+
             // retriving json of product
             $json_path = '/products/' . $product->id . '/json/json.json';
             if(Storage::exists($json_path))

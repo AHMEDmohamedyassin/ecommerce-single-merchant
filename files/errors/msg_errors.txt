@@ -9,3 +9,5 @@
 9 => setting is not registered
 10=> reached maximum address number
 11=> address not found
+12 => coupon not found
+13 => order not found or canceled before

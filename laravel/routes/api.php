@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Credit\CouponController;
+use App\Http\Controllers\Credit\OrderController;
 use App\Http\Controllers\Filters\CategoryController;
 use App\Http\Controllers\Filters\TopCategoryController;
 use App\Http\Controllers\Permissions\PermissionController;
@@ -110,3 +112,24 @@ Route::get('/review/product/list' , [ReviewController::class , 'ListProductRevie
 Route::get('/review/admin/list' , [ReviewController::class , 'AdminListReview']);           #admin
 Route::post('/review/admin/publish' , [ReviewController::class , 'AdminPublishReview']);    #admin
 Route::post('/review/admin/delete' , [ReviewController::class , 'AdminDeleteReview']);      #admin
+
+// Coupon Controller 12,000
+Route::post('/coupon/create' , [CouponController::class , 'CreateCoupon']); #admin  
+Route::post('/coupon/delete' , [CouponController::class , 'DeleteCoupon']); #admin
+Route::post('/coupon/paid' , [CouponController::class , 'PaidStatusCoupon']); #admin
+Route::post('/coupon/read' , [CouponController::class , 'ReadCoupon']);     
+Route::get('/coupon/list' , [CouponController::class , 'ListCoupon']);      #admin
+
+
+// Order Controller 13,000
+Route::middleware('TokenRequiredMiddleware' , 'BlockCheckMiddleware' , 'EmailVerifyMiddleware')->group(function () {
+    Route::post('/order/user/create' , [OrderController::class , 'UserCreateOrder']);
+    Route::post('/order/user/cancel' , [OrderController::class , 'UserCancelOrder']);
+    Route::get('/order/user/list' , [OrderController::class , 'UserListOrder']);
+    Route::get('/order/user/read' , [OrderController::class , 'UserReadOrder']);
+});
+Route::post('/order/create' , [OrderController::class , 'CreateOrder']);
+Route::post('/order/update' , [OrderController::class , 'UpdateOrder']);
+Route::post('/order/delete' , [OrderController::class , 'DeleteOrder']);
+Route::get('/order/read' , [OrderController::class , 'ReadOrder']);
+Route::get('/order/list' , [OrderController::class , 'ListOrder']);

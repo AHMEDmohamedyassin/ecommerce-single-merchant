@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('coupons', function (Blueprint $table) {
             $table->id();
+            $table->string('coupon_encrypt')->nullable();
+            $table->string('coupon_hash')->nullable();
             $table->unsignedFloat('value')->default(0);
             $table->boolean('paid')->default(0);
             $table->dateTime('expire_date')->nullable();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -1,0 +1,39 @@
+types of orders 
+	case 1 - online with online payment : user who makes the order
+	case 2 - online with on-diliver payment : user who makes the order 
+	case 3 - store payment : admin who makes the order
+
+
+
+orders table (Order) :  transactions
+user_id : not needed in case of  ( case 3 -  in store payment ) 
+shipping_address_id : users address , not needed in case of  ( case 3 -  in store payment ) 
+billing_address_id : store address  , not needed if user who making the order ( case 1,2 - online payment )
+cart_total         : not provided by user  , application calculate it by showing the products in cart
+pay_on_diliver : Boolean     , not needed in case of  ( case 3 -  in store payment ) 
+status : pending , ready , preparing , success , canceled  : application detect it
+
+transactions table : 
+order_id
+gateway_name      // fawaterk , detected by website not by paymentgateway
+invoice_status    
+paid_at           
+payment_method    
+pay_load
+referenceNumber
+invoice_id
+invoice_key
+currency
+cart_total
+hashKey       // hmac
+
+
+
+
+orders.status : 
+	pending -> pending payment if the user wants to pay with gateway , if user set payment diliver the status will be ready directly , 
+	ready -> when user pay for the order by gateway or he set the order to be paid on diliver
+	preparing -> when admin receive the order and starting to prepare it , the order can not be canceled by user only canceled by admin
+	success -> delivered order , 
+	canceled -> canceled order , canceled by user before preparation step or by admin at any step , 
+	

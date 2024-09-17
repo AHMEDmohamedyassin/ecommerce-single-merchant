@@ -30,7 +30,7 @@ class Product extends Model
     }
 
     public function order () {
-        return $this->belongsToMany(Order::class , 'product_order' , 'product_id' , 'order_id');
+        return $this->belongsToMany(Order::class , 'product_order' , 'product_id' , 'order_id')->withPivot('id' , 'quantity');
     }
 
     public function review () {

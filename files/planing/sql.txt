@@ -66,30 +66,36 @@ product_id
 public
 
 
-coupons table (Coupon) :
+coupons table (Coupon) : done
+coupon_hash         // for searching the coupon 
+coupon_encryption   // for getting the coupon by decryption
 value 
 expire_date	// date when the coupon is expired
 paid	// check if coupon is paid for a user
 user_id // check if coupon is used
 
 
-orders table (Order) :  transactions
-user_id
-shipping_address_id : users address
-billing_address_id : store address 
-cartTotal
-invoice_status    // filed by payment gateway or by web application incase of coupon
-paid_at           // filed by payment gateway or by web application incase of coupon
-payment_method    // filed by payment gateway or by web application incase of coupon
-gateway_name      // fawaterk , coupon
-// payment gateway informations
+transactions table : 
+order_id
+gateway_name      // fawaterk , detected by website not by paymentgateway
+invoice_status    
+paid_at           
+payment_method    
+pay_load
+referenceNumber
 invoice_id
 invoice_key
 currency
-payment_reason
-referenceNumber
+cart_total
 hashKey       // hmac
-pay_load
+
+orders table (Order)
+user_id
+shipping_address_id : users address
+billing_address_id : store address 
+cart_total
+pay_on_diliver
+status
 
 product_order table : // sold products 
 product_id

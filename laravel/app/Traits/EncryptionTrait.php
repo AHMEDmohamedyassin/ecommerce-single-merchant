@@ -4,19 +4,28 @@ namespace App\Traits;
 
 Trait EncryptionTrait{
 
-    public function encrypt($string){
-        $cipher = "aes-256-cbc";
-        $iv = base64_decode(env('ENCRYPTION_IV'));
-        $encrypted = openssl_encrypt($string, $cipher, base64_decode(env('ENCRYPTION_KEY')), OPENSSL_RAW_DATA , $iv);
-        $encryptedBase64 = base64_encode($encrypted);
-        return $encryptedBase64;
+    function encrypt($plaintext, $password) {
+        $method = "AES-256-CBC";
+        $key = hash('sha256', $password, true);
+        $iv = openssl_random_pseudo_bytes(16);
+    
+        $ciphertext = openssl_encrypt($plaintext, $method, $key, OPENSSL_RAW_DATA, $iv);
+        $hash = hash_hmac('sha256', $ciphertext . $iv, $key, true);
+    
+        return base64_encode($iv . $hash . $ciphertext);
+    }
+    
+    function decrypt($encodedtext, $password) {
+        $ivHashCiphertext = base64_decode($encodedtext);
+        $method = "AES-256-CBC";
+        $iv = substr($ivHashCiphertext, 0, 16);
+        $hash = substr($ivHashCiphertext, 16, 32);
+        $ciphertext = substr($ivHashCiphertext, 48);
+        $key = hash('sha256', $password, true);
+    
+        if (!hash_equals(hash_hmac('sha256', $ciphertext . $iv, $key, true), $hash)) return null;
+    
+        return openssl_decrypt($ciphertext, $method, $key, OPENSSL_RAW_DATA, $iv);
     }
 
-    public function decrypt ($string){
-        $cipher = "aes-256-cbc";
-        $encrypted = base64_decode($string);
-        $iv = base64_decode(env('ENCRYPTION_IV'));
-        $decrypted = openssl_decrypt($encrypted, $cipher, base64_decode(env('ENCRYPTION_KEY')), OPENSSL_RAW_DATA , $iv);
-        return $decrypted;
-    }
 }

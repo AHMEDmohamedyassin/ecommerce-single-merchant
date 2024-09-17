@@ -10,6 +10,8 @@ class Coupon extends Model
     use HasFactory;
 
     protected $fillable = [
+        "coupon_encrypt",
+        "coupon_hash",
         "value" ,
         "paid" ,
         "expire_date" ,

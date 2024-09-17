@@ -1,0 +1,2 @@
+users who paid the product can makes reviews
+one user makes receive the order the product paid_quantity changes

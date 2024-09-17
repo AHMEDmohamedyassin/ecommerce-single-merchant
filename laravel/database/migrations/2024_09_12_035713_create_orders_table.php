@@ -13,22 +13,13 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('shipping_address_id')->nullable();
             $table->foreignId('billing_address_id')->nullable();
-            $table->unsignedFloat('cartTotal')->default(0);
-            $table->char('invoice_status' , 20)->nullable();
-            $table->char('payment_method' , 100)->nullable();
-            $table->char('gateway_name' , 20)->nullable();
-            $table->dateTime('paid_at')->nullable();
-            $table->string('invoice_id')->nullable();
-            $table->string('invoice_key')->nullable();
+            $table->unsignedFloat('cart_total')->default(0);
             $table->char('currency' , 20)->nullable();
-            $table->string('payment_reason')->nullable();
-            $table->string('referenceNumber')->nullable();
-            $table->string('hashKey')->nullable();
-            $table->string('pay_load')->nullable();
-            
+            $table->char('status' , 20)->nullable();
+            $table->boolean('pay_on_diliver')->default(0);
             $table->timestamps();
         });
     }

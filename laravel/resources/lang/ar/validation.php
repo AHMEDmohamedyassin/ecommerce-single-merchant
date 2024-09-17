@@ -121,6 +121,9 @@ return [
         "address" => 'العنوان' ,
         "publish_date" => 'تاريخ النشر',
         "ratting" => "التقييم" ,
+        "expire_date" => "تاريخ الصلاحية" ,
+        "value" => "القيمة" ,
+        "coupon" => "القسيمة"
     ],
 
 ];
