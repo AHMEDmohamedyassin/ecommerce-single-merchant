@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Credit;
 
+use App\Events\OrderStatusEvent;
 use App\Exceptions\CustomException;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\User;
 use App\Traits\PaginateTrait;
 use App\Traits\ResponseTrait;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
 
 class AdminOrderController extends Controller
@@ -120,13 +121,67 @@ class AdminOrderController extends Controller
                 "status" => "required|in:pending,ready,preparing,success,canceled,canceled without refund", 
             ]);
 
-            $order = Order::find(request('id'))->update([
-                'status' => request('status')
-            ]);
+            $order = Order::find(request('id'));
+
+            // events handle 
+            Event::dispatch(new OrderStatusEvent($order , request('status')));
             
             return $this->SuccessResponse($order);
         }catch(\Exception $e){
-            return $this->ErrorResponse(14001 , $e->getCode() , $e->getMessage());
+            return $this->ErrorResponse(14002 , $e->getCode() , $e->getMessage());
+        }
+    }
+
+
+    /**
+     * @error 14003
+     * listing orders
+     */
+    public function ListOrder () {
+        try {
+            request()->validate([
+                'status' => "nullable|in:pending,ready,preparing,success,canceled,canceled without refund" , 
+                'orderby' => "nullable|in:status,quantity,cart_total,pay_on_diliver,id,created_at,updated_at",
+                "desc" => "in:desc,asc"
+            ]);
+
+            $orders = Order::query();
+
+            if(request()->has("status")) $orders->where('status' , request('status'));
+            
+            $orders->orderby(request('orderby' , 'id') , request('desc', 'desc'));
+
+            return $this->SuccessResponse($this->paginate($orders));
+        }catch(\Exception $e){
+            return $this->ErrorResponse(14003 , $e->getCode() , $e->getMessage());
+        }
+    }
+
+
+    /**
+     * @error 14004
+     * read order details with its products and coupons
+     */
+    public function ReadOrder () {
+        try{
+            request()->validate([
+                'id' => 'required|exists:orders,id'
+            ]);
+
+            // getting order with all related data
+            $order = Order::with('product')->with('coupon')
+                    ->with('user')->with('address')
+                    ->with('store_address')
+                    ->find(request('id'));
+
+            // getting additional informations in json file
+            $path = "/orders/{$order->id}/json.json";
+            if(Storage::exists($path))
+                $order['additional'] = json_decode(Storage::read($path));
+
+            return $this->SuccessResponse($order);
+        }catch(\Exception $e){
+            return $this->ErrorResponse(14004 , $e->getCode() , $e->getMessage());
         }
     }
 

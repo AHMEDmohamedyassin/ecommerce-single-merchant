@@ -37,6 +37,6 @@
 	    /image1.jpg
 	    /image2.png
 
-/orders
+/orders # for additional items
 	/[order_id]
 		json.json

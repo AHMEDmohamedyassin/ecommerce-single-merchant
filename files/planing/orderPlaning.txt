@@ -13,6 +13,7 @@ coupon_id : if coupon is used
 cart_total         : not provided by user  , application calculate it by showing the products in cart
 pay_on_diliver : Boolean     , not needed in case of  ( case 3 -  in store payment ) 
 status : pending , ready , preparing , success , canceled  : application detect it
+coupon_id
 
 transactions table : 
 order_id

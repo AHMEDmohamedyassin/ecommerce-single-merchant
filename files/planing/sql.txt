@@ -89,19 +89,23 @@ currency
 cart_total
 hashKey       // hmac
 
-orders table (Order)
+orders table (Order) : done
 user_id
 shipping_address_id : users address
 billing_address_id : store address 
 cart_total
 pay_on_diliver
 status
+coupon_id
+currency
 
-product_order table : // sold products 
+
+product_order table : done  // sold products 
 product_id
 order_id
 quantity
 price
+
 
 carts table (Cart) : done
 user_id
@@ -112,14 +116,14 @@ favorites table (Favorite) : done
 user_id
 product_id
 
-contacts table (Contact) : 
+contacts table (Contact) :  done
 user_id
 name
 phone
 email
 msg
 
-blocks table (Block) : {{{{{{{{stoped here}}}}}}}}
+blocks table (Block) : done
 user_id
 reasone
 expire_date

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\BlockController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Credit\AdminOrderController;
 use App\Http\Controllers\Credit\CouponController;
 use App\Http\Controllers\Credit\UserOrderController;
@@ -15,8 +17,7 @@ use App\Http\Controllers\UserExperience\ReviewController;
 use App\Http\Controllers\Users\AddressController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Users\AuthController;
-
-
+use App\Http\Controllers\Users\ContactController;
 
 // Auth controller 1000
 Route::post('/auth/login' , [AuthController::class , 'LoginAuth']);
@@ -133,6 +134,27 @@ Route::middleware('TokenRequiredMiddleware' , 'BlockCheckMiddleware' , 'EmailVer
 // Admin Orders Controller 14,000
 Route::post('/order/create' , [AdminOrderController::class , 'CreateOrder']);
 Route::post('/order/update/status' , [AdminOrderController::class , 'StatusOrder']);
-// Route::post('/order/delete' , [AdminOrderController::class , 'DeleteOrder']);
 Route::get('/order/read' , [AdminOrderController::class , 'ReadOrder']);
 Route::get('/order/list' , [AdminOrderController::class , 'ListOrder']);
+
+
+// Contacts Controller 15,000
+Route::post('/contact/create' , [ContactController::class , 'CreateContact']); 
+Route::get('/contact/list' , [ContactController::class , 'ListContact']); 
+
+
+// Block Controller 16,000
+Route::post('/block/create' , [BlockController::class , 'CreateBlock']);
+Route::post('/block/disable' , [BlockController::class , 'DisableBlock']);
+Route::post('/block/user/disable' , [BlockController::class , 'DisableUserBlock']);
+Route::get('/block/list' , [BlockController::class , 'ListBlock']);
+
+
+// Users Controller 17,000
+Route::post('/user/create' , [UserController::class , 'CreateUser']);
+Route::post('/user/update' , [UserController::class , 'UpdateUser']);
+Route::post('/user/resetpassword/url' , [UserController::class , 'RestPasswordUser']);
+Route::post('/user/delete' , [UserController::class , 'DeleteUser']);
+Route::get('/user/list' , [UserController::class , 'ListUser']);
+Route::get('/user/read' , [UserController::class , 'ReadUser']);
+Route::get('/user/detail' , [UserController::class , 'DetailUser']);

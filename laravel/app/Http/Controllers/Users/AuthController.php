@@ -78,9 +78,9 @@ class AuthController {
             // other validations
             $this->HelperValidationMethodAuth();
 
-            $slug = $this->CreateSlug(request('name'));
+            $slug = $this->MultiTextSlug(request('phone') , request('name') , request('email'));
 
-            $user = User::create($data , [
+            $user = User::create($data + [
                 'slug' => $slug
             ]);
 
