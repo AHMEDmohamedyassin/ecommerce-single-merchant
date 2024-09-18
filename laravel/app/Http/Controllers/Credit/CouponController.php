@@ -92,6 +92,7 @@ class CouponController extends Controller
     /**
      * @error 12003
      * change paid status of coupon
+     * @Admin
      */
     public function PaidStatusCoupon () {
         try{
@@ -116,6 +117,7 @@ class CouponController extends Controller
     /**
      * @error 12004
      * Read coupon
+     * @Admin
      */
     public function ReadCoupon () {
         try{
@@ -175,6 +177,28 @@ class CouponController extends Controller
         }catch(\Exception $e){
             return $this->ErrorResponse(12005 , $e->getCode() , $e->getMessage());
         }
+    }
+
+
+    /**
+     * using coupon
+     * routless method
+     * @var the_cop : coupon , @var user_id user id if available
+     */
+    public function UseCoupon ($the_cop = null , $user_id = null) {
+        $coupon = Coupon::whereNull('user_id')->where('is_used' , 0)
+            ->where('expire_date' , '>' , Carbon::now())
+            ->where('coupon_hash' , hash('sha256', $the_cop) )->first();
+        if(!$coupon)
+            return false;
+
+        // update coupon status as used
+        $coupon->update([
+            'is_used' => 1,
+            'user_id' => $user_id
+        ]);
+
+        return $coupon;
     }
 
 

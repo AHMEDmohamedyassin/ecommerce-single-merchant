@@ -16,6 +16,7 @@ class Coupon extends Model
         "paid" ,
         "expire_date" ,
         "user_id" ,
+        "is_used" ,
     ];
 
     
@@ -23,5 +24,9 @@ class Coupon extends Model
 
     public function user () {
         return $this->belongsTo(User::class , 'user_id' ,'id');
+    }
+
+    public function order () {
+        return $this->hasOne(Order::class , 'coupon_id' , 'id');
     }
 }

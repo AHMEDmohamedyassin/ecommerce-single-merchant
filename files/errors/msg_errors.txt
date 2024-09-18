@@ -11,3 +11,5 @@
 11=> address not found
 12 => coupon not found
 13 => order not found or canceled before
+14 => user id required
+15 => order not found

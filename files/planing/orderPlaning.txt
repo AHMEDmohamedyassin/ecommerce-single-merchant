@@ -9,6 +9,7 @@ orders table (Order) :  transactions
 user_id : not needed in case of  ( case 3 -  in store payment ) 
 shipping_address_id : users address , not needed in case of  ( case 3 -  in store payment ) 
 billing_address_id : store address  , not needed if user who making the order ( case 1,2 - online payment )
+coupon_id : if coupon is used
 cart_total         : not provided by user  , application calculate it by showing the products in cart
 pay_on_diliver : Boolean     , not needed in case of  ( case 3 -  in store payment ) 
 status : pending , ready , preparing , success , canceled  : application detect it
@@ -36,4 +37,19 @@ orders.status :
 	preparing -> when admin receive the order and starting to prepare it , the order can not be canceled by user only canceled by admin
 	success -> delivered order , 
 	canceled -> canceled order , canceled by user before preparation step or by admin at any step , 
-	
+	canceled without refund -> canceled order , canceled by user before preparation step in this case user paid for the product using payment gateway needs to contact with the admin to refund paid money, 
+
+
+
+scenario : 
+users select products and add it to carts , 
+when he wants to buy the product he create the order ,
+application removes products from cart and place it as order products , 
+if user has a coupon the cart_total of order decrease with coupon value and coupon data updated as used ,
+if user select pay_on_diliver option the product status will be ( ready )
+if user does not select pay_on_diliver option the product status will be ( pending ) , the status will be ( ready ) when user pay for order using payment gateway
+
+user can cancel the product if its status is ( ready , pending )
+if user selected option pay_on_diliver the order status will be ( canceled ) after canceling it by user
+if user does not selected option pay_on_diliver and product status is  ( ready ) which means that user have paid for order uisng payment gateway  the order status will be ( canceled without refund ) after canceling it by user
+if user does not selected option pay_on_diliver and product status is  ( pending ) which means that user have not paid for order uisng payment gateway  the order status will be ( canceled ) after canceling it by user

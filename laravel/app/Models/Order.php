@@ -13,6 +13,7 @@ class Order extends Model
         "user_id" , 
         "shipping_address_id" , 
         "billing_address_id" , 
+        "coupon_id" , 
         "cart_total" , 
         "currency" , 
         "pay_on_diliver" , 
@@ -40,5 +41,9 @@ class Order extends Model
 
     public function transaction () {
         return $this->hasMany(Transaction::class , 'order_id' , 'id');
+    }
+
+    public function coupon () {
+        return $this->belongsTo(Coupon::class , 'coupon_id' , 'id');
     }
 }

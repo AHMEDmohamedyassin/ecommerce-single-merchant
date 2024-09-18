@@ -19,6 +19,7 @@ return new class extends Migration
             $table->boolean('paid')->default(0);
             $table->dateTime('expire_date')->nullable();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+            $table->boolean('is_used')->default(0);
             $table->timestamps();
         });
     }

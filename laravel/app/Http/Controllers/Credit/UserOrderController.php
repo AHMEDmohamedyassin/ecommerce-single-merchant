@@ -4,16 +4,14 @@ namespace App\Http\Controllers\Credit;
 
 use App\Exceptions\CustomException;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\UserExperience\CartController;
-use App\Models\Order;
-use App\Models\User;
+use App\Traits\PaginateTrait;
 use App\Traits\ResponseTrait;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
-class OrderController extends Controller
+class UserOrderController extends Controller
 {
-    use ResponseTrait;
+    use ResponseTrait , PaginateTrait;
 
 
     /**
@@ -36,6 +34,7 @@ class OrderController extends Controller
             $data = [];
             $sync_data = [];
             $cart_total = 0;
+            $coupon_id = null;
 
             foreach($cart as $item){
                 // sum total price of order
@@ -56,9 +55,20 @@ class OrderController extends Controller
                 ];
             }
 
+            // checking coupon if provided
+            if(request()->has('coupon')){
+                $coupon = (new CouponController)->UseCoupon(request('coupon') , request('user')->id);
+                if($coupon){
+                    $cart_total -= $coupon->value;
+                    $coupon_id = $coupon->id;
+                }
+            }
+
+
             // creating order
             $order = request('user')->order()->create([
-                "cart_total" => $cart_total, 
+                "coupon_id" => $coupon_id ,
+                "cart_total" => $cart_total < 0 ? 0 : $cart_total, 
                 "status" =>  request('pay_on_diliver') ? 'ready' : 'pending', 
                 "pay_on_diliver" => request('pay_on_diliver') ?? 0 , 
                 "shipping_address_id" => request('shipping_address_id')  
@@ -78,9 +88,11 @@ class OrderController extends Controller
 
 
     /**
-     * @error 13001
+     * @error 13002
      * cancel order by user
      * canceling orders only with status ( pending or ready )
+     * if user will paid for order using payment gateway , the status of order will be ( canceled without refund ) , to make order reviced with admin
+     * if user will pay for order after delivery , the status of order will be ( canceled )
      */
     public function UserCancelOrder () {
         try{
@@ -90,7 +102,8 @@ class OrderController extends Controller
             ]);
 
             // getting order and check if it is exists
-            $order = request('user')->order()->where(['id' => request('id')])->whereIn('status' , ['pending' , 'ready'])->first();
+            $order = request('user')->order()
+                ->where(['id' => request('id')])->whereIn('status' , ['pending' , 'ready'])->first();
 
             if(!$order)
                 throw new CustomException('order not found or canceled before' , 13);
@@ -119,12 +132,60 @@ class OrderController extends Controller
 
             // change order status to be canceled 
             $order->update([
-                'status' => 'canceled'
+                'status' => !$order->pay_on_diliver && $order->status == 'ready' ? 'canceled without refund' : 'canceled'
             ]);
 
             return $this->SuccessResponse($order);
         }catch(\Exception $e){
-            return $this->ErrorResponse(13001 , $e->getCode() , $e->getMessage());
+            return $this->ErrorResponse(13002 , $e->getCode() , $e->getMessage());
+        }
+    }
+
+
+    /**
+     * @error 13003
+     * listing orders of user 
+     */
+    public function UserListOrder () {
+        try{
+            $orders = request('user')->order()->orderby('id' , 'desc');
+
+            return $this->SuccessResponse($this->paginate($orders));
+        }catch(\Exception $e){
+            return $this->ErrorResponse(13003 , $e->getCode() , $e->getMessage());
+        }
+    }
+
+
+    /**
+     * @error 13004
+     * reading order data , like products , used coupons 
+     */
+    public function UserReadOrder () {
+        try{
+            request()->validate([
+                'id' => 'required|exists:orders,id'
+            ]);
+            
+            $order = request('user')->order()
+                ->where('orders.id' , request('id'))
+                ->with('product')->with('coupon')
+                ->first();
+
+            if(!$order)
+                throw new CustomException("order not found" , 15);
+
+            // appending additional data to order
+            $path = "/orders/{$order->id}/json.json";
+            if(Storage::fileExists($path)){
+                $additional = Storage::read($path);
+                $order['additional'] = json_decode($additional);
+            }
+
+
+            return $this->SuccessResponse($order);
+        }catch(\Exception $e){
+            return $this->ErrorResponse(13004 , $e->getCode() , $e->getMessage());
         }
     }
 

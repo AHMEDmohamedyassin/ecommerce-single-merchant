@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
-            $table->foreignId('shipping_address_id')->nullable();
-            $table->foreignId('billing_address_id')->nullable();
+            $table->foreignId('shipping_address_id')->constrained("addresses")->nullable();
+            $table->foreignId('billing_address_id')->constrained("store_addresses")->nullable();
+            $table->foreignId('coupon_id')->constrained("coupons")->nullable();
             $table->unsignedFloat('cart_total')->default(0);
             $table->char('currency' , 20)->nullable();
-            $table->char('status' , 20)->nullable();
+            $table->char('status' , 30)->nullable();
             $table->boolean('pay_on_diliver')->default(0);
             $table->timestamps();
         });

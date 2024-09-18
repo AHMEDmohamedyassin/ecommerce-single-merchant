@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\Credit\AdminOrderController;
 use App\Http\Controllers\Credit\CouponController;
-use App\Http\Controllers\Credit\OrderController;
+use App\Http\Controllers\Credit\UserOrderController;
 use App\Http\Controllers\Filters\CategoryController;
 use App\Http\Controllers\Filters\TopCategoryController;
 use App\Http\Controllers\Permissions\PermissionController;
@@ -117,19 +118,21 @@ Route::post('/review/admin/delete' , [ReviewController::class , 'AdminDeleteRevi
 Route::post('/coupon/create' , [CouponController::class , 'CreateCoupon']); #admin  
 Route::post('/coupon/delete' , [CouponController::class , 'DeleteCoupon']); #admin
 Route::post('/coupon/paid' , [CouponController::class , 'PaidStatusCoupon']); #admin
-Route::post('/coupon/read' , [CouponController::class , 'ReadCoupon']);     
+Route::post('/coupon/read' , [CouponController::class , 'ReadCoupon']);       #admin
 Route::get('/coupon/list' , [CouponController::class , 'ListCoupon']);      #admin
 
 
 // Order Controller 13,000
 Route::middleware('TokenRequiredMiddleware' , 'BlockCheckMiddleware' , 'EmailVerifyMiddleware')->group(function () {
-    Route::post('/order/user/create' , [OrderController::class , 'UserCreateOrder']);
-    Route::post('/order/user/cancel' , [OrderController::class , 'UserCancelOrder']);
-    Route::get('/order/user/list' , [OrderController::class , 'UserListOrder']);
-    Route::get('/order/user/read' , [OrderController::class , 'UserReadOrder']);
+    Route::post('/order/user/create' , [UserOrderController::class , 'UserCreateOrder']);
+    Route::post('/order/user/cancel' , [UserOrderController::class , 'UserCancelOrder']);
+    Route::get('/order/user/list' , [UserOrderController::class , 'UserListOrder']);
+    Route::get('/order/user/read' , [UserOrderController::class , 'UserReadOrder']);
 });
-Route::post('/order/create' , [OrderController::class , 'CreateOrder']);
-Route::post('/order/update' , [OrderController::class , 'UpdateOrder']);
-Route::post('/order/delete' , [OrderController::class , 'DeleteOrder']);
-Route::get('/order/read' , [OrderController::class , 'ReadOrder']);
-Route::get('/order/list' , [OrderController::class , 'ListOrder']);
+
+// Admin Orders Controller 14,000
+Route::post('/order/create' , [AdminOrderController::class , 'CreateOrder']);
+Route::post('/order/update/status' , [AdminOrderController::class , 'StatusOrder']);
+// Route::post('/order/delete' , [AdminOrderController::class , 'DeleteOrder']);
+Route::get('/order/read' , [AdminOrderController::class , 'ReadOrder']);
+Route::get('/order/list' , [AdminOrderController::class , 'ListOrder']);
