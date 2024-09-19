@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('store_addresses', function (Blueprint $table) {
             $table->id();
             $table->string('address')->nullable();
-            $table->boolean('primary')->default(1);
+            $table->boolean('primary')->default(0);
             $table->timestamps();
         });
     }

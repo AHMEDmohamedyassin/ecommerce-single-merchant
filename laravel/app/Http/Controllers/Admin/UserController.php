@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Users\AddressController;
 use App\Http\Controllers\Users\AuthController;
 use App\Models\User;
 use App\Traits\PaginateTrait;
@@ -132,6 +133,10 @@ class UserController extends Controller
 
             $user->delete();
 
+            $path = "/users/{$user->id}";
+            if(Storage::directoryExists($path))
+                Storage::deleteDirectory($path);
+
             return $this->SuccessResponse($user);
         }catch(\Exception $e){
             return $this->ErrorResponse(17004 , $e->getCode() , $e->getMessage());
@@ -212,6 +217,81 @@ class UserController extends Controller
             return $this->SuccessResponse($user);
         }catch(\Exception $e){
             return $this->ErrorResponse(17007 , $e->getCode() , $e->getMessage());
+        }
+    }
+
+
+    /**
+     * @error 17,008
+     * create user  address
+     */
+    public function AddAddressUser () {
+        try{
+            request()->validate([
+                'id' => 'required|exists:users,id' 
+            ]);
+
+            $user = User::find(request('id'));
+
+            request()->merge([
+                'user' => $user
+            ]);
+
+            return (new AddressController)->CreateAddress();
+        }catch(\Exception $e){
+            return $this->ErrorResponse(17008 , $e->getCode() , $e->getMessage());
+        }
+    }
+
+
+    /**
+     * @error 17,009
+     * delete user address 
+     */
+    public function DeleteAddressUser () {
+        try{
+            request()->validate([
+                'user_id' => 'required|exists:users,id' ,
+                'address_id' => 'required' ,
+            ]);
+
+            $user = User::find(request('user_id'));
+
+            request()->merge([
+                'user' => $user ,
+                'id' => request('address_id')
+            ]);
+
+            return (new AddressController)->DeleteAddress();
+
+        }catch(\Exception $e){
+            return $this->ErrorResponse(17009 , $e->getCode() , $e->getMessage());
+        }
+    }
+
+
+    /**
+     * @error 17,010
+     * delete user address 
+     */
+    public function UpdateAddressUser () {
+        try{
+            request()->validate([
+                'user_id' => 'required|exists:users,id' ,
+                'address_id' => 'required' ,
+            ]);
+
+            $user = User::find(request('user_id'));
+
+            request()->merge([
+                'user' => $user ,
+                'id' => request('address_id')
+            ]);
+
+            return (new AddressController)->UpdateAddress();
+
+        }catch(\Exception $e){
+            return $this->ErrorResponse(17010 , $e->getCode() , $e->getMessage());
         }
     }
 

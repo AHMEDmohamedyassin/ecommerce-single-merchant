@@ -18,7 +18,7 @@ return new class extends Migration
             $table->char('slug' , 50)->nullable();
             $table->string('value')->nullable();
             $table->boolean('private')->default(1);
-            $table->boolean('deletable')->default(0);
+            $table->boolean('updatable')->default(0);
             $table->timestamps();
         });
     }

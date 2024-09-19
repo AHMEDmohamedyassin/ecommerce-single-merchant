@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\BlockController;
+use App\Http\Controllers\Admin\StoreController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Credit\AdminOrderController;
 use App\Http\Controllers\Credit\CouponController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Permissions\PermissionController;
 use App\Http\Controllers\Permissions\RoleController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Product\ProductImageController;
+use App\Http\Controllers\Setting\SettingController;
 use App\Http\Controllers\UserExperience\CartController;
 use App\Http\Controllers\UserExperience\FavoriteController;
 use App\Http\Controllers\UserExperience\ReviewController;
@@ -158,3 +160,18 @@ Route::post('/user/delete' , [UserController::class , 'DeleteUser']);
 Route::get('/user/list' , [UserController::class , 'ListUser']);
 Route::get('/user/read' , [UserController::class , 'ReadUser']);
 Route::get('/user/detail' , [UserController::class , 'DetailUser']);
+Route::post('/user/add/address' , [UserController::class , 'AddAddressUser']);
+Route::post('/user/delete/address' , [UserController::class , 'DeleteAddressUser']);
+Route::post('/user/update/address' , [UserController::class , 'UpdateAddressUser']);
+
+
+// Store Controller 18,000
+Route::post('/store/create' , [StoreController::class , 'CreateStore']);;
+Route::post('/store/update' , [StoreController::class , 'UpdateStore']);
+Route::post('/store/delete' , [StoreController::class , 'DeleteStore']);
+Route::get('/store/list' , [StoreController::class , 'ListStore']);
+
+
+// Setting Controller 19,000
+Route::post('/setting/update' , [SettingController::class , 'UpdateSetting']);
+Route::get('/setting/list' , [SettingController::class , 'ListSetting']);

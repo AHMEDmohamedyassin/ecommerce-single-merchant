@@ -15,6 +15,6 @@ class Setting extends Model
         "slug" , 
         "value" , 
         "private" , 
-        "deletable" , 
+        "updatable" , 
     ];
 }

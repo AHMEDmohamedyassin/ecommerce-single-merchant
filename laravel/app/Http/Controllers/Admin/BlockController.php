@@ -46,13 +46,13 @@ class BlockController extends Controller
 
             return $this->SuccessResponse($block);
         }catch(\Exception $e){
-            return $this->ErrorResponse(15001 , $e->getCode() , $e->getMessage());
+            return $this->ErrorResponse(16001 , $e->getCode() , $e->getMessage());
         }
     }
 
 
     /**
-     * @error 15002
+     * @error 16002
      * disable block 
      * set expire date before now to remove user block
      * @var id block id
@@ -71,13 +71,13 @@ class BlockController extends Controller
             
             return $this->SuccessResponse($block);
         }catch(\Exception $e){
-            return $this->ErrorResponse(15002 , $e->getCode() , $e->getMessage());
+            return $this->ErrorResponse(16002 , $e->getCode() , $e->getMessage());
         }
     }
 
 
     /**
-     * @error 15003
+     * @error 16003
      * disable user blocks
      * set expire date before now for all blocks of user
      * @var id user id
@@ -96,13 +96,13 @@ class BlockController extends Controller
             
             return $this->SuccessResponse($blocks->get());
         }catch(\Exception $e){
-            return $this->ErrorResponse(15003 , $e->getCode() , $e->getMessage());
+            return $this->ErrorResponse(16003 , $e->getCode() , $e->getMessage());
         }
     }
 
 
     /**
-     * @error 15004
+     * @error 16004
      * list blocks
      */
     public function ListBlock () {
@@ -117,7 +117,7 @@ class BlockController extends Controller
             
             return $this->SuccessResponse($this->paginate($blocks));
         }catch(\Exception $e){
-            return $this->ErrorResponse(15004 , $e->getCode() , $e->getMessage());
+            return $this->ErrorResponse(16004 , $e->getCode() , $e->getMessage());
         }
     }
 

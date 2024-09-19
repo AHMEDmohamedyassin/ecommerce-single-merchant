@@ -40,3 +40,7 @@
 /orders # for additional items
 	/[order_id]
 		json.json
+
+/stores
+	/[store_address_id]
+		/json.json

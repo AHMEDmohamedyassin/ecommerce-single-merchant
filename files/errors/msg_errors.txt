@@ -13,3 +13,4 @@
 13 => order not found or canceled before
 14 => user id required
 15 => order not found
+16 => setting not found or can not be updated
