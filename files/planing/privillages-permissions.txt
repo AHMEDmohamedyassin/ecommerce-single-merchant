@@ -1,5 +1,16 @@
 roles :
 dashboard      : must be added to user to be able to open dashboard and use any endpoint of admin
+admin
+category
+permission
+product
+review
+coupon
+order
+contact
+block 
+user 
+store
 
 permissions : 
 top_category_create
@@ -9,6 +20,7 @@ category_create
 category_update
 category_delete_image
 category_delete
+
 permission_attach_user
 permission_list
 role_create
@@ -17,28 +29,35 @@ role_update
 role_list
 role_read
 role_attach_user
+
 product_create
 product_update
 product_delete
 product_image_upload
 product_image_delete
+
 review_list
 review_publish
 review_delete
+
 coupon_create
 coupon_delete
 coupon_paid_status
 coupon_read
 coupon_list
+
 order_create
 order_update_status
 order_read
 order_list
+
 contact_list
+
 block_create
 block_disable
 block_user_disable
 block_list
+
 user_create
 user_update
 user_reset_password
@@ -49,6 +68,7 @@ user_detail
 user_add_address
 user_delete_address
 user_update_address
+
 store_create
 store_update
 store_delete
