@@ -28,9 +28,8 @@ class UserOrderController extends Controller
                 "coupon" => "nullable|string"
             ]);
 
-            // getting products in cart to add it to order and then delete it from cart 
+            // getting products in cart to add it to order
             $cart = request('user')->cart;
-            request('user')->cart()->sync([]);
 
             // handle data
             $data = [];
@@ -39,6 +38,10 @@ class UserOrderController extends Controller
             $coupon_id = null;
 
             foreach($cart as $item){
+
+                if($item->quantity < $item->pivot->quantity)
+                    throw new CustomException("order quantity of products is larger than available" , 17);
+
                 // sum total price of order
                 $cart_total += $item->price * $item->pivot->quantity;
                 // handle return data , and used for payment gateway bills
@@ -56,6 +59,11 @@ class UserOrderController extends Controller
                     'updated_at' => Carbon::now() ,
                 ];
             }
+
+
+            // detach products from cart 
+            request('user')->cart()->sync([]);
+
 
             // checking coupon if provided
             if(request()->has('coupon')){

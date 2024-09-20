@@ -7,6 +7,7 @@ use App\Events\OrderReadyEvent;
 use App\Exceptions\CustomException;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\User;
 use App\Traits\PaginateTrait;
 use App\Traits\ResponseTrait;
@@ -67,6 +68,12 @@ class AdminOrderController extends Controller
             // preparing cart total and sync product data to be recorded in product_order
             foreach(request('products' , []) as $product){
                 $id = $product['id'];
+
+                // check if order product quantity is larger than available
+                $product_database = Product::find($id);
+                if($product_database->quantity < $product['quantity'])
+                    throw new CustomException('order quantity of products is larger than available' , 17);
+
                 unset($product['id']);
                 $sync_data[$id] = $product;
                 $cart_total += $product['price'] * $product['quantity'];

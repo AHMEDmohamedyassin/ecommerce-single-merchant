@@ -52,9 +52,19 @@ class FawaterkController {
             ]);
 
             $user = request('user');
-            $order = Order::with('product')->with('address')->find(request('id'));
             $cart_total = 0;
             $cart_items = [];
+            $discount = 0;
+
+            // searching for order
+            $order = Order::with('product')->with('address')->where([
+                'id' => request('id') , 
+                'status' => 'pending'
+            ])->first();
+
+            // check if order is available or not
+            if(!$order) 
+                throw new CustomException('order not found or canceled' , 13);
 
 
             // handeling cart items and cart total
@@ -69,6 +79,10 @@ class FawaterkController {
                 if($product->quantity < $product->pivot->quantity)
                     throw new CustomException("order quantity of products is larger than available" , 17);
             }
+
+            // calc discount and check if it is less than zero
+            $discount = $cart_total - $order->cart_total;
+            if($discount < 0) $discount = 0;
 
             $body = [
                 "cartTotal"=> $cart_total,
@@ -85,7 +99,11 @@ class FawaterkController {
                      "failUrl"=> $this->FailUrl,
                      "pendingUrl"=> $this->PendingUrl   
                 ],
-                "cartItems"=> $cart_items
+                "cartItems"=> $cart_items ,
+                "discountData" => [ 
+                    "type" => "literal" ,
+                    "value" => $discount
+                ]
             ];
 
             $header = [
@@ -163,6 +181,7 @@ class FawaterkController {
 
 
     /**
+     * @error 20003
      * show all user invoices for users
      */
     public function ListPayment(){
@@ -172,7 +191,7 @@ class FawaterkController {
 
             return $this->SuccessResponse($this->paginate($transaction , request('page')));
         }catch(\Exception $e){
-            return $this->ErrorResponse(code : 14003 , msg:$e->getMessage() , msg_code:$e->getCode());
+            return $this->ErrorResponse(code : 20003 , msg:$e->getMessage() , msg_code:$e->getCode());
         }
     }
 

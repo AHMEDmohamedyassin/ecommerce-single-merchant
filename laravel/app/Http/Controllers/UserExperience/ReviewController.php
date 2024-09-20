@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\UserExperience;
 
+use App\Exceptions\CustomException;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Setting\SettingController;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Review;
 use App\Traits\PaginateTrait;
@@ -38,30 +40,41 @@ class ReviewController extends Controller
                 'id' => 'required|exists:products,id'
             ]);
 
+            // check if user paid for the product
+            $productId = request('id'); // Assuming this is the product ID
+            $hasPaidForProduct = Order::where('user_id', request('user')->id)->where('status', 'success') 
+                ->whereHas('product', function ($query) use ($productId) {
+                    $query->where('products.id', $productId);
+                })->exists();
+
+
+            if(!$hasPaidForProduct)
+                throw new CustomException('product not paid by user' , 21);
+
             // check if user have reviewed the product before
-            if(!request('user')->review()->where('product_id' , request('id'))->count()){
+            if(request('user')->review()->where('product_id' , request('id'))->count())
+                throw new CustomException('product has been reviewed before' , 20);
 
-                // check setting if it set to auto publish review without admin checking content of review it
-                $publish_review = (new SettingController() )->valueSetting('auto_public_review');
+            // check setting if it set to auto publish review without admin checking content of review it
+            $publish_review = (new SettingController() )->valueSetting('auto_public_review');
 
-                // creating review for the product 
-                request('user')->review()->create($req + [
-                    'product_id' => request('id'),
-                    'slug' => $this->MultiTextSlug(request('ratting') , request('comment')),
-                    'public' => (int) $publish_review
-                ]);
+            // creating review for the product 
+            $review = request('user')->review()->create($req + [
+                'product_id' => request('id'),
+                'slug' => $this->MultiTextSlug(request('ratting') , request('comment')),
+                'public' => (int) $publish_review
+            ]);
 
-                // updating product average reviews
-                $product = Product::find(request('id'));
-                $product->update([
-                    'ratting' => ( ( $product->ratting * $product->reviews ) + request('ratting') ) / ( $product->reviews + 1 ) ,
-                    'reviews' => $product->reviews + 1
-                ]);
-            }
+            // updating product average reviews
+            $product = Product::find(request('id'));
+            $product->update([
+                'ratting' => ( ( $product->ratting * $product->reviews ) + request('ratting') ) / ( $product->reviews + 1 ) ,
+                'reviews' => $product->reviews + 1
+            ]);
 
-            $reviews = request('user')->review()->with('product')->orderby('reviews.id' , 'desc');
+            // $reviews = request('user')->review()->with('product')->orderby('reviews.id' , 'desc');
 
-            return $this->SuccessResponse($this->paginate($reviews));
+            return $this->SuccessResponse($review);
         }catch(\Exception $e){
             return $this->ErrorResponse(11001 , $e->getCode() , $e->getMessage());
         }

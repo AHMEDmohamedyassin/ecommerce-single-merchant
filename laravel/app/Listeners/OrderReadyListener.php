@@ -26,7 +26,8 @@ class OrderReadyListener
     
     
         // update products of order 
-        if(in_array($order->status , ['canceled' , 'canceled without refund'])){
+        // if(in_array($order->status , ['canceled' , 'canceled without refund'])){
+        if(!in_array($order->status , ['ready' , 'success', 'preparing'])){
 
             $products = $order->product;
     

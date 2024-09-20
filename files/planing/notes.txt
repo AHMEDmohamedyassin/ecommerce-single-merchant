@@ -1,12 +1,8 @@
 users who paid the product can makes reviews
-one user makes receive the order the product paid_quantity changes
-
 
 refresh migration for updates in order table migration in billing_address_id and shipping_address_id , coupon_id columns
 
 refresh migration for update in orders table which makes order not deleted on deleting user
 
 
-prevent adding products quantity larger than available quantity
-
-decrease product available quantity on order success and increase available quantity on making order canceled
+discount not implemented in payment with fawaterk

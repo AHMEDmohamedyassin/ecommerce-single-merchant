@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\UserExperience;
 
+use App\Exceptions\CustomException;
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Traits\PaginateTrait;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
@@ -26,13 +28,25 @@ class CartController extends Controller
 
             // adding quantity of products in cart if it is previously exists
             $product = $cart->where('products.id' , request('id'));
-            if ($product->count())
+            if ($product->count()){
+
+                // check if product quantity less than required quantity
+                if($product->first()->quantity <= $product->first()->pivot->quantity)
+                    throw new CustomException("reached maximum available product quantity" , 18);
+
                 $product->update([
                     'carts.quantity' => $product->first()->pivot->quantity + 1
                 ]);
+            }
             // attach product to cart if it is not previously exists
-            else
+            else{
+
+                // check if product quantity less than required quantity
+                if(Product::find(request('id'))->quantity <= 0 )
+                    throw new CustomException("reached maximum available product quantity" , 18);
+
                 $cart->attach([request('id')]);
+            }
 
             return $this->SuccessResponse($this->paginate(request('user')->cart()->orderby('carts.id' , 'desc')));
         }catch(\Exception $e){

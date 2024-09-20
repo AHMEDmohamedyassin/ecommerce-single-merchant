@@ -57,13 +57,6 @@ if user does not selected option pay_on_diliver and product status is  ( pending
 
 
 
-products quantities affected by cancel when order status was ready , preparing , success
-products quantities not affected by ready when it was canceled , canceled without refund , ready , preparing
+products quantities affected on setting status of order ( ready ) , ( preparing ) , ( success )
+products quantities affected by ( cancel ) when order status was ( ready ) , ( preparing ) , ( success )
 
-
-
-methods to update
-userOrderController@usercancelorder	#done
-FawaterkController@CallbackPayment      #done
-AdminOrderController@CreateOrder	#done
-AdminOrderController@StatusOrder
