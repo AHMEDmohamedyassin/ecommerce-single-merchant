@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Credit\AdminOrderController;
 use App\Http\Controllers\Credit\CouponController;
 use App\Http\Controllers\Credit\UserOrderController;
+use App\Http\Controllers\Credit\FawaterkController;
 use App\Http\Controllers\Filters\CategoryController;
 use App\Http\Controllers\Filters\TopCategoryController;
 use App\Http\Controllers\Permissions\PermissionController;
@@ -175,3 +176,11 @@ Route::get('/store/list' , [StoreController::class , 'ListStore']);
 // Setting Controller 19,000
 Route::post('/setting/update' , [SettingController::class , 'UpdateSetting']);
 Route::get('/setting/list' , [SettingController::class , 'ListSetting']);
+
+
+// Fawaterk Controller 20,000
+Route::middleware('TokenRequiredMiddleware' , 'BlockCheckMiddleware' , 'EmailVerifyMiddleware')->group(function () {
+    Route::post('/transaction/fawaterk/sendpayment' , [FawaterkController::class , 'SendPayment']);
+    Route::get('/transaction/list' , [FawaterkController::class , 'ListPayment']);
+});
+Route::post('/transaction/fawaterk/callback' , [FawaterkController::class , 'CallbackPayment']);   // not tested

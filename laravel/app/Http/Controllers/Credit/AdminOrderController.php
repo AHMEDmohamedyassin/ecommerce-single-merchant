@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Credit;
 
-use App\Events\OrderStatusEvent;
+use App\Events\OrderCancelEvent;
+use App\Events\OrderReadyEvent;
 use App\Exceptions\CustomException;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
@@ -86,7 +87,6 @@ class AdminOrderController extends Controller
                 "shipping_address_id" => request('shipping_address_id'),
                 "billing_address_id" => request('billing_address_id'),
                 "coupon_id" => $coupon ? $coupon->id : null,
-                "status" => request('status'),
                 "pay_on_diliver" => true ,
                 "cart_total" => $cart_total < 0 ? 0 : $cart_total
             ]);
@@ -98,6 +98,9 @@ class AdminOrderController extends Controller
             // save additional content to json file related to order
             if(request()->has('additional'))
                 Storage::put("/orders/{$order->id}/json.json" , json_encode(request('additional')));
+
+            // order event ready fire
+            Event::dispatch(new OrderReadyEvent($order , request('status')));
 
             // adjusting response data
             $order['additional'] = request('additional');
@@ -118,13 +121,16 @@ class AdminOrderController extends Controller
         try{
             request()->validate([
                 "id" => "required|exists:orders,id" ,
-                "status" => "required|in:pending,ready,preparing,success,canceled,canceled without refund", 
+                "status" => "required|in:ready,preparing,success,canceled,canceled without refund", 
             ]);
 
             $order = Order::find(request('id'));
 
             // events handle 
-            Event::dispatch(new OrderStatusEvent($order , request('status')));
+            if(in_array(request('status') , ["canceled","canceled without refund"]))
+                Event::dispatch(new OrderCancelEvent($order , request('status')));
+            else
+                Event::dispatch(new OrderReadyEvent($order , request('status')));
             
             return $this->SuccessResponse($order);
         }catch(\Exception $e){

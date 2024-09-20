@@ -7,4 +7,6 @@ refresh migration for updates in order table migration in billing_address_id and
 refresh migration for update in orders table which makes order not deleted on deleting user
 
 
-need to get way to update and add addresses to users using admin panel
+prevent adding products quantity larger than available quantity
+
+decrease product available quantity on order success and increase available quantity on making order canceled

@@ -54,3 +54,16 @@ user can cancel the product if its status is ( ready , pending )
 if user selected option pay_on_diliver the order status will be ( canceled ) after canceling it by user
 if user does not selected option pay_on_diliver and product status is  ( ready ) which means that user have paid for order uisng payment gateway  the order status will be ( canceled without refund ) after canceling it by user
 if user does not selected option pay_on_diliver and product status is  ( pending ) which means that user have not paid for order uisng payment gateway  the order status will be ( canceled ) after canceling it by user
+
+
+
+products quantities affected by cancel when order status was ready , preparing , success
+products quantities not affected by ready when it was canceled , canceled without refund , ready , preparing
+
+
+
+methods to update
+userOrderController@usercancelorder	#done
+FawaterkController@CallbackPayment      #done
+AdminOrderController@CreateOrder	#done
+AdminOrderController@StatusOrder

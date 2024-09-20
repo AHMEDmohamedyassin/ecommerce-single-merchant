@@ -9,7 +9,7 @@ class Transaction extends Model
 {
     use HasFactory;
 
-    private $fillable = [
+    protected $fillable = [
         "user_id" , 
         "order_id" , 
         "gateway_name" , 
@@ -22,7 +22,8 @@ class Transaction extends Model
         "currency" ,
         "referenceNumber" ,
         "hashKey" ,
-        "pay_load" 
+        "pay_load"  ,
+        "cart_total"
     ];
 
 

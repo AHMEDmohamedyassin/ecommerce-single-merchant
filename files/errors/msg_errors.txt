@@ -14,3 +14,4 @@
 14 => user id required
 15 => order not found
 16 => setting not found or can not be updated
+17 => order quantity of products is larger than available

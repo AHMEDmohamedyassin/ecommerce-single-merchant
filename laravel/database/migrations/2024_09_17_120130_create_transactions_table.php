@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('order_id')->nullable();
             $table->char('gateway_name' , 20)->nullable();
             $table->unsignedFloat('cart_total')->default(0);
-            $table->char('invoice_status' , 20)->nullable();
+            $table->char('invoice_status' , 20)->default('pending')->nullable();
             $table->char('payment_method' , 100)->nullable();
             $table->dateTime('paid_at')->nullable();
             $table->string('invoice_id')->nullable();

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Credit;
 
+use App\Events\OrderCancelEvent;
 use App\Exceptions\CustomException;
 use App\Http\Controllers\Controller;
 use App\Traits\PaginateTrait;
 use App\Traits\ResponseTrait;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
 
 class UserOrderController extends Controller
@@ -130,10 +132,8 @@ class UserOrderController extends Controller
 
             }
 
-            // change order status to be canceled 
-            $order->update([
-                'status' => !$order->pay_on_diliver && $order->status == 'ready' ? 'canceled without refund' : 'canceled'
-            ]);
+            // cancel order event 
+            Event::dispatch(new OrderCancelEvent($order));
 
             return $this->SuccessResponse($order);
         }catch(\Exception $e){
