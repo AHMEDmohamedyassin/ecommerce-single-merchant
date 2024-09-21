@@ -18,6 +18,7 @@ class ProductController extends Controller
 
     // muilti used validation 
     public $validation = [
+        "serial" => "nullable|max:255|string",
         "description" => "nullable|max:255|string",
         "old_price" => "nullable|max:999999.99" ,
         "quantity" => "nullable|max:65535" ,
@@ -60,7 +61,7 @@ class ProductController extends Controller
 
             // creating product
             $product = Product::create($req + [
-                'slug' => $this->MultiTextSlug(request('title') , request('price') , request('description')) ,
+                'slug' => $this->MultiTextSlug(request('serial') , request('title') , request('price') , request('description')) ,
                 'publish_date' => request('publish_date') ? Carbon::parse(request('publish_date')) : Carbon::now()
             ]);
             
@@ -93,7 +94,7 @@ class ProductController extends Controller
             $product = Product::find(request('id'));
 
             $product->update($req + [
-                'slug' => $this->MultiTextSlug(request('title') , request('price') , request('description')) ,
+                'slug' => $this->MultiTextSlug(request("serial" , $product->serial) , request('title' , $product->title) , request('price' , $product->price) , request('description' , $product->description)) ,
                 'publish_date' => request('publish_date') ? Carbon::parse(request('publish_date')) : $product->publish_date
             ]);
 

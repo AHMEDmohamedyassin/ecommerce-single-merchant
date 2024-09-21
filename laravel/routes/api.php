@@ -13,6 +13,7 @@ use App\Http\Controllers\Permissions\PermissionController;
 use App\Http\Controllers\Permissions\RoleController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Product\ProductImageController;
+use App\Http\Controllers\Setting\ImageController;
 use App\Http\Controllers\Setting\SettingController;
 use App\Http\Controllers\UserExperience\CartController;
 use App\Http\Controllers\UserExperience\FavoriteController;
@@ -87,7 +88,6 @@ Route::get('/product/read' , [ProductController::class , 'ReadProduct']);
 // Product Image Controller 8000
 Route::post('/product/image/upload' , [ProductImageController::class , 'UploadImageProduct'])->middleware("AdminMiddleware:product_image_upload");  #admin
 Route::post('/product/image/delete' , [ProductImageController::class , 'DeleteImageProduct'])->middleware("AdminMiddleware:product_image_delete");  #admin
-Route::get('/product/image/retrieve' , [ProductImageController::class , 'ImageRetrieveProduct']);
 
 
 // Favorite Controller 9000 
@@ -184,3 +184,7 @@ Route::middleware('TokenRequiredMiddleware' , 'BlockCheckMiddleware' , 'EmailVer
     Route::get('/transaction/list' , [FawaterkController::class , 'ListPayment']);
 });
 Route::post('/transaction/fawaterk/callback' , [FawaterkController::class , 'CallbackPayment']);   // not tested
+
+
+// Image Controller 21,000
+Route::get('/image' , [ImageController::class , 'ImageSetting']);

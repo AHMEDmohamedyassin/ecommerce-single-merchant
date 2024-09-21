@@ -1,8 +1,9 @@
-users who paid the product can makes reviews
-
 refresh migration for updates in order table migration in billing_address_id and shipping_address_id , coupon_id columns
 
 refresh migration for update in orders table which makes order not deleted on deleting user
 
 
 discount not implemented in payment with fawaterk
+
+
+need tests for images retrieve api

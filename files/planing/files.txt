@@ -44,3 +44,8 @@
 /stores
 	/[store_address_id]
 		/json.json
+		/image1.jpg
+
+/settings
+	/images
+		/default.jpg
