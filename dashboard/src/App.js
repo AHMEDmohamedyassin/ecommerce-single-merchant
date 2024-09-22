@@ -1,11 +1,10 @@
 import HeaderComp from "components/header/HeaderComp";
 import { NotifyContainer } from "components/public/NotificationComp";
 import SideMenuComp from "components/sideMenu/SideMenuComp";
+import LoginPage from "pages/Auth/LoginPage";
 import DashboardPage from "pages/DashboardPage";
 import ListPage from "pages/product/ListPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "scripts/inputScript"
-import "scripts/sidemenuScript"
 
 function App() {
   return (
@@ -27,6 +26,8 @@ function App() {
             <Routes>
               <Route path="/" element={<DashboardPage/>} />
               <Route path="/products" element={<ListPage/>} />
+
+              <Route path="/login" element={<LoginPage/>} />
             </Routes>
 
           </div>

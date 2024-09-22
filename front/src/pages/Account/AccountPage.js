@@ -1,4 +1,5 @@
 import DetailsComp from 'components/account/DetailsComp'
+import UpdatePasswordComp from 'components/account/UpdatePasswordComp'
 import NavigationComp from 'components/account/NavigationComp'
 import React from 'react'
 import { Link } from 'react-router-dom'
@@ -22,6 +23,9 @@ const AccountPage = () => {
 
             {/* Account Details  */}
             <DetailsComp/>
+
+            {/* update password */}
+            <UpdatePasswordComp/>
 
         </section>
         

@@ -1,22 +1,49 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { Link, useLocation } from 'react-router-dom'
+import { Auth_LogoutAction } from '../../redux/action/AuthAction'
 
 const NavigationComp = () => {
+    const dispatch = useDispatch()
+    const location = useLocation()
+
+    const urls = [
+        {
+            title : "لوحة التحكم" ,
+            url : "/account",
+            icon : "grid_view"
+        },
+        {
+            title : "العناوين" ,
+            url : "/account/addresses",
+            icon : "person_pin_circle"
+        },
+        {
+            title : "بيانات المستخدم" ,
+            url : "/account/user",
+            icon : "person"
+        },
+    ]
+
+    const handleLogout = () => {
+        dispatch(Auth_LogoutAction())
+    }
   return (
         <section className=''>
 
-            <Link to="/account" className='flex items-center gap-2 custom-border p-1 px-3 text-xs border-b-0 font-bold bg-slate-300'> 
-                <span class="material-symbols-outlined text-xl">grid_view</span>
-                <span>لوحة التحكم</span>
-            </Link>
-            <Link to="/account/addresses" className='flex items-center gap-2 custom-border p-1 px-3 text-xs border-b-0'> 
-                <span class="material-symbols-outlined text-xl">person_pin_circle</span>
-                <span>عناوين</span>
-            </Link>
-            <Link to="/account" className='flex items-center gap-2 custom-border p-1 px-3 text-xs'> 
+            {
+                urls.map((e, index) => (
+                    <Link to={e.url} className={`${location.pathname == e.url ? "font-bold bg-slate-300" : ""} flex items-center gap-2 custom-border p-1 px-3 text-xs border-b-0`}> 
+                        <span class="material-symbols-outlined text-xl">{e.icon}</span>
+                        <span>{e.title}</span>
+                    </Link>
+                ))
+            }
+            
+            <button onClick={handleLogout} className='w-full flex items-center gap-2 custom-border p-1 px-3 text-xs'> 
                 <span class="material-symbols-outlined text-xl">logout</span>
                 <span>تسجيل الخروج</span>
-            </Link>
+            </button>
 
         </section>
   )

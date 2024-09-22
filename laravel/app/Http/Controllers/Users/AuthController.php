@@ -182,7 +182,7 @@ class AuthController {
 
             $token = Password::createToken($user);
 
-            $url = env('APP_URL') . '/auth/password/reset?token=' . $token . '&'. $field .'=' . $user[$field];
+            $url = env('APP_URL') . '/auth/password/reset?token=' . $token . '&phoneORemail=' . $user[$field];
 
             // sending email
             Mail::to($user)->send(new PasswordReset($url , $user->name));
@@ -303,6 +303,6 @@ class AuthController {
     public function HelperValidationMethodAuth () {
             // check if email is fake
             if(request('email') && !in_array('@' . explode('@' , request('email'))[1] , $this->allowableEmails))
-                throw new \Exception('email is fake' , 2);
+                throw new CustomException('email is fake' , 22);
     }
 }

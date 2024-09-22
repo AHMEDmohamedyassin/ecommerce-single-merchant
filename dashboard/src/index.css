@@ -111,6 +111,7 @@ input:focus{
     .custom-table .custom-tablehead {
         @apply sticky top-0 right-0 bg-secondarybg
     }
+    
 }
 
 .material-symbols-outlined {

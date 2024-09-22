@@ -21,7 +21,7 @@ const SideMenuComp = () => {
                 <span data-animate="sidemenulabel" className=' text-nowrap'>المنتجات</span>
             </Link>
 
-            <Link to={"/"} className='flex items-center gap-4 hover:text-maincolor'>
+            <Link to={"/login"} className='flex items-center gap-4 hover:text-maincolor'>
                 <span className="material-symbols-outlined text-3xl text-inherit">add</span>
                 <span data-animate="sidemenulabel" className=' text-nowrap'>إضافة منتج</span>
             </Link>
