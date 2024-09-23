@@ -7,3 +7,6 @@ discount not implemented in payment with fawaterk
 
 
 need tests for images retrieve api
+
+
+prevent deleting some roles like dashboard and admin

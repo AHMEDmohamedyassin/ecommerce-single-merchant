@@ -103,7 +103,7 @@ class RoleController extends Controller
      */
     public function ListRole () {
         try{
-            return $this->SuccessResponse(Role::get());
+            return $this->SuccessResponse(Role::with("permission")->orderby('id' , 'desc' )->get());
         }catch(\Exception $e){
             return $this->ErrorResponse(5004 , $e->getCode() , $e->getMessage());
         }

@@ -50,7 +50,7 @@ class PermissionController extends Controller
     public function ListPermission () {
         try{
 
-            $permissions = Permission::with('role')->get();
+            $permissions = Permission::orderby('id' , 'desc')->get();
 
             return $this->SuccessResponse($permissions);
         }catch(\Exception $e){

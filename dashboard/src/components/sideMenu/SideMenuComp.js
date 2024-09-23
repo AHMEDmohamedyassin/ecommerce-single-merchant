@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const SideMenuComp = () => {
   return (
-    <div data-animate="sidemenu" className='z-20 fixed top-2/4 right-0 -translate-y-2/4 mt-1 flex h-[80vb] bg-secondarybg custom-border shadow overflow-hidden w-[60px]'>
+    <div data-animate="sidemenu" className='fixed top-0 right-0 flex h-[100vb] bg-maincolor shadow overflow-hidden w-[60px] pt-10'>
         <div className='flex flex-col justify-between items-start overflow-y-auto overflow-hidden gap-y-4  px-4 py-6 h-full font-semibold'>
             
             {/* closing and opening icons */}

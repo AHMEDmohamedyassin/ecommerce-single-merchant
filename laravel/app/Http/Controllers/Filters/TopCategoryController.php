@@ -65,7 +65,6 @@ class TopCategoryController{
         try{
             request()->validate([
                 'title' => 'required' , 
-                'append' => 'boolean' , 
                 'ids' => 'required|array' , 
                 'ids.*' => 'exists:categories,id' 
             ]);
@@ -77,12 +76,7 @@ class TopCategoryController{
             $content = json_decode(Storage::read($this->file_path) , true);
 
             if(isset($content[request('title')])){
-                $ids = $content[request('title')]['ids'] ?? [];
-
-                // append or prepend
-                if(request('append'))
-                    $ids = array_merge($ids , request('ids'));
-                else $ids = array_diff($ids , request('ids'));
+                $ids = request('ids');
 
                 $content[request('title')]['ids'] = array_values(array_unique($ids));
             }else 

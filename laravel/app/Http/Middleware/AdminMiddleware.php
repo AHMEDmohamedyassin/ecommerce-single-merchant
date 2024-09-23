@@ -39,7 +39,8 @@ class AdminMiddleware
                 !$user->permission()->where('slug' , $permission)->exists() && 
                 !$user->role()->whereHas('permission' , function ($query) use ($permission) {
                     $query->where('slug' , $permission);
-                } )->exists()
+                } )->exists() &&
+                !$user->role()->where('slug' , 'admin')->first()
             )
                 throw new CustomException('not Authorized Admin' , 19);
             

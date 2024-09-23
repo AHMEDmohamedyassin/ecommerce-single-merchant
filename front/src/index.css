@@ -92,9 +92,6 @@ input:focus{
         @apply py-2 px-4 custom-border text-sm text-center bg-black hover:bg-black/70 disabled:bg-black/70 text-white
     }
 
-    .custom-button3 {
-        @apply py-2 px-4 border-2 border-gray-400 text-sm text-center bg-transparent hover:bg-gray-400 disabled:bg-gray-700 
-    }
 
     .custom-accountcontainer{
         @apply custom-container grid lg:grid-cols-4 gap-8

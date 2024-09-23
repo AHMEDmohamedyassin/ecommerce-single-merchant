@@ -1,12 +1,24 @@
 import HeaderComp from "components/header/HeaderComp";
 import { NotifyContainer } from "components/public/NotificationComp";
 import SideMenuComp from "components/sideMenu/SideMenuComp";
-import LoginPage from "pages/Auth/LoginPage";
-import DashboardPage from "pages/DashboardPage";
-import ListPage from "pages/product/ListPage";
+import DashboardPage from "./pages/DashboardPage";
+import ListPage from "./pages/product/ListPage";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Auth_GetuserdataAction } from "./redux/action/AuthAction";
+import SessionExpiredPage from "./pages/SessionExpiredPage";
+import LoadingComp from "components/public/LoadingComp";
+import PermissionPage from "pages/PermissionPage";
+import CategoryPage from "pages/CategoryPage";
 
 function App() {
+  const state = useSelector(state => state.AuthReducer)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(Auth_GetuserdataAction())
+  } ,[])
   return (
     <div className="bg-mainbg">
         <BrowserRouter>
@@ -20,17 +32,28 @@ function App() {
           {/* side menu component */}
           <SideMenuComp/>
 
-          <div data-animate="mainAppContainer" className="pe-[22px] ps-20">
+          {/* loading component */}
+          <LoadingComp/>
 
-            {/* pages  */}
-            <Routes>
-              <Route path="/" element={<DashboardPage/>} />
-              <Route path="/products" element={<ListPage/>} />
 
-              <Route path="/login" element={<LoginPage/>} />
-            </Routes>
+          {/* pages  */}
+          <Routes>
+            {
+              state.token ? (
+                <>
+                  <Route path="/" element={<DashboardPage/>} />
+                  <Route path="/products" element={<ListPage/>} />
 
-          </div>
+                  <Route path="/permission" element={<PermissionPage/>} />
+                  <Route path="/category" element={<CategoryPage/>} />
+
+                </>
+              ) : <>
+                <Route path="/*" element={<SessionExpiredPage/>} />
+              </>
+            }
+          </Routes>
+
 
         </BrowserRouter>
     </div>

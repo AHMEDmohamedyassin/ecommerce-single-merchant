@@ -56,18 +56,21 @@ input:focus{
 
     /* custom input style */
     .custom-inputcontainer{
-        @apply relative custom-border sm:w-[410px] w-full h-[46px] bg-mainbg
+        @apply flex flex-col items-start w-full gap-1 
     }
     .custom-inputcontainer label{
-        @apply text-[12px] font-light absolute top-2/4 right-4 -translate-y-2/4  bg-inherit 
+        @apply text-[12px] font-light
     }
     .custom-inputcontainer input{
-        @apply   bg-transparent w-full h-full px-4 absolute bottom-0 text-sm
+        @apply custom-border  bg-transparent w-full h-full px-4 py-2  text-sm bg-mainbg
+    }
+    .custom-inputcontainer p{
+        @apply text-xs text-red-500
     }
 
     /* custom input 2 style  */
     .custom-inputcontainer2{
-        @apply flex flex-col items-start w-full
+        @apply flex flex-col items-start w-full gap-2
     }
     .custom-inputcontainer2 label {
         @apply text-xs text-gray-500
@@ -75,9 +78,16 @@ input:focus{
     .custom-inputcontainer2 input , .custom-inputcontainer2 textarea{
         @apply w-full bg-secondarybg custom-border text-xs text-gray-500 px-4 py-2 focus:border-gray-300
     }
+    .custom-inputcontainer2 p{
+        @apply text-xs text-red-500
+    }
 
     .custom-button {
-        @apply custom-border px-4  hover:bg-maincolor hover:text-secondarybg py-2 text-sm font-semibold
+        @apply custom-border px-4  hover:bg-maincolor hover:text-secondarybg disabled:bg-maincolor disabled:text-secondarybg py-2 text-sm font-semibold
+    }
+
+    .custom-button2 {
+        @apply custom-border px-4  hover:bg-black/70 disabled:bg-black/70 text-white bg-black py-2 text-sm font-semibold
     }
 
     .custom-accountcontainer{
@@ -89,7 +99,7 @@ input:focus{
     }
 
     .custom-dashcontainer{
-        @apply bg-secondarybg custom-border py-8 px-6 rounded-xl shadow
+        @apply bg-secondarybg custom-border py-8 px-6 rounded-xl shadow mx-2 ms-20
     }
     .custom-dashcontainer .title {
         @apply text-sm font-bold text-gray-500 mb-8 w-full
