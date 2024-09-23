@@ -99,7 +99,7 @@ input:focus{
     }
 
     .custom-dashcontainer{
-        @apply bg-secondarybg custom-border py-8 px-6 rounded-xl shadow mx-2 ms-20
+        @apply bg-secondarybg custom-border py-8 px-6 rounded-xl shadow mx-2 ms-20 mb-20
     }
     .custom-dashcontainer .title {
         @apply text-sm font-bold text-gray-500 mb-8 w-full

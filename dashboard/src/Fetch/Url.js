@@ -1,6 +1,9 @@
 export const APP_URL = window.globalConfig?.APP_URL ?? 'http://192.168.1.9:8000';
 export const APIv = '/api'
 
+// image url
+export const ImageURL = `${APP_URL}${APIv}/image`
+
 // apis
 
 // auth
@@ -21,6 +24,7 @@ export const CategoryCreateURL = '/category/create';
 export const CategoryUpdateURL = '/category/update';
 export const CategoryDeleteURL = '/category/delete';
 export const CategorySearchURL = '/category/search';
+export const CategoryDeleteImageURL = '/category/delete/image';
 export const TopCategoryCreateURL = '/topcategory/create';
 export const TopCategoryAppendURL = '/topcategory/append';
 export const TopCategoryDeleteURL = '/topcategory/delete';

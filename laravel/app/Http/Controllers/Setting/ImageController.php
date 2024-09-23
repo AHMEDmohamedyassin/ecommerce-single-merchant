@@ -16,6 +16,7 @@ class ImageController extends Controller
 
     private $defaultImage = "/settings/images/default.jpg";
 
+    // assessed 
     private function ProductImagePath() {
         $id = request('id');
         $image = request('image');
@@ -45,11 +46,16 @@ class ImageController extends Controller
         return $path;
     }
 
+    // assessed 
     private function CategoryImagePath() {
         $id = request('id');
-        $image = request('image');
-        $path = "/categories/{$id}/{$image}";
-        return $path;
+
+        $images = Storage::allFiles("/categories/{$id}");
+
+        // check if there is any image
+        if(!count($images)) throw new Exception();
+
+        return $images[0];
     }
 
     private function TopCategoryImagePath() {
@@ -109,6 +115,8 @@ class ImageController extends Controller
      * @error 21,001
      * image method
      * get images from any where in application with selected resolution
+     * incase of product : if image name is provided for a product it will pass the required image and if name is wronge it will return default image
+     * in case of cateogry : it is sufficent to pass category id
      */
     public function ImageSetting () {
         header('Content-Type: image/png');
@@ -117,9 +125,11 @@ class ImageController extends Controller
                 'width' => 'nullable|numeric|in:100,200,300,400,500,600,700,800' , 
                 'type' => 'required|in:product,user,category,top_category,static,store,setting' , 
                 'id' => [Rule::requiredIf( in_array(request('type') , ["product" , "user" , "category" , "store"]) ) , "numeric"],
-                "image" => [Rule::requiredIf( request("type") != "product" || ( request("type") == "product" && request('order') == null)  )] , 
                 "page_name" => [Rule::requiredIf(request('type') == 'static')] , 
-                "order" => [Rule::requiredIf(request('type') == 'product' && request("image") == null ) , 'numeric']
+                // "image" => [Rule::requiredIf( request("type") != "product" || ( request("type") == "product" && request('order') == null)  )] , 
+                // "order" => [Rule::requiredIf(request('type') == 'product' && request("image") == null ) , 'numeric']
+                "image" => [] , 
+                "order" => ['numeric' , "nullable"]
             ]);
 
             $filepath =  $this->SwitchImagePath();
