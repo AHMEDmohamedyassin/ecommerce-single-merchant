@@ -11,6 +11,7 @@ import SessionExpiredPage from "./pages/SessionExpiredPage";
 import LoadingComp from "components/public/LoadingComp";
 import PermissionPage from "pages/PermissionPage";
 import CategoryPage from "pages/CategoryPage";
+import CreatePage from "pages/product/CreatePage";
 
 function App() {
   const state = useSelector(state => state.AuthReducer)
@@ -43,6 +44,7 @@ function App() {
                 <>
                   <Route path="/" element={<DashboardPage/>} />
                   <Route path="/products" element={<ListPage/>} />
+                  <Route path="/product/create" element={<CreatePage/>} />
 
                   <Route path="/permission" element={<PermissionPage/>} />
                   <Route path="/category" element={<CategoryPage/>} />

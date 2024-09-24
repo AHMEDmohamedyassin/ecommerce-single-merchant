@@ -122,7 +122,8 @@ export const Category_CreateAction = (data , file) => {
         const form = new FormData()
         form.append("title" , data?.title)
         form.append("description" , data?.description)
-        form.append("image" , file)
+        if(file)
+            form.append("image" , file)
 
         const req = await fetching(CategoryCreateURL , {} , "POST" , true, {} , form)
 

@@ -59,9 +59,9 @@ input:focus{
         @apply flex flex-col items-start w-full gap-1 
     }
     .custom-inputcontainer label{
-        @apply text-[12px] font-light
+        @apply text-sm font-light
     }
-    .custom-inputcontainer input{
+    .custom-inputcontainer input , .custom-inputcontainer textarea{
         @apply custom-border  bg-transparent w-full h-full px-4 py-2  text-sm bg-mainbg
     }
     .custom-inputcontainer p{
