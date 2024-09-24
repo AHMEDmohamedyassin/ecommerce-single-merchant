@@ -1,13 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-const ArrayInputComp = ({register , reset , errors , name , title}) => {
-    const [inputCount , setInputCount] = useState(3)
+const ArrayInputComp = ({register , reset , errors , name , title , initialLength}) => {
+    const [inputCount , setInputCount] = useState(1)
 
     const controlSizesInputs = (adding = true) => {
-        setInputCount(e => adding ? e + 1 : e - 1)
-        reset(values => ({...values , json : {...values.json , [name] : []}}))
+        try{
+            if(!adding)
+                reset(values => ({...values , json : {...values.json , [name] : [...values.json[name].slice(0 , values.json[name].length - 1) ]}}))
+            setInputCount(e => adding ? e + 1 : e - 1)
+        }catch(e){}
     }
 
+    // setting initail length if existed
+    useEffect(() => {
+        setInputCount(initialLength ?? 1)
+    } , [initialLength])
   return (
         <div className=''>
             <p className='text-gray-500 text-sm mb-2'>{title}</p>
@@ -18,7 +25,7 @@ const ArrayInputComp = ({register , reset , errors , name , title}) => {
                             <div key={index} className='custom-inputcontainer'>
                                 <label>{`${title} - ${index + 1}`}</label>
                                 <input {...register(`json.${name}.${index}`)} />
-                                {errors.json?.[name] && <p>{errors.json[name].message}</p>}
+                                {errors.json?.[name] && <p>{errors.json[name][index]?.message}</p>}
                             </div>
                             {
                                 inputCount <= index + 1 ? (

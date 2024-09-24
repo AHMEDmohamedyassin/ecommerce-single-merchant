@@ -88,7 +88,7 @@ class ProductImageController extends Controller
 
             // deleting image directory
             $image_path = '/products/' . $product->id . '/images/' . request('image');
-            Storage::deleteDirectory($image_path);
+            Storage::delete($image_path);
 
 
             // retreaving json file if exits and updating it

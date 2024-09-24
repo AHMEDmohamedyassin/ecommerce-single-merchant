@@ -33,6 +33,11 @@ export const ProductReducer = (state = initial , action) => {
                 ...state,
                 status: action.data
             }
+        case "Product_Reset":
+            return {
+                ...initial ,
+                ...action.data 
+            }
         default: 
             return state;
     }

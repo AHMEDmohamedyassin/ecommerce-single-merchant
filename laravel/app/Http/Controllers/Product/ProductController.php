@@ -22,7 +22,7 @@ class ProductController extends Controller
         "description" => "nullable|max:255|string",
         "old_price" => "nullable|max:999999.99" ,
         "quantity" => "nullable|max:65535" ,
-        "publish_date" => "nullable|date_format:Y-m-d H:i:s" ,
+        "publish_date" => "nullable|date_format:d-m-Y H:i" ,
         "categories" => "array|nullable",
         "categories.*" => "numeric|exists:categories,id",
         "json" => "nullable|array" ,
@@ -58,12 +58,11 @@ class ProductController extends Controller
                 "price" => "required|max:999999.99" 
             ] + $this->validation);
 
-
             // creating product
-            $product = Product::create($req + [
+            $product = Product::create(array_merge($req , [
                 'slug' => $this->MultiTextSlug(request('serial') , request('title') , request('price') , request('description')) ,
-                'publish_date' => request('publish_date') ? Carbon::parse(request('publish_date')) : Carbon::now()
-            ]);
+                'publish_date' => request('publish_date' , null) ? Carbon::parse(request('publish_date'))->format('Y-m-d H:i:s') : Carbon::now()
+            ]));
             
             // sync cateogries
             $product->category()->sync(request('categories'));
@@ -93,10 +92,10 @@ class ProductController extends Controller
 
             $product = Product::find(request('id'));
 
-            $product->update($req + [
+            $product->update(array_merge($req , [
                 'slug' => $this->MultiTextSlug(request("serial" , $product->serial) , request('title' , $product->title) , request('price' , $product->price) , request('description' , $product->description)) ,
                 'publish_date' => request('publish_date') ? Carbon::parse(request('publish_date')) : $product->publish_date
-            ]);
+            ]));
 
             // sync cateogries
             $product->category()->sync(request('categories'));
@@ -193,6 +192,7 @@ class ProductController extends Controller
             $json_path = '/products/' . $product->id . '/json/json.json';
             if(Storage::exists($json_path))
                 $product['json'] = json_decode(Storage::read($json_path , true));
+            
 
             return $this->SuccessResponse($product->load('category'));
         }catch(\Exception $e){

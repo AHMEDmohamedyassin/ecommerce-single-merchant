@@ -29,3 +29,13 @@ export const TopCategoryCreateURL = '/topcategory/create';
 export const TopCategoryAppendURL = '/topcategory/append';
 export const TopCategoryDeleteURL = '/topcategory/delete';
 export const TopCategoryReadURL = '/topcategory/read';
+
+
+// product 
+export const ProductCreateURL = '/product/create';
+export const ProductUpdateURL = '/product/update';
+export const ProductDeleteURL = '/product/delete';
+export const ProductSearchURL = '/product/search';
+export const ProductReadURL = '/product/read';
+export const ProductUploadImageURL = '/product/image/upload';
+export const ProductDeleteImageURL = '/product/image/delete';
