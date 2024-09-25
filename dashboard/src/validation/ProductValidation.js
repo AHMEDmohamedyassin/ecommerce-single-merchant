@@ -22,7 +22,9 @@ export const CreateProductValidation = z.object({
 
 
 // reformation the date to be as the input fomate
-export const formattingDateForUpdate = (date) => {
+export const formattingDateForUpdate = (date = null) => {
+    if(!date)
+        return "00-00-0000 00:00"
     let d = new Date(date)
     let day = String(d.getDate()).padStart(2 , '0')
     let month = String(d.getMonth()+ 1).padStart(2 , '0') 

@@ -5,6 +5,7 @@ import { SettingReducer } from './reducer/SettingReducer';
 import { PermissionReducer } from './reducer/PermissionReducer';
 import { CategoryReducer } from './reducer/CategoryReducer';
 import { ProductReducer } from './reducer/ProductReducer';
+import { ProductListReducer } from './reducer/ProductListReducer';
 
 const rootReducer = combineReducers({
     AuthReducer ,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
     PermissionReducer ,
     CategoryReducer ,
     ProductReducer ,
+    ProductListReducer ,
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

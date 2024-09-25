@@ -1,17 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { ProductList_SearchAction } from '../../redux/action/ProductListAction'
 
 const SearchComp = () => {
+  const [search , setSearch] = useState('')
+  const dispatch = useDispatch()
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+    dispatch(ProductList_SearchAction({search}) )
+  }
   return (
-      <div className='flex justify-center gap-4'>
+      <form onSubmit={handleSearch} className='flex justify-center  gap-4'>
         {/* search input container  */}
         <div className='custom-inputcontainer '>
-          <label>ابحث عن منتج</label>
-          <input />
+          <input onChange={e => setSearch(e.target.value)} placeholder='بحث في العنوان و السعر و الوصف'/>
         </div>
 
         {/* search button */}
         <button className='custom-button'>بحث</button>
-      </div>
+      </form>
   )
 }
 
