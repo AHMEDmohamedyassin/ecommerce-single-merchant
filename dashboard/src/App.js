@@ -13,6 +13,8 @@ import PermissionPage from "pages/PermissionPage";
 import CategoryPage from "pages/CategoryPage";
 import CreatePage from "pages/product/CreatePage";
 import UpdatePage from "pages/product/UpdatePage";
+import UserCreatePage from "pages/user/CreatePage";
+import UserUpdatePage from "pages/user/UpdatePage";
 
 function App() {
   const state = useSelector(state => state.AuthReducer)
@@ -47,6 +49,9 @@ function App() {
                   <Route path="/products" element={<ListPage/>} />
                   <Route path="/product/create" element={<CreatePage/>} />
                   <Route path="/product/update/:id" element={<UpdatePage/>} />
+
+                  <Route path="/user/create" element={<UserCreatePage/>} />
+                  <Route path="/user/update/:id" element={<UserUpdatePage/>} />
 
                   <Route path="/permission" element={<PermissionPage/>} />
                   <Route path="/category" element={<CategoryPage/>} />

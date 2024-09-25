@@ -50,12 +50,12 @@ export const ProductList_DeleteAction = (id) => {
     return async dispatch => {
         let items = store.getState().ProductListReducer.items ?? []
 
-        dispatch({type : "Product_Status" , data : "ld"}) // loading delete product
+        dispatch({type : "ProductList_Status" , data : "ld"}) // loading delete product
 
         const req = await fetching(ProductDeleteURL , {id})
 
         if(!req.success)
-            return  dispatch({type : "Product_Status" , data : "n"})
+            return  dispatch({type : "ProductList_Status" , data : "n"})
 
 
         // updating items list 

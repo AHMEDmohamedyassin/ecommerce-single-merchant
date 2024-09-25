@@ -39,3 +39,13 @@ export const ProductSearchURL = '/product/search';
 export const ProductReadURL = '/product/read';
 export const ProductUploadImageURL = '/product/image/upload';
 export const ProductDeleteImageURL = '/product/image/delete';
+
+
+// user 
+export const UserCreateURL = '/user/create';
+export const UserUpdateURL = '/user/update';
+export const UserDeleteURL = '/user/delete';
+export const UserResetPassURL = '/user/resetpassword/url';
+export const UserListURL = '/user/list';
+export const UserReadURL = '/user/read';
+export const UserDetailURL = '/user/detail';

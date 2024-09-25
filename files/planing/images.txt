@@ -1,0 +1,4 @@
+product list dashboard page : 200
+product dashboard update page  : 400
+
+thumbnail  for users search page: 200

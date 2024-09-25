@@ -143,7 +143,7 @@ class ProductController extends Controller
         try{
             request()->validate([
                 'search' => 'nullable|max:255' , 
-                'orderby' => 'in:publish_date,price,ratting,quantity,reviews,views,old_price,id,created_at,title,paid_quantity,updated_at|nullable' , 
+                'orderby' => 'in:publish_date,price,ratting,quantity,reviews,views,old_price,id,created_at,title,paid_quantity,updated_at,description|nullable' , 
                 'order' => 'in:asc,desc',
                 "categories" => "array|nullable",
                 "categories.*" => "numeric|exists:categories,id"

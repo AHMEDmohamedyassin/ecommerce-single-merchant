@@ -121,6 +121,10 @@ input:focus , select:focus{
     .custom-table .custom-tablehead {
         @apply sticky top-0 right-0 bg-secondarybg
     }
+
+    .custom-table .custom-tablehead p {
+        @apply justify-center text-center 
+    }
     
 }
 

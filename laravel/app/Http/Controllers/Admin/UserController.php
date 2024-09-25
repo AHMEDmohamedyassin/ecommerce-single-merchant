@@ -47,7 +47,7 @@ class UserController extends Controller
 
 
             // creating new address
-            if(request()->has('address')){
+            if(request()->has('address') && request('address')){
                 $address = $user->address()->create($data);
     
                 // writing json file
