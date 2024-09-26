@@ -1,66 +1,39 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { User_DetailAction } from '../../redux/action/UserAction'
+import AddressesListComp from './user details components/AddressesListComp'
+import TransactionsListComp from './user details components/TransactionsListComp'
+import PaginationComp from './user details components/PaginationComp'
+import CartListComp from './user details components/CartListComp'
+import FavoritListComp from './user details components/FavoritListComp'
+import BlocksListComp from './user details components/BlocksListComp'
+import ContactsListComp from './user details components/ContactsListComp'
+import ReviewsListComp from './user details components/ReviewsListComp'
+import OrdersListComp from './user details components/OrdersListComp'
+import CouponsListComp from './user details components/CouponsListComp'
+import NavigationComp from './user details components/NavigationComp'
 
 const UserDetailFormComp = () => {
-    const state = useSelector(state => state.UserReducer)
-    const dispatch = useDispatch()
-    const sections = [
-        {
-            value : "coupon" ,
-            title : "الكوبونات المستخدمة"
-        } ,
-        {
-            value : "order" ,
-            title : "الطلبات"
-        } ,
-        {
-            value : "review" ,
-            title : "المراجعات"
-        } ,
-        {
-            value : "contact" ,
-            title : "طلبات التواصل"
-        } ,
-        {
-            value : "block" ,
-            title : "الحظر"
-        } ,
-        {
-            value : "favorite" ,
-            title : "المفضلة"
-        } ,
-        {
-            value : "cart" ,
-            title : "سلة المشتريات"
-        } ,
-        {
-            value : "transaction" ,
-            title : "عمليات الدفع"
-        } ,
-        {
-            value : "address" ,
-            title : "العناوين"
-        } ,
-    ]
-
-    // getting user details accourding to selected
-    const handleSelect = (val) => {
-        dispatch(User_DetailAction(val))
-    }
 
   return (
     <div className='custom-dashcontainer'>
         <p className='title'>بيانات المستخدم</p>
-        <div>
-            {
-                sections.map((e , index) => (
-                    <button key={index} onClick={() => handleSelect(e.value)} className='custom-button'>{e.title}</button>
-                ))
-            }
-        </div>
+        
+        {/* navigation Component  */}
+        <NavigationComp/>
 
-        <div></div>
+        {/* components of each section */}
+        <AddressesListComp/>
+        <TransactionsListComp/>
+        <CartListComp/>
+        <FavoritListComp/>
+        <BlocksListComp/>
+        <ContactsListComp/>
+        <ReviewsListComp/>
+        <OrdersListComp/>
+        <CouponsListComp/>
+
+        {/* pagination */}
+        <PaginationComp/>
+
     </div>
   )
 }

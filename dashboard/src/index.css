@@ -88,7 +88,7 @@ input:focus , select:focus{
 
     .custom-button2 {
         @apply custom-border px-4  hover:bg-black/70 disabled:bg-black/70 text-white bg-black py-2 text-sm font-semibold
-    }
+    }   
 
     .custom-accountcontainer{
         @apply custom-container grid lg:grid-cols-4 gap-8
@@ -107,13 +107,13 @@ input:focus , select:focus{
 
     /* table styling */
     .custom-table {
-        @apply relative max-w-full w-fit overflow-auto custom-border border-l-0 border-b-0 mx-auto my-10
+        @apply relative max-w-full w-fit custom-border border-l-0 border-b-0 mx-auto my-10 overflow-x-auto
     }
     .custom-table .custom-tablerow {
         @apply  flex w-max  
     }
     .custom-table .custom-tablerow p {
-        @apply px-2 custom-border border-r-0 border-t-0 text-start text-sm flex items-center
+        @apply px-2 custom-border border-r-0 border-t-0 text-start text-sm flex items-center min-h-10 min-w-10
     }
     .custom-table .custom-tablerow img {
         @apply h-12
@@ -137,6 +137,9 @@ input:focus , select:focus{
 }
 .material-symbols-outlined{
     user-select: none;
+}
+.material-symbols-outlined:hover{
+    cursor: pointer;
 }
 
 

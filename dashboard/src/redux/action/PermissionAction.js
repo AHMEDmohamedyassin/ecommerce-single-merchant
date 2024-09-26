@@ -1,5 +1,5 @@
 import { fetching } from "Fetch/Fetch"
-import { PermissionListURL, RoleCreateURL, RoleDeleteURL, RoleListURL, RoleUpdateURL } from "Fetch/Url"
+import { PermissionListURL, PermissionUserAttachURL, RoleCreateURL, RoleDeleteURL, RoleListURL, RoleUpdateURL, RoleUserAttachURL } from "Fetch/Url"
 import { store } from "../store"
 
 
@@ -134,6 +134,67 @@ export const Role_CreateAction = (data) => {
             type : "Permission_Data" , 
             data : {
                 roles : [req.res , ...roles]
+            }
+        })
+    }
+}
+
+
+
+/**
+ * appending permissions to user
+ */
+export const Permission_UserAppendAction = (data) => {      // {permission_id}
+    return async dispatch => {
+        let user_id = store.getState().UserReducer?.id
+        let user_permissions = store.getState().UserReducer?.permission ?? []
+        
+        dispatch({type : "Permission_Status" , data : "lap"})      // loading append permission
+
+        const req = await fetching(PermissionUserAttachURL , {user_id , ...data})
+
+        dispatch({type : "Permission_Status" , data : "n"})
+        
+        if(!req.success)
+            return 
+
+        // updating user permissions in store
+        user_permissions = [...user_permissions , ...data?.permission_id.map(e => ({e})) ?? [] ]
+
+        dispatch({
+            type : "User_Data" , 
+            data : {
+                permission : user_permissions
+            }
+        })
+    }
+}
+
+
+/**
+ * appending roles to user
+ */
+export const Role_UserAppendAction = (data) => {      // {user_roles}
+    return async dispatch => {
+        let user_id = store.getState().UserReducer?.id
+        let user_roles = store.getState().UserReducer?.permission ?? []
+        
+        dispatch({type : "Permission_Status" , data : "lar"})      // loading append role
+
+        const req = await fetching(RoleUserAttachURL , {user_id , ...data})
+
+        dispatch({type : "Permission_Status" , data : "n"})
+
+        if(!req.success)
+            return 
+
+        // updating user permissions in store
+        user_roles = [...user_roles , ...data?.role_id.map(e => ({e})) ?? [] ]
+
+        dispatch({
+            type : "User_Data" , 
+            data : {
+                role : user_roles
             }
         })
     }

@@ -39,7 +39,7 @@ const AddressesPage = () => {
               !showForm ?  <button onClick={() => setShowForm(!showForm)} className='custom-button bg-black hover:bg-black/70 text-white w-fit mx-auto'>أضف عنوانا جديدا</button> : null
             }
 
-            {/* create location from */}
+            {/* create location form */}
             {
               showForm ?  <LocationFormComp cancelButton={() => setShowForm(!showForm)} fromData={CreateAddress} /> : null
             }

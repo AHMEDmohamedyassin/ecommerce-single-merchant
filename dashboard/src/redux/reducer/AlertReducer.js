@@ -3,10 +3,10 @@ const initial = {
     reject_msg : "إلغاء",   // if false : reject button will disappear
     reject : () => {},
     buttons : [
-        {
-            msg : "" ,
-            fn : () => {}
-        }
+        // {
+        //     msg : "" ,
+        //     fn : () => {}
+        // }
     ]
 }
 

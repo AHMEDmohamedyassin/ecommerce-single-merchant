@@ -15,6 +15,8 @@ import CreatePage from "pages/product/CreatePage";
 import UpdatePage from "pages/product/UpdatePage";
 import UserCreatePage from "pages/user/CreatePage";
 import UserUpdatePage from "pages/user/UpdatePage";
+import UserListPage from "pages/user/ListPage";
+import AlertComp from "components/public/AlertComp";
 
 function App() {
   const state = useSelector(state => state.AuthReducer)
@@ -39,6 +41,9 @@ function App() {
           {/* loading component */}
           <LoadingComp/>
 
+          {/* Alert component  */}
+          <AlertComp/>
+
 
           {/* pages  */}
           <Routes>
@@ -50,12 +55,12 @@ function App() {
                   <Route path="/product/create" element={<CreatePage/>} />
                   <Route path="/product/update/:id" element={<UpdatePage/>} />
 
+                  <Route path="/users" element={<UserListPage/>} />
                   <Route path="/user/create" element={<UserCreatePage/>} />
                   <Route path="/user/update/:id" element={<UserUpdatePage/>} />
 
                   <Route path="/permission" element={<PermissionPage/>} />
                   <Route path="/category" element={<CategoryPage/>} />
-
                 </>
               ) : <>
                 <Route path="/*" element={<SessionExpiredPage/>} />

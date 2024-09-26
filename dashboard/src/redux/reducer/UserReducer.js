@@ -1,5 +1,6 @@
 const initial = {
     status : "n",   // n : normal ,  l : loading , s : success , f : fail
+    detail : null , // the required detail of user
 
     id : null , 
     slug : null , 
@@ -11,15 +12,15 @@ const initial = {
     updated_at : null , 
     role : [] , 
     permission : [] , 
-    coupon :[],
-    order :[],
-    review :[],
-    contact :[],
-    block :[],
-    favorite :[],
-    cart :[],
-    transaction :[],
-    address : []
+    coupon :{},
+    order :{},
+    review :{},
+    contact :{},
+    block :{},
+    favorite :{},
+    cart :{},
+    transaction :{},
+    address : {}
 }
 
 export const UserReducer = (state = initial , action) => {

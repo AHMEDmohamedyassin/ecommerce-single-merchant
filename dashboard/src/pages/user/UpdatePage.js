@@ -8,6 +8,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ValidateInputChanges } from 'validation/Validation'
 import UpdateUserFormComp from 'components/user/UpdateUserFormComp'
 import UserDetailFormComp from 'components/user/UserDetailFormComp'
+import AddressCreateComp from 'components/user/AddressCreateComp'
+import PermissionsComp from 'components/user/permission_roles/PermissionsComp'
+import RolesComp from 'components/user/permission_roles/RolesComp'
 
 const UpdatePage = () => {
     const state = useSelector(state => state.UserReducer)
@@ -31,6 +34,15 @@ const UpdatePage = () => {
 
                     {/* showing and updating user detailed informations */}
                     <UserDetailFormComp/>
+
+                    {/* creating address to user */}
+                    <AddressCreateComp/>
+
+                    {/* permissions  */}
+                    <PermissionsComp/>
+
+                    {/* roles  */}
+                    <RolesComp/>
                 </>
             )
         }

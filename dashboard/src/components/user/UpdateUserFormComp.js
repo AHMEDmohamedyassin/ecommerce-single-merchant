@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { User_DeleteAction, User_ReadAction, User_UpdateAction } from '../../redux/action/UserAction'
+import { User_DeleteAction, User_ReadAction, User_ResetPassAction, User_UpdateAction } from '../../redux/action/UserAction'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
@@ -37,6 +37,11 @@ const UpdateUserFormComp = () => {
     // handle delete 
     const handleDelete = () => {
         dispatch(User_DeleteAction(state.id))
+    }
+
+    // reset password for user
+    const ResetPassword = () => {
+        dispatch(User_ResetPassAction())
     }
     
     // setting default values
@@ -77,6 +82,7 @@ const UpdateUserFormComp = () => {
             <div className='flex justify-center gap-4 flex-wrap'>
                 <button type='submit' className='custom-button2 w-fit'>تأكيد</button>
                 <button onClick={ResetForm} type='button' className='custom-button hover:bg-blue-500'>إعادة</button>
+                <button onClick={ResetPassword} type='button' className='custom-button hover:bg-blue-500'>إعادة تعيين كلمة المرور</button>
                 <button onClick={handleDelete} type='button' className='custom-button hover:bg-red-500'>حذف</button>
             </div>
         </form>

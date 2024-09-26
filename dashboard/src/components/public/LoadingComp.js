@@ -9,6 +9,7 @@ const LoadingComp = () => {
   const category = useSelector(state => state.CategoryReducer)
   const product = useSelector(state => state.ProductReducer)
   const product_List = useSelector(state => state.ProductListReducer)
+  const user = useSelector(state => state.UserReducer)
   return (
     <>
       {
@@ -17,7 +18,8 @@ const LoadingComp = () => {
         permission.status != "n"  ||
         category.status != "n"  ||
         product.status != 'n' ||
-        product_List.status != 'n' 
+        product_List.status != 'n' ||
+        user.status != 'n' 
         ? (
           <div className='z-50 fixed top-0 left-0 w-full h-full bg-white/50 flex justify-center items-center'>
               <LargeSpinnerComp/>

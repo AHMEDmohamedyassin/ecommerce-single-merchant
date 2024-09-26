@@ -9,4 +9,9 @@ discount not implemented in payment with fawaterk
 need tests for images retrieve api
 
 
-prevent deleting some roles like dashboard and admin
+password_reset_table needs to add phone column and make email accepts null
+    $table->id(); // Add an auto-incrementing primary key
+    $table->string('email')->nullable(); // Allow email to be nullable
+    $table->string('phone')->nullable(); // Add phone column
+    $table->string('token');
+    $table->timestamp('created_at')->nullable();

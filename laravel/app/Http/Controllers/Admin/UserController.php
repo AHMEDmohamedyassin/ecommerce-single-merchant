@@ -10,9 +10,11 @@ use App\Traits\PaginateTrait;
 use App\Traits\ResponseTrait;
 use App\Traits\SlugTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Storage;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -109,8 +111,8 @@ class UserController extends Controller
             $user = User::find(request('id'));
 
             $token = Password::createToken($user);
-
-            $url = env('APP_URL') . '/auth/password/reset?token=' . $token . '&phone=' . $user->phone;
+            
+            $url = env('APP_URL') . '/auth/password/reset?token=' . $token . '&phoneORemail=' . $user->phone;
 
             return $this->SuccessResponse($url);
         }catch(\Exception $e){
@@ -199,20 +201,39 @@ class UserController extends Controller
                 'detail' => 'required|in:coupon,order,review,contact,block,favorite,cart,transaction,address'
             ]);
 
-            $user = User::with(request('detail'))->find(request('id'));
+            $user = User::find(request('id'));
 
-            // if required details is address it is needed to read json file of addresses
+            // check if the required details is the address to handle different logic of adding json data to each address item
             if(request('detail') == 'address'){
-                $addresses = [];
-                foreach($user->address as $address){
-                    $path = "/addresses/{$address->id}/json.json";
-                    if(Storage::exists($path)) 
-                        $addresses[] = array_merge($address->toArray() , (array)json_decode(Storage::read($path)) );
-                }
+                $address = $user->address();
+                $address = $this->paginate($address);
 
-                unset($user->address);
-                $user->address = $addresses;
+                // getting addressess items and adding the json content to it
+                $addresses = [];
+                foreach($address['items'] as $item){
+                    $path = "/addresses/{$item->id}/json.json";
+                    if(Storage::exists($path)) 
+                        $addresses[] = array_merge($item->toArray() , (array)json_decode(Storage::read($path)) );
+                }
+                
+                // replacing the address items with new items ($addresses) which containing the content of json file of each address 
+                $address['items'] = $addresses;
+                $user['address'] = $address;
+            }elseif (request('detail') == 'order') {
+                // get details of user orders and getting details of shipping address and billing address
+                $detail = $user->order()->with('store_address')->with('address')->with('coupon');
+                $detail = $this->paginate($detail);
+    
+                $user[request('detail')] = $detail;
+            }else {
+                // get details of user and appending it to user object
+                $detail_type = request()->input('detail');
+                $detail = $user->$detail_type();
+                $detail = $this->paginate($detail);
+    
+                $user[request('detail')] = $detail;
             }
+
 
             return $this->SuccessResponse($user);
         }catch(\Exception $e){

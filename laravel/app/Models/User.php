@@ -77,11 +77,11 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function favorite () {
-        return $this->belongsToMany(Product::class , 'favorites' , 'user_id' , 'product_id')->withPivot('id');
+        return $this->belongsToMany(Product::class , 'favorites' , 'user_id' , 'product_id')->withPivot('id' , 'updated_at');
     }
 
     public function cart () {
-        return $this->belongsToMany(Product::class , 'carts' , 'user_id' , 'product_id')->withPivot('id' , 'quantity');
+        return $this->belongsToMany(Product::class , 'carts' , 'user_id' , 'product_id')->withPivot('id' , 'quantity' , 'created_at' , 'updated_at');
     }
 
     public function transaction () {

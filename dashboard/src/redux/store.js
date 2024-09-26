@@ -7,6 +7,8 @@ import { CategoryReducer } from './reducer/CategoryReducer';
 import { ProductReducer } from './reducer/ProductReducer';
 import { ProductListReducer } from './reducer/ProductListReducer';
 import { UserReducer } from './reducer/UserReducer';
+import { UserListReducer } from './reducer/UserListReducer';
+import { AlertReducer } from './reducer/AlertReducer';
 
 const rootReducer = combineReducers({
     AuthReducer ,
@@ -16,6 +18,8 @@ const rootReducer = combineReducers({
     ProductReducer ,
     ProductListReducer ,
     UserReducer ,
+    UserListReducer ,
+    AlertReducer ,
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

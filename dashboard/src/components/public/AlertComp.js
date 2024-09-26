@@ -19,18 +19,18 @@ const AlertComp = () => {
     <>
         {
             state.msg ? (
-                <div className='dimmingBg'>
-                    <section>
-                        <h1 className='lg:font-bold'>{state.msg}</h1>
+                <div className='fixed top-0 left-0 w-full h-full bg-white/50 z-30 flex items-center justify-center'>
+                    <section className='w-2/4 custom-border rounded-xl p-4 bg-mainbg flex flex-col gap-4'>
+                        <h1 className='text-sm text-justify text-wrap break-words'>{state.msg}</h1>
                         <div className='w-full flex max-lg:justify-between justify-around gap-4'>
                             {
-                                state.buttons.map((e , index) => (
-                                    <button key={index} onClick={() => actionHandle(e.fn)} className='max-lg:py-1 thebutton'>{e.msg}</button>
-                                ))
+                                state.buttons.length ? state.buttons.map((e , index) => (
+                                    <button key={index} onClick={() => actionHandle(e.fn)} className='custom-button bg-white hover:bg-black'>{e.msg}</button>
+                                )) : null
                             }
                             {
                                 state.reject_msg ? 
-                                    <button onClick={rejectHandle} className='max-lg:py-1 thebutton'>{state.reject_msg}</button>
+                                    <button onClick={rejectHandle} className='custom-button bg-white hover:bg-red-500'>{state.reject_msg}</button>
                                 :null
                             }
                         </div>

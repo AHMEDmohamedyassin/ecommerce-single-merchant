@@ -99,7 +99,7 @@ export const Product_ReadAction = (id) => {
     return async dispatch => {
         dispatch({type : "Product_Status" , data : "lr"}) // loading read
 
-        const req = await fetching(`${ProductReadURL}?id=${id}` , {} , "GET")
+        const req = await fetching(`${ProductReadURL}?id=${id}` , {} , "GET" , false)
 
         if(!req.success)
             return  dispatch({type : "Product_Status" , data : "n"})

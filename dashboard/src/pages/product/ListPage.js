@@ -4,6 +4,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ProductList_SearchAction } from '../../redux/action/ProductListAction'
 import TableHeaderComp from '../../components/productlist/TableHeaderComp'
+import PaginationComp from 'components/public/PaginationComp'
 
 const ListPage = () => {
   const state = useSelector(state => state.ProductListReducer)
@@ -14,8 +15,10 @@ const ListPage = () => {
     dispatch(ProductList_SearchAction({page}))
   }
 
+  // initiate loading products data
   useEffect(() => {
-    paginateHandle()
+    if(!state.total)
+      paginateHandle()
   } , [])
   return (
     <div className='custom-dashcontainer'>
@@ -48,15 +51,7 @@ const ListPage = () => {
 
 
       {/* pagination */}
-      <div className='flex items-center gap-4 mx-auto w-fit'>
-        <button disabled={state.current < 2} onClick={() => paginateHandle(state.current - 1)} className='custom-button'>السابق</button>
-        <div className='flex items-center gap-2'>
-          <p>{state.current}</p>
-          <p>/</p>
-          <p>{state.last}</p>
-        </div>
-        <button disabled={state.current >= state.last } onClick={() => paginateHandle(state.current + 1)} className='custom-button'>التالي</button>
-      </div>
+      <PaginationComp state={state} handlePagination={paginateHandle}/>
 
     </div>
   )

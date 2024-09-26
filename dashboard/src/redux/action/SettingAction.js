@@ -1,8 +1,11 @@
 import { notify } from "components/public/NotificationComp"
 import { store } from "../store"
 import { msgs } from "Fetch/Msg"
+import { Confirm_Msg } from "Fetch/Confirm_Msg"
 
-
+/**
+ * pop up messages
+ */
 export const Setting_Msg = (msg_code) => {
     if(msgs[msg_code]){
         notify(msgs[msg_code]["ar"])
@@ -21,3 +24,13 @@ export const Setting_Loading = (state = true) => {
     })
 }
 
+
+/**
+ * confirmation messages
+ */
+export const Setting_Confirm = (msg_code) => {
+    if(Confirm_Msg[msg_code]){
+        return window.confirm(Confirm_Msg[msg_code]['ar'])
+    }
+    return true
+}

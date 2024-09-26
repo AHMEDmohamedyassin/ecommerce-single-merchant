@@ -17,6 +17,7 @@ export const RoleUpdateURL = "/role/update";
 export const RoleDeleteURL = "/role/delete";
 export const RoleListURL = "/role/list";
 export const RoleReadURL = "/role/read";
+export const RoleUserAttachURL = '/role/user/attach'
 
 
 // category
@@ -49,3 +50,6 @@ export const UserResetPassURL = '/user/resetpassword/url';
 export const UserListURL = '/user/list';
 export const UserReadURL = '/user/read';
 export const UserDetailURL = '/user/detail';
+export const UserAddAddressURL = '/user/add/address'
+export const UserUpdateAddressURL = '/user/update/address'
+export const UserDeleteAddressURL = '/user/delete/address'

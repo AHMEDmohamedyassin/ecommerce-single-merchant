@@ -1,7 +1,8 @@
-import { UserCreateURL, UserDetailURL, UserReadURL, UserUpdateURL } from "Fetch/Url"
+import { UserAddAddressURL, UserCreateURL, UserDeleteAddressURL, UserDetailURL, UserReadURL, UserResetPassURL, UserUpdateURL } from "Fetch/Url"
 import { fetching } from "../../Fetch/Fetch"
-import { Setting_Msg } from "./SettingAction"
+import { Setting_Confirm, Setting_Msg } from "./SettingAction"
 import { store } from "../../redux/store"
+import { Alert_ChoiceAction, Alert_InfoAction } from "./AlertAction"
 
 
 
@@ -65,6 +66,8 @@ export const User_ReadAction = (id) => {
  */
 export const User_UpdateAction = (data) => {
     return async dispatch => {
+        if(!Setting_Confirm(2000)) return {}     // confirmation
+
         const id = store.getState().UserReducer?.id
 
         dispatch({type : "User_Status" , data : "lu"}) // loading user read data
@@ -73,6 +76,9 @@ export const User_UpdateAction = (data) => {
 
         if(!req.success)
             return dispatch({type : "User_Status" , data : "n"})
+
+        // notification
+        Setting_Msg(6000)
 
         dispatch({
             type : "User_Data" ,
@@ -89,6 +95,8 @@ export const User_UpdateAction = (data) => {
  */
 export const User_DeleteAction = id => {
     return async dispatch => {
+        if(!Setting_Confirm(1000)) return {}     // confirmation
+
         const user_id = store.getState().AuthReducer?.id
 
         // safe user delete its account
@@ -119,18 +127,18 @@ export const User_DeleteAction = id => {
 /**
  * getting user details 
  */
-export const User_DetailAction = (detail) => {
+export const User_DetailAction = (detail , page = null ) => {
     return async dispatch => {
         const stored_detail = store.getState().UserReducer[detail] ?? []
         const id = store.getState().UserReducer.id
 
-        // safe user delete its account
-        if(stored_detail?.length)
-            return 
+        // prevent multi-fetching for same data
+        if(stored_detail?.total && ( stored_detail.current == page || (!page && stored_detail.current) ) || (stored_detail.items && !stored_detail.items.length) )
+            return dispatch({type : "User_Data" , data : {detail} }) 
 
         dispatch({type : "User_Status" , data : "lde"}) // loading user detail 
 
-        const req = await fetching(`${UserDetailURL}?id=${id}&detail=${detail}` , {} , "GET")
+        const req = await fetching(`${UserDetailURL}?id=${id}&detail=${detail}&page=${page ?? 1}` , {} , "GET")
 
         if(!req.success)
             return dispatch({type : "User_Status" , data : "n"})
@@ -138,7 +146,126 @@ export const User_DetailAction = (detail) => {
 
         dispatch({
             type : "User_Data" ,
-            data : req.res
+            data : {
+                [detail] : req.res[detail] , 
+                detail : detail
+            }
+        })
+    }
+}
+
+
+/**
+ * user password reset 
+ */
+export const User_ResetPassAction = () => {
+    return async dispatch => {
+        const id = store.getState().UserReducer.id
+
+        dispatch({type : "User_Status" , data : "lrp"}) // loading reset password of user 
+
+        const req = await fetching(UserResetPassURL , {id})
+
+        dispatch({type : "User_Status" , data : "n"})
+        
+        if(!req.success)
+            return
+
+
+        // making Alert with button to copy the reset url 
+        store.dispatch({
+            type : "Alert_Data" , 
+            data : {
+                msg : `قم بنسخ ذلك الرابط و إرسالة إلي المستخدم ليقوم بإعادة تعيين كلمة المرور الخاصة به : ${req.res}`,
+                buttons : [
+                    {
+                        msg : "نسخ" ,
+                        fn : () => navigator.clipboard.writeText(req.res).then(Setting_Msg(25000))
+                    }
+                ]
+            }
+        })
+
+
+    }
+}
+
+
+
+/**
+ * add address to user 
+ */
+export const User_AddAdressAction = (data) => {
+    return async dispatch => {
+        const id = store.getState().UserReducer.id
+        let address = store.getState().UserReducer?.address ?? {}
+        let address_items = store.getState().UserReducer?.address?.items ?? []
+
+        dispatch({type : "User_Status" , data : "laa"}) // loading adding address 
+
+        const req = await fetching(UserAddAddressURL , {id , ...data})
+
+        dispatch({type : "User_Status" , data : "n"})
+        
+        if(!req.success)
+            return dispatch({type : "User_Status" , data : "n"})
+    
+        // notification
+        Setting_Msg(7000)
+
+        // updating stored address if exists
+        address_items = [...address_items , {...data , ...data.json , id}]
+
+        dispatch({
+            type : "User_Data" , 
+            data : {
+                address : {
+                    ...address , 
+                    items : address_items
+                }
+            }
+        })
+    }
+}
+
+
+/**
+ * delete user Address
+ */
+export const User_DeleteAddressAction = (address_id) => {
+    return async dispatch => {
+
+        // confirm deleting
+        if(!Setting_Confirm(1000)) return {}
+
+        const user_id = store.getState().UserReducer.id
+        let address = store.getState().UserReducer?.address ?? {}
+        let address_items = store.getState().UserReducer?.address?.items ?? []
+
+        dispatch({type : "User_Status" , data : "lda"}) // loading delete address 
+
+        const req = await fetching(UserDeleteAddressURL , {user_id , address_id})
+
+        dispatch({type : "User_Status" , data : "n"})
+        
+        if(!req.success)
+            return dispatch({type : "User_Status" , data : "n"})
+    
+
+        // notification
+        Setting_Msg(9000)
+
+        // updating stored address if exists
+        address_items = address_items.filter(e => e.id != address_id)
+
+        dispatch({
+            type : "User_Data" , 
+            data : {
+                address : {
+                    ...address , 
+                    items : address_items
+                }
+            }
         })
     }
 }
