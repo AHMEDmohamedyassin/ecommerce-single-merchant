@@ -21,6 +21,7 @@ import StoreAddressCreatePage from "pages/store_address/CreatePage";
 import StoreAddressUpdatePage from "pages/store_address/UpdatePage";
 import StoreAddressListPage from "pages/store_address/ListPage";
 import OrderCreatePage from "pages/order/CreatePage";
+import OrderListPage from "pages/order/ListPage";
 
 function App() {
   const state = useSelector(state => state.AuthReducer)
@@ -69,6 +70,7 @@ function App() {
                   <Route path="/store-address/create" element={<StoreAddressCreatePage/>} />
                   <Route path="/store-address/update/:id" element={<StoreAddressUpdatePage/>} />
 
+                  <Route path="/orders" element={<OrderListPage/>} />
                   <Route path="/order/create" element={<OrderCreatePage/>} />
                 </>
               ) : <>

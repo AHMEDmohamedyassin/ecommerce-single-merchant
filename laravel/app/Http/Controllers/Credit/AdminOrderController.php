@@ -153,15 +153,16 @@ class AdminOrderController extends Controller
     public function ListOrder () {
         try {
             request()->validate([
-                'status' => "nullable|in:pending,ready,preparing,success,canceled,canceled without refund" , 
+                'status' => "nullable|in:pending,ready,preparing,success,canceled,canceled without refund,all" , 
                 'orderby' => "nullable|in:status,quantity,cart_total,pay_on_diliver,id,created_at,updated_at",
                 "desc" => "in:desc,asc"
             ]);
 
             $orders = Order::query();
 
-            if(request()->has("status")) $orders->where('status' , request('status'));
+            if(request()->has("status") && request('status') != 'all') $orders->where('status' , request('status'));
             
+            $orders->with('user')->with('store_address')->with('address')->with('coupon');
             $orders->orderby(request('orderby' , 'id') , request('desc', 'desc'));
 
             return $this->SuccessResponse($this->paginate($orders));

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ProductList_SearchAction } from '../../redux/action/ProductListAction'
-import TableHeaderRowComp from './TableHeaderRowComp'
+import TableHeaderRowComp from '../public/TableHeaderRowComp'
 
 const TableHeaderComp = () => {
     const state = useSelector(state => state.ProductListReducer)
@@ -14,8 +14,6 @@ const TableHeaderComp = () => {
         // check if input is multi-clicked makes its order ascending
         if(orderby == order && state.order == 'desc')
           is_desc = 'asc'
-    
-        console.log(is_desc , orderby == order)
     
         setOrder(orderby)
         dispatch(ProductList_SearchAction({orderby , order : is_desc}))

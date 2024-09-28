@@ -75,3 +75,4 @@ export const StoreAddressListURL = "/store/list"
 
 // order 
 export const OrderCreateURL = '/order/create'
+export const OrderListURL = '/order/list'

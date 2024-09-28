@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             // $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->nullable()->constrained();
-            $table->foreignId('shipping_address_id')->constrained("addresses")->nullable();
-            $table->foreignId('billing_address_id')->constrained("store_addresses")->nullable();
-            $table->foreignId('coupon_id')->constrained("coupons")->nullable();
+            $table->foreignId('shipping_address_id')->nullable()->constrained("addresses");
+            $table->foreignId('billing_address_id')->nullable()->constrained("store_addresses");
+            $table->foreignId('coupon_id')->nullable()->constrained("coupons");
             $table->unsignedFloat('cart_total')->default(0);
             $table->char('currency' , 20)->nullable();
             $table->char('status' , 30)->nullable();

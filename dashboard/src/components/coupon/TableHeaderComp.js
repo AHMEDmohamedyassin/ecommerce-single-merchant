@@ -1,4 +1,4 @@
-import TableHeaderRowComp from 'components/productlist/TableHeaderRowComp'
+import TableHeaderRowComp from 'components/public/TableHeaderRowComp'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Coupon_ListAction } from '../../redux/action/CouponAction'
