@@ -33,6 +33,7 @@ class PermissionSeeder extends Seeder
             ["title" => "إنشاء منتج" , "slug" => "product_create"] ,
             ["title" => "تعديل منتج" , "slug" => "product_update"] ,
             ["title" => "حذف منتج" , "slug" => "product_delete"] ,
+            ["title" => "بحث عن المنتج باستخدام الرمز" , "slug" => "product_serial"] ,
             ["title" => "رفع صورة منتج" , "slug" => "product_image_upload"] ,
             ["title" => "حذف صورة منتج" , "slug" => "product_image_delete"] ,
             ["title" => "قائمة المراجعات" , "slug" => "review_list"] ,

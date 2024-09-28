@@ -55,3 +55,25 @@ export const UserAddressesValidation = z.object({
     }),
     default : z.boolean()
 })
+
+
+
+/**
+ * create user inside for order page
+ */
+export const OrderPageCreateUserValidation = z.object({
+    name : validation.name ,
+    email : validation.email ,
+    phone : validation.phone ,
+    address : z.string().max(255 , "تخطيت أكبر طول للحقل ").optional().nullable() ,
+    json : z.object({
+        city : z.string().max(255 , "تخطيت أكبر طول للحقل").optional() ,
+        governorate : z.string().max(255 , "تخطيت أكبر طول للحقل").optional() ,
+    }) ,
+}).refine(data => !(data.address && !data.json.city) , {
+    message : "يجب عليك إدخال حقل المدينة في حالة ملئ حقل العنوان" , 
+    path:['json' , 'city']
+}).refine(data => !(data.address && !data.json.governorate) , {
+    message : "يجب عليك إدخال حقل المحافظة في حالة ملئ حقل العنوان" , 
+    path:['json' , 'governorate']
+})

@@ -33,6 +33,7 @@ role_attach_user
 product_create
 product_update
 product_delete
+product_serial
 product_image_upload
 product_image_delete
 

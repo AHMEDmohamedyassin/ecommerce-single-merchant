@@ -45,16 +45,14 @@ class CouponController extends Controller
             $coupon_hashed = hash('sha256', $uuid);
 
             // save coupon to database
-            Coupon::create([
+            $coupon = Coupon::create([
                 'coupon_encrypt' => $coupon_encrypt,
                 'coupon_hash' => $coupon_hashed,
                 'value' => request('value'),
-                'expire_date' => Carbon::now()->addDays(request('expire_date'))
+                'expire_date' => Carbon::now()->addDays(request('expire_date' , $max_days))
             ]);
 
-            $req['coupon'] = $uuid;
-
-            return $this->SuccessResponse($req);
+            return $this->SuccessResponse($coupon);
         }catch(\Exception $e){
             return $this->ErrorResponse(12001 , $e->getCode() , $e->getMessage());
         }
@@ -117,6 +115,8 @@ class CouponController extends Controller
     /**
      * @error 12004
      * Read coupon
+     * getting coupon data by the coupon itself if it is not used or expired
+     * getting coupon data by its id 
      * @Admin
      */
     public function ReadCoupon () {
@@ -131,9 +131,14 @@ class CouponController extends Controller
             if(request()->has('id'))
                 $coupon = $coupon->find(request('id'));
             else 
-                $coupon = $coupon->where('coupon_hash' , hash('sha256', request('coupon')) )->first();
+                $coupon = $coupon->where('coupon_hash' , hash('sha256', request('coupon')) )
+                                    ->where('user_id' , null)
+                                    ->where('expire_date' , '>' , Carbon::now())->first();
 
             
+            if(!$coupon)
+                throw new CustomException('coupon not found or expired' , 23);
+
             $data = [
                 "value" => $coupon->value,
                 "coupon" => $this->decrypt($coupon->coupon_encrypt , env('ENCRYPTION_PASSWORD'))
@@ -155,25 +160,13 @@ class CouponController extends Controller
     public function ListCoupon () {
         try{
             request()->validate([
-                'paid' => 'nullable|boolean' , 
-                'used' => 'nullable|boolean'
+                'orderby' => 'nullable|in:paid,is_used,value,id,created_at,updated_at,expire_date',
+                'order' => 'nullable|in:desc,asc'
             ]);
 
-            $coupon = Coupon::query();
+            $coupon = new Coupon();
 
-            if(request()->has('paid'))
-                $coupon->where([
-                    'paid' => request('paid') ?? 0
-                ]);
-
-            if(request()->has('used')){
-                if(request('used'))
-                    $coupon->whereNotNull('user_id');
-                else
-                    $coupon->whereNull('user_id');
-            }
-
-            return $this->SuccessResponse($this->paginate($coupon->orderby('id' , 'desc')));
+            return $this->SuccessResponse($this->paginate($coupon->orderby(request('orderby' , "id") , request('order' , 'desc'))));
         }catch(\Exception $e){
             return $this->ErrorResponse(12005 , $e->getCode() , $e->getMessage());
         }

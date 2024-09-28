@@ -16,7 +16,11 @@ import UpdatePage from "pages/product/UpdatePage";
 import UserCreatePage from "pages/user/CreatePage";
 import UserUpdatePage from "pages/user/UpdatePage";
 import UserListPage from "pages/user/ListPage";
-import AlertComp from "components/public/AlertComp";
+import CouponPage from "pages/CouponPage";
+import StoreAddressCreatePage from "pages/store_address/CreatePage";
+import StoreAddressUpdatePage from "pages/store_address/UpdatePage";
+import StoreAddressListPage from "pages/store_address/ListPage";
+import OrderCreatePage from "pages/order/CreatePage";
 
 function App() {
   const state = useSelector(state => state.AuthReducer)
@@ -41,9 +45,6 @@ function App() {
           {/* loading component */}
           <LoadingComp/>
 
-          {/* Alert component  */}
-          <AlertComp/>
-
 
           {/* pages  */}
           <Routes>
@@ -59,8 +60,16 @@ function App() {
                   <Route path="/user/create" element={<UserCreatePage/>} />
                   <Route path="/user/update/:id" element={<UserUpdatePage/>} />
 
+                  <Route path="/coupon" element={<CouponPage/>} />
+
                   <Route path="/permission" element={<PermissionPage/>} />
                   <Route path="/category" element={<CategoryPage/>} />
+
+                  <Route path="/store-address" element={<StoreAddressListPage/>} />
+                  <Route path="/store-address/create" element={<StoreAddressCreatePage/>} />
+                  <Route path="/store-address/update/:id" element={<StoreAddressUpdatePage/>} />
+
+                  <Route path="/order/create" element={<OrderCreatePage/>} />
                 </>
               ) : <>
                 <Route path="/*" element={<SessionExpiredPage/>} />

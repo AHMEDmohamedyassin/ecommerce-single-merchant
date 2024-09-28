@@ -2,7 +2,6 @@ import { UserAddAddressURL, UserCreateURL, UserDeleteAddressURL, UserDetailURL, 
 import { fetching } from "../../Fetch/Fetch"
 import { Setting_Confirm, Setting_Msg } from "./SettingAction"
 import { store } from "../../redux/store"
-import { Alert_ChoiceAction, Alert_InfoAction } from "./AlertAction"
 
 
 
@@ -165,27 +164,15 @@ export const User_ResetPassAction = () => {
         dispatch({type : "User_Status" , data : "lrp"}) // loading reset password of user 
 
         const req = await fetching(UserResetPassURL , {id})
-
-        dispatch({type : "User_Status" , data : "n"})
         
+        dispatch({type : "User_Status" , data : "n"})
+
         if(!req.success)
-            return
+            return 
 
 
-        // making Alert with button to copy the reset url 
-        store.dispatch({
-            type : "Alert_Data" , 
-            data : {
-                msg : `قم بنسخ ذلك الرابط و إرسالة إلي المستخدم ليقوم بإعادة تعيين كلمة المرور الخاصة به : ${req.res}`,
-                buttons : [
-                    {
-                        msg : "نسخ" ,
-                        fn : () => navigator.clipboard.writeText(req.res).then(Setting_Msg(25000))
-                    }
-                ]
-            }
-        })
-
+        // copying url to clipboard with notification
+        navigator.clipboard.writeText(req.res).then(Setting_Msg(25000))
 
     }
 }

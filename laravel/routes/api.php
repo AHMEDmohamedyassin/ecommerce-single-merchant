@@ -83,6 +83,7 @@ Route::post('/product/update' , [ProductController::class , 'UpdateProduct'])->m
 Route::post('/product/delete' , [ProductController::class , 'DeleteProduct'])->middleware("AdminMiddleware:product_delete");  #admin
 Route::get('/product/search' , [ProductController::class , 'SearchProduct']);
 Route::get('/product/read' , [ProductController::class , 'ReadProduct']);
+Route::get('/product/serial' , [ProductController::class , 'SerialReadProduct'])->middleware("AdminMiddleware:product_serial"); #admin
 
 
 // Product Image Controller 8000
@@ -171,6 +172,7 @@ Route::post('/store/create' , [StoreController::class , 'CreateStore'])->middlew
 Route::post('/store/update' , [StoreController::class , 'UpdateStore'])->middleware("AdminMiddleware:store_update");    #admin
 Route::post('/store/delete' , [StoreController::class , 'DeleteStore'])->middleware("AdminMiddleware:store_delete");    #admin
 Route::get('/store/list' , [StoreController::class , 'ListStore']);
+Route::get('/store/read' , [StoreController::class , 'ReadStore']);
 
 
 // Setting Controller 19,000

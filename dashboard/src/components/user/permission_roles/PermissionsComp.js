@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Permission_ListAction, Permission_UserAppendAction, Role_ListAction } from '../../../redux/action/PermissionAction'
 import PermissionCardComp from 'components/permission/PermissionCardComp'
 import { useForm } from 'react-hook-form'
+import SectionTitleComp from '../SectionTitleComp'
 
 const PermissionsComp = () => {
     const dispatch = useDispatch() 
@@ -28,18 +29,11 @@ const PermissionsComp = () => {
     } , [])
   return (
     <div className='custom-dashcontainer'>
-        <div className='flex justify-between items-start'>
-            <p className='title'>الصلاحيات</p>
-            {
-                show ? 
-                <span onClick={() => setShow(false)} className="material-symbols-outlined text-4xl">stat_1</span>
-                :
-                <span onClick={() => setShow(true)} className="material-symbols-outlined text-4xl">stat_minus_1</span>
-            }
-        </div>
+        {/* section title with toggle arrow button */}
+        <SectionTitleComp title={'الصلاحيات'} section={'permission'}/>
 
         {
-            show ? (
+            user.section == 'permission' ? (
                 <>
                     {/* form containing list of permissons */}
                     <form onSubmit={handleSubmit(submitHandle)} className='w-full grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-2 '>

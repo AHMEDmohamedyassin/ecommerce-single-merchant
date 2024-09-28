@@ -8,7 +8,9 @@ import { ProductReducer } from './reducer/ProductReducer';
 import { ProductListReducer } from './reducer/ProductListReducer';
 import { UserReducer } from './reducer/UserReducer';
 import { UserListReducer } from './reducer/UserListReducer';
-import { AlertReducer } from './reducer/AlertReducer';
+import { CouponReducer } from './reducer/CouponReducer';
+import { StoreAddressReducer } from './reducer/StoreAddressReducer';
+import { OrderReducer } from './reducer/OrderReducer';
 
 const rootReducer = combineReducers({
     AuthReducer ,
@@ -19,7 +21,9 @@ const rootReducer = combineReducers({
     ProductListReducer ,
     UserReducer ,
     UserListReducer ,
-    AlertReducer ,
+    CouponReducer ,
+    StoreAddressReducer ,
+    OrderReducer ,
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

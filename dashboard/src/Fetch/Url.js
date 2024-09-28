@@ -38,6 +38,7 @@ export const ProductUpdateURL = '/product/update';
 export const ProductDeleteURL = '/product/delete';
 export const ProductSearchURL = '/product/search';
 export const ProductReadURL = '/product/read';
+export const ProductSerialURL = '/product/serial';
 export const ProductUploadImageURL = '/product/image/upload';
 export const ProductDeleteImageURL = '/product/image/delete';
 
@@ -53,3 +54,24 @@ export const UserDetailURL = '/user/detail';
 export const UserAddAddressURL = '/user/add/address'
 export const UserUpdateAddressURL = '/user/update/address'
 export const UserDeleteAddressURL = '/user/delete/address'
+
+
+// coupons 
+export const CouponCreateURL = "/coupon/create"
+export const CouponUpdateURL = "/coupon/update"
+export const CouponDeleteURL = "/coupon/delete"
+export const CouponReadURL = "/coupon/read"
+export const CouponListURL = "/coupon/list"
+export const CouponPaidURL = "/coupon/paid"
+
+
+// store address
+export const StoreAddressCreateURL = "/store/create"
+export const StoreAddressUpdateURL = "/store/update"
+export const StoreAddressDeleteURL = "/store/delete"
+export const StoreAddressReadURL = "/store/read"
+export const StoreAddressListURL = "/store/list"
+
+
+// order 
+export const OrderCreateURL = '/order/create'

@@ -18,7 +18,7 @@ class ProductController extends Controller
 
     // muilti used validation 
     public $validation = [
-        "serial" => "nullable|max:255|string",
+        "serial" => "nullable|max:255|string|unique:products,serial",
         "description" => "nullable|max:255|string",
         "old_price" => "nullable|max:999999.99" ,
         "quantity" => "nullable|max:65535" ,
@@ -174,7 +174,6 @@ class ProductController extends Controller
     /**
      * @error 7005
      * Read all product data
-     * @Admin
      */
     public function ReadProduct () {
         try{
@@ -195,6 +194,26 @@ class ProductController extends Controller
             
 
             return $this->SuccessResponse($product->load('category'));
+        }catch(\Exception $e){
+            return $this->ErrorResponse(7005 , $e->getCode() , $e->getMessage());
+        }
+    }
+
+    
+    /**
+     * @error 7006
+     * Read essential product data using serial
+     * @Admin
+     */
+    public function SerialReadProduct () {
+        try{
+            request()->validate([
+                "serial" => "required|exists:products,serial"
+            ]);
+
+            $product = Product::where('serial' , request('serial'))->first();
+            
+            return $this->SuccessResponse($product);
         }catch(\Exception $e){
             return $this->ErrorResponse(7005 , $e->getCode() , $e->getMessage());
         }

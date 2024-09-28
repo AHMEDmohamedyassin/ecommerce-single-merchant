@@ -117,22 +117,47 @@ class StoreController extends Controller
 
     /**
      * @error 18004
-     * delete store
+     * list store
      */
     public function ListStore () {
         try{
 
-            $stores = StoreAddress::orderby('primary' , 'desc')->orderby('id' , 'desc')->get();
-
-            $stores->each(function ($store){
+            $stores = StoreAddress::orderby('primary' , 'desc')
+            ->orderby('id' , 'desc')->take(20)->get()             // limiting 20 results
+            ->each(function ($store) {
                 $path = "stores/{$store->id}/json.json";
                 if(Storage::exists($path))
                     $store->json = json_decode(Storage::read($path));
+                return $store;
             });
+
 
             return $this->SuccessResponse($stores);
         }catch(\Exception $e){
             return $this->ErrorResponse(18004 , $e->getCode() , $e->getMessage());
+        }
+    }
+
+
+    /**
+     * @error 18005
+     * read store
+     */
+    public function ReadStore () {
+        try{
+            request()->validate([
+                'id' => 'required|exists:store_addresses,id'
+            ]);
+
+            $store = StoreAddress::find(request('id'));
+
+            $path = "stores/{$store->id}/json.json";
+            if(Storage::exists($path))
+                $store["json"] = json_decode(Storage::read($path));
+
+            return $this->SuccessResponse($store);
+        }catch(\Exception $e){
+            return $this->ErrorResponse(18005 , $e->getCode() , $e->getMessage());
         }
     }
 }

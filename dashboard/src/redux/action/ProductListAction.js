@@ -21,8 +21,6 @@ export const ProductList_SearchAction = (data) => {
             params = params.concat(key , "=" , data[key] , "&")
         }
 
-        console.log(params)
-
         dispatch({type :"ProductList_Status" , action : "ll"})      // loading listing
 
         const req = await fetching(`${ProductSearchURL}${params}` , {} , "GET")

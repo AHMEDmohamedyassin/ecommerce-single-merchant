@@ -1,6 +1,7 @@
 const initial = {
     status : "n",   // n : normal ,  l : loading , s : success , f : fail
     detail : null , // the required detail of user
+    section : null , // the shown section in user update page
 
     id : null , 
     slug : null , 
