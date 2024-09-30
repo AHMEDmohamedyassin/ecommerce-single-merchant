@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\BlockController;
+use App\Http\Controllers\Admin\StaticController;
 use App\Http\Controllers\Admin\StoreController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Credit\AdminOrderController;
@@ -190,3 +191,8 @@ Route::post('/transaction/fawaterk/callback' , [FawaterkController::class , 'Cal
 
 // Image Controller 21,000
 Route::get('/image' , [ImageController::class , 'ImageSetting']);
+
+
+// static controller 22,000
+Route::post('/static/create' , [StaticController::class , 'CreateStatic'])->middleware("AdminMiddleware:static_create");  #admin
+Route::get('/static/read' , [StaticController::class , 'ReadStatic']);

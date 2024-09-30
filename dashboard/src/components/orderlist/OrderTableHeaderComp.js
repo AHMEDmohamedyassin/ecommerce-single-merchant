@@ -28,7 +28,6 @@ const OrderTableHeaderComp = () => {
                 <p className='w-40 '>عنوان الدفع</p>
                 <TableHeaderRowComp state={state} handleOrder={handleSorting} w={40} value={'updated_at'} title={'تاريخ التعديل'} className={'justify-center'}/>
                 <TableHeaderRowComp state={state} handleOrder={handleSorting} w={40} value={'created_at'} title={'تاريخ الإنشاء'} className={'justify-center'}/>
-                <p className='w-10 justify-center'>حذف</p>
             </div>
   )
 }

@@ -22,6 +22,12 @@ import StoreAddressUpdatePage from "pages/store_address/UpdatePage";
 import StoreAddressListPage from "pages/store_address/ListPage";
 import OrderCreatePage from "pages/order/CreatePage";
 import OrderListPage from "pages/order/ListPage";
+import OrderReviewPage from "pages/order/ReviewPage";
+import SettingPage from "pages/SettingPage";
+import FaqPage from "pages/static/FaqPage";
+import AboutPage from "pages/static/AboutPage";
+import ContactPage from "pages/static/ContactPage";
+import PolicyPage from "pages/static/PolicyPage";
 
 function App() {
   const state = useSelector(state => state.AuthReducer)
@@ -40,44 +46,52 @@ function App() {
           {/* header component  */}
           <HeaderComp/>
 
-          {/* side menu component */}
-          <SideMenuComp/>
-
           {/* loading component */}
           <LoadingComp/>
 
+          <div className="flex min-h-[100vb] pt-20">
+            {/* side menu component */}
+            <SideMenuComp/>
+            
+            {/* pages  */}
+            <Routes>
+              {
+                state.token ? (
+                  <>
+                    <Route path="/" element={<DashboardPage/>} />
+                    <Route path="/products" element={<ListPage/>} />
+                    <Route path="/product/create" element={<CreatePage/>} />
+                    <Route path="/product/update/:id" element={<UpdatePage/>} />
 
-          {/* pages  */}
-          <Routes>
-            {
-              state.token ? (
-                <>
-                  <Route path="/" element={<DashboardPage/>} />
-                  <Route path="/products" element={<ListPage/>} />
-                  <Route path="/product/create" element={<CreatePage/>} />
-                  <Route path="/product/update/:id" element={<UpdatePage/>} />
+                    <Route path="/users" element={<UserListPage/>} />
+                    <Route path="/user/create" element={<UserCreatePage/>} />
+                    <Route path="/user/update/:id" element={<UserUpdatePage/>} />
 
-                  <Route path="/users" element={<UserListPage/>} />
-                  <Route path="/user/create" element={<UserCreatePage/>} />
-                  <Route path="/user/update/:id" element={<UserUpdatePage/>} />
+                    <Route path="/coupon" element={<CouponPage/>} />
 
-                  <Route path="/coupon" element={<CouponPage/>} />
+                    <Route path="/permission" element={<PermissionPage/>} />
+                    <Route path="/category" element={<CategoryPage/>} />
 
-                  <Route path="/permission" element={<PermissionPage/>} />
-                  <Route path="/category" element={<CategoryPage/>} />
+                    <Route path="/store-address" element={<StoreAddressListPage/>} />
+                    <Route path="/store-address/create" element={<StoreAddressCreatePage/>} />
+                    <Route path="/store-address/update/:id" element={<StoreAddressUpdatePage/>} />
 
-                  <Route path="/store-address" element={<StoreAddressListPage/>} />
-                  <Route path="/store-address/create" element={<StoreAddressCreatePage/>} />
-                  <Route path="/store-address/update/:id" element={<StoreAddressUpdatePage/>} />
+                    <Route path="/orders" element={<OrderListPage/>} />
+                    <Route path="/order/create" element={<OrderCreatePage/>} />
+                    <Route path="/order/review/:id" element={<OrderReviewPage/>} />
 
-                  <Route path="/orders" element={<OrderListPage/>} />
-                  <Route path="/order/create" element={<OrderCreatePage/>} />
+                    <Route path="/setting" element={<SettingPage/>}/>
+                    <Route path="/faq" element={<FaqPage/>} />
+                    <Route path="/about" element={<AboutPage/>} />
+                    <Route path="/contact" element={<ContactPage/>} />
+                    <Route path="/policy" element={<PolicyPage/>} />
+                  </>
+                ) : <>
+                  <Route path="/*" element={<SessionExpiredPage/>} />
                 </>
-              ) : <>
-                <Route path="/*" element={<SessionExpiredPage/>} />
-              </>
-            }
-          </Routes>
+              }
+            </Routes>
+          </div>
 
 
         </BrowserRouter>

@@ -13,11 +13,11 @@ const OrdersListComp = () => {
                 {
                     !state.order?.total ? <p className='text-sm text-center text-red-500'>لا يوجد عناوين للمستخدم</p> : (
                         <div className='custom-table'>
-                            <div className='custom-tablerow'>
-                                <p className='justify-center '>م</p>
-                                <p className='justify-center w-20'>حالة الطلب</p>
-                                <p className='justify-center w-20'>المبلغ المدفوع</p>
-                                <p className='justify-center w-20'>قيمة الكوبون</p>
+                            <div className='custom-tablerow bg-mainbg'>
+                                <p className='justify-center sticky right-0'>م</p>
+                                <p className='justify-center w-40'>حالة الطلب</p>
+                                <p className='justify-center w-40'>المبلغ المدفوع</p>
+                                <p className='justify-center w-40'>قيمة الكوبون</p>
                                 <p className='justify-center w-40'>طريقة الدفع</p>
                                 <p className='justify-center w-40'>عنوان التوصيل</p>
                                 <p className='justify-center w-40'>عنوان الدفع</p>
@@ -27,10 +27,10 @@ const OrdersListComp = () => {
                             {
                                 state.order?.items.map((e , index) => (
                                     <div key={index} className='custom-tablerow'>
-                                        <p className='justify-center '>{e.id}</p>
-                                        <p className='justify-center w-20'>{OrderStatus(e.status)}</p>
-                                        <p className='justify-center w-20'>{e.cart_total}</p>
-                                        <p className='justify-center w-20'>{e.coupon?.value}</p>
+                                        <p className='justify-center sticky right-0 bg-mainbg'>{e.id}</p>
+                                        <p className='justify-center w-40'>{OrderStatus(e.status)}</p>
+                                        <p className='justify-center w-40'>{e.cart_total}</p>
+                                        <p className='justify-center w-40'>{e.coupon?.value}</p>
                                         <p className='justify-center w-40'>{e.pay_on_diliver ? "دفع عند التوصيل" : "دفع إليكتروني"}</p>
                                         <p className='justify-center w-40'>{e.address?.address}</p>
                                         <p className='justify-center w-40'>{e.store_address?.address}</p>

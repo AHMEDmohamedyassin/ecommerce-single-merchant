@@ -185,7 +185,7 @@ class AdminOrderController extends Controller
             // getting order with all related data
             $order = Order::with('product')->with('coupon')
                     ->with('user')->with('address')
-                    ->with('store_address')
+                    ->with('store_address')->with('transaction')
                     ->find(request('id'));
 
             // getting additional informations in json file

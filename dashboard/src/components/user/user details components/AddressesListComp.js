@@ -18,9 +18,9 @@ const AddressesListComp = () => {
             <>
                 {
                     !state.address?.total ? <p className='text-sm text-center text-red-500'>لا يوجد عناوين للمستخدم</p> : (
-                        <div className='custom-table'>
-                            <div className='custom-tablerow'>
-                                <p className='justify-center '>م</p>
+                        <div className='custom-table '>
+                            <div className='custom-tablerow bg-mainbg'>
+                                <p className='justify-center sticky right-0 bg-mainbg'>م</p>
                                 <p className='w-40'>عنوان</p>
                                 <p className='justify-center w-40'>اسم</p>
                                 <p className='justify-center w-40'>الهاتف</p>
@@ -37,7 +37,7 @@ const AddressesListComp = () => {
                             {
                                 state.address?.items.map((e , index) => (
                                     <div key={index} className='custom-tablerow'>
-                                        <p className='justify-center '>{e.id}</p>
+                                        <p className='justify-center sticky right-0 bg-mainbg'>{e.id}</p>
                                         <p className='w-40'>{e.address}</p>
                                         <p className='justify-center w-40'>{e.name}</p>
                                         <p className='justify-center w-40'>{e.phone}</p>

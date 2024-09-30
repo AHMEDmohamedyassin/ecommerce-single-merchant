@@ -1,40 +1,65 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 const SideMenuComp = () => {
+    const state = useSelector(state => state.SettingReducer)
+    const dispatch = useDispatch()
+
+    const links = [
+        {
+            href : "/" , 
+            title : "لوحة التحكم" ,
+            icon : "dashboard"
+        },
+        {
+            href : "/products" , 
+            title : "المنتجات" ,
+            icon : "category"
+        },
+        {
+            href : "/users" , 
+            title : "المستخدمين" ,
+            icon : "person"
+        },
+        {
+            href : "/coupon" , 
+            title : "القسائم" ,
+            icon : "money"
+        },
+        {
+            href : "/orders" , 
+            title : "الطلبات" ,
+            icon : "shopping_cart"
+        },
+    ]
+
+    const toggleSideMenu = () => {
+        dispatch({type : "Setting_Data" , data : {side_menu : !state.side_menu}})
+    }
+
   return (
-    <div data-animate="sidemenu" className='fixed top-0 right-0 flex h-[100vb] bg-maincolor shadow overflow-hidden w-[60px] pt-10'>
+    <div data-animate="sidemenu" className='h-fit flex bg-maincolor shadow w-fit'>
         <div className='flex flex-col justify-between items-start overflow-y-auto overflow-hidden gap-y-4  px-4 py-6 h-full font-semibold'>
             
             {/* closing and opening icons */}
-            <span data-animate="sidemenuicon" className="hover:text-maincolor hover:cursor-pointer material-symbols-outlined text-3xl text-inherit">menu</span>
-            <span data-animate="sidemenuicon" className="hidden hover:text-maincolor hover:cursor-pointer material-symbols-outlined text-3xl text-inherit">close</span>
+            <span onClick={toggleSideMenu} data-animate="sidemenuicon" className="hover:text-maincolor hover:cursor-pointer material-symbols-outlined text-3xl text-inherit">menu</span>
+            <span onClick={toggleSideMenu} data-animate="sidemenuicon" className="hidden hover:text-maincolor hover:cursor-pointer material-symbols-outlined text-3xl text-inherit">close</span>
             
             {/* links */}
-            <Link to={"/"} className='flex items-center gap-4 hover:text-maincolor'>
-                <span className="material-symbols-outlined text-3xl text-inherit">dashboard</span>
-                <span data-animate="sidemenulabel" className=' text-nowrap'>لوحة التحكم</span>
-            </Link>
+            {
+                links.map((e , index) => (
+                    <Link key={index} to={e.href} className='flex items-center gap-4 hover:text-maincolor w-full'>
+                        <span className="material-symbols-outlined text-3xl text-inherit">{e.icon}</span>
+                        {
+                            state.side_menu ? (
+                                <span data-animate="sidemenulabel" className=' text-nowrap'>{e.title}</span>
+                            ) : null
+                        }
+                    </Link>
+                ))
+            }
 
-            <Link to={"/products"} className='flex items-center gap-4 hover:text-maincolor'>
-                <span className="material-symbols-outlined text-3xl text-inherit">category</span>
-                <span data-animate="sidemenulabel" className=' text-nowrap'>المنتجات</span>
-            </Link>
-
-            <Link to={"/login"} className='flex items-center gap-4 hover:text-maincolor'>
-                <span className="material-symbols-outlined text-3xl text-inherit">add</span>
-                <span data-animate="sidemenulabel" className=' text-nowrap'>إضافة منتج</span>
-            </Link>
-
-            <Link to={"/"} className='flex items-center gap-4 hover:text-maincolor'>
-                <span className="material-symbols-outlined text-3xl text-inherit">person</span>
-                <span data-animate="sidemenulabel" className=' text-nowrap'>المستخدمون</span>
-            </Link>
-            
-            <Link to={"/"} className='flex items-center gap-4 hover:text-maincolor'>
-                <span className="material-symbols-outlined text-3xl text-inherit">person_add</span>
-                <span data-animate="sidemenulabel" className=' text-nowrap'>إضافة مستخدم</span>
-            </Link>
         </div>
     </div>
   )

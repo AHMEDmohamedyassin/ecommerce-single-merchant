@@ -19,10 +19,11 @@ const CreatePage = () => {
         dispatch(Order_CreateAction())    
     }
 
+    // navigation on success creating the prodcut
     useEffect(() => {
         if(state.status == 'sc'){
             dispatch({type:"Order_Status" , data : "n"})
-            navigate('/orders')
+            navigate(`/order/update/${state.id}`)
         }
 
     } , [state.status])

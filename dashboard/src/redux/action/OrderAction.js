@@ -1,5 +1,5 @@
 import { fetching } from "../../Fetch/Fetch";
-import { CouponReadURL, OrderCreateURL, ProductSerialURL } from "../../Fetch/Url";
+import { CouponReadURL, OrderCreateURL, OrderReadURL, ProductSerialURL, UserCreateURL } from "../../Fetch/Url";
 import { store } from "../../redux/store";
 import { Setting_Msg } from "./SettingAction";
 
@@ -166,11 +166,13 @@ export const Order_CreateAction = () => {
         
         dispatch({type :"Order_Status" , data : "lc"})      // loading create order
         
-        // data need to be sent
+        // data need to be sent , prepairing the order products and addtionals and coupon and status
         let products = state.products?.map(({id , price , count}) => ({id , price , quantity : count}))   // get only needed form array
         let data = {products , additional : state.additional , coupon : state.coupon?.coupon , status : state.order_state}
         
-        console.log(data)
+        // check if user data is provided by search of existing users
+        if(['old' , 'new'].includes(state.user_state) && state.user )
+            data.user_id = state.user.id
 
         const req = await fetching(OrderCreateURL , data )
 
@@ -181,10 +183,49 @@ export const Order_CreateAction = () => {
         Setting_Msg(33000)
 
         dispatch({
-            type:"Order_Reset", 
+            type:"Order_Data", 
             data : {
-                status : "sc"      // success creating the order
+                ...req.res ,
+                status : "sc",  // success creating the order
             }
+        })
+    }
+}
+
+
+
+
+/**
+ * order read data
+ */
+export const Order_ReadAction = (id) => {
+    return async dispatch => {
+        const state = store.getState().OrderReducer
+
+        // prevent multi-fetch to same data
+        if(state.id == id)
+            return {}
+        
+        dispatch({type : "Order_Status" , data : "lr"})        // loading read order data
+
+        const req = await fetching(`${OrderReadURL}?id=${id}` , {} , "GET")
+
+        if(!req.success)
+            return dispatch({type : "Order_Status" , data : "n"})
+        
+        
+        // modify the response to be readed by appliction
+        let res = {
+            ...req.res , 
+            products : req.res?.product?.map(({title , id , pivot}) => ({count : pivot?.quantity , price : pivot?.price , title , id })) , 
+            order_state : req.res?.status
+        }
+        delete res.product // error in returned name of collection that containing products , [products] should be [product]
+        delete res.status
+
+        dispatch({
+            type :"Order_Data" , 
+            data : res
         })
     }
 }

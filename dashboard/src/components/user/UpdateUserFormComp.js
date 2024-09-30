@@ -58,44 +58,32 @@ const UpdateUserFormComp = () => {
     } , [state])
   return (
     <div className='custom-dashcontainer'>
+        <p className='title'>تعديل بيانات المستخدم</p>
 
-        {/* section title with toggle arrow button */}
-        <SectionTitleComp title={'تعديل بيانات المستخدم'} section={'update'}/>
-
-        {
-            state.section == 'update' ? (
-                <>
-                    <form onSubmit={handleSubmit(SubmitForm)} className='flex flex-col gap-4'>
-
-                        <div className='custom-inputcontainer'>
-                            <label>الاسم</label>
-                            <input {...register("name")} />
-                            {errors.name && <p>{errors.name.message}</p>}
-                        </div>
-
-                        <div className='custom-inputcontainer'>
-                            <label>رقم الهاتف</label>
-                            <input {...register("phone")} />
-                            {errors.phone && <p>{errors.phone.message}</p>}
-                        </div>
-
-                        <div className='custom-inputcontainer'>
-                            <label>البريد الإليكتروني</label>
-                            <input {...register("email")} />
-                            {errors.email && <p>{errors.email.message}</p>}
-                        </div>
-
-                        {/* buttons  */}
-                        <div className='flex justify-center gap-4 flex-wrap'>
-                            <button type='submit' className='custom-button2 w-fit'>تأكيد</button>
-                            <button onClick={ResetForm} type='button' className='custom-button hover:bg-blue-500'>إعادة</button>
-                            <button onClick={ResetPassword} type='button' className='custom-button hover:bg-blue-500'>إعادة تعيين كلمة المرور</button>
-                            <button onClick={handleDelete} type='button' className='custom-button hover:bg-red-500'>حذف</button>
-                        </div>
-                    </form>
-                </>
-            )  : <div className='text-center -mb-10'><span className="material-symbols-outlined text-5xl">more_horiz</span></div>
-        }
+            <form onSubmit={handleSubmit(SubmitForm)} className='flex flex-col gap-4'>
+                <div className='custom-inputcontainer'>
+                    <label>الاسم</label>
+                    <input {...register("name")} />
+                    {errors.name && <p>{errors.name.message}</p>}
+                </div>
+                <div className='custom-inputcontainer'>
+                    <label>رقم الهاتف</label>
+                    <input {...register("phone")} />
+                    {errors.phone && <p>{errors.phone.message}</p>}
+                </div>
+                <div className='custom-inputcontainer'>
+                    <label>البريد الإليكتروني</label>
+                    <input {...register("email")} />
+                    {errors.email && <p>{errors.email.message}</p>}
+                </div>
+                {/* buttons  */}
+                <div className='flex justify-center gap-4 flex-wrap'>
+                    <button type='submit' className='custom-button2 w-fit'>تأكيد</button>
+                    <button onClick={ResetForm} type='button' className='custom-button hover:bg-blue-500'>إعادة</button>
+                    <button onClick={ResetPassword} type='button' className='custom-button hover:bg-blue-500'>إعادة تعيين كلمة المرور</button>
+                    <button onClick={handleDelete} type='button' className='custom-button hover:bg-red-500'>حذف</button>
+                </div>
+            </form>
     </div>
   )
 }

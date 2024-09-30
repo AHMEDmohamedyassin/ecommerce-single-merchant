@@ -31,8 +31,7 @@
 
 /static # static content pages like contact , about pages
     /[page_name]
-        /json
-            json.json
+        /json.json
         /images
 	    /image1.jpg
 	    /image2.png

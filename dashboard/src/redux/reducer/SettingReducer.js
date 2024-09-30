@@ -1,5 +1,8 @@
 const initial = {
+    status : "n" ,
     page_loading : false,
+    side_menu : false , 
+    items : []
 }
 
 export const SettingReducer = (state = initial , action) => {
@@ -8,6 +11,11 @@ export const SettingReducer = (state = initial , action) => {
             return {
                 ...state,
                 ...action.data
+            }
+        case "Setting_Status":
+            return {
+                ...state,
+                status : action.data
             }
         case "Setting_Loading":
             return {

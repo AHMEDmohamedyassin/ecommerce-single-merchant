@@ -1,0 +1,50 @@
+faq : 
+
+{
+    questions : [
+        {
+            question : "" ,
+            answer : ""
+        },
+        {
+            question : "" ,
+            answer : ""
+        },
+    ]
+}
+
+
+
+about : 
+
+{
+    content : [
+        {
+            title : "" ,
+            value : ""
+        },
+        {
+            title : "" ,
+            value : ""
+        },
+    ]
+}
+
+
+contact : 
+
+{
+    address : value,
+    email : value,
+    whatsapp : value,
+    phone : value,
+    work : value,
+}
+
+
+policies : 
+
+{
+    return_policy : ""
+    shipping_policy : ""
+}

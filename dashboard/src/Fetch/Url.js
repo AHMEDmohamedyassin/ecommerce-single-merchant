@@ -76,3 +76,22 @@ export const StoreAddressListURL = "/store/list"
 // order 
 export const OrderCreateURL = '/order/create'
 export const OrderListURL = '/order/list'
+export const OrderReadURL = '/order/read'
+export const OrderStatusURL = '/order/update/status'
+
+
+// setting
+export const SettingListURL = '/setting/list'
+export const SettingUpdateURL = '/setting/update'
+
+
+// blocks 
+export const BlockListURL = '/block/list'
+export const BlockCreateURL = '/block/create'
+export const BlockDisableURL = '/block/disable'
+export const BlockUserDisableURL = '/block/user/disable'
+
+
+// static
+export const StaticCreateURL = '/static/create'
+export const StaticReadURL = '/static/read'

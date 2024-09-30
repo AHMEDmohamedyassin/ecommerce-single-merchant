@@ -4,12 +4,13 @@ import { useForm } from 'react-hook-form'
 import { CreateUserValidation } from '../../validation/UserValidation'
 import { useDispatch, useSelector } from 'react-redux'
 import { User_CreateAction } from '../../redux/action/UserAction'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const CreatePage = () => {
     const state = useSelector(state => state.UserReducer)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const location = useLocation()
 
     const {register , handleSubmit , formState:{errors}} = useForm({mode:"onBlur" , resolver:zodResolver(CreateUserValidation)})
 
@@ -18,8 +19,9 @@ const CreatePage = () => {
     }
 
     // navigate to update page after creating user
+    // handle navigation only when user create page in open not when page is implemented in other page
     useEffect(() => {
-        if(state.status == 'sc'){
+        if(state.status == 'sc' && location.pathname == `/user/create`){
             dispatch({type:"User_Status" , data : "n"})
             navigate(`/user/update/${state.id}`)
         }

@@ -3,10 +3,12 @@ import OrderTableRowComp from './OrderTableRowComp'
 import { useDispatch, useSelector } from 'react-redux'
 import OrderAdditionalTableRowComp from './OrderAdditionalTableRowComp'
 import { Order_AdditionalCreateAction } from '../../../redux/action/OrderAction'
+import { useLocation } from 'react-router-dom'
 
 const OrdersTableComp = () => {
     const state = useSelector(state => state.OrderReducer)
     const dispatch = useDispatch()
+    const location = useLocation()
 
 
     const handleAddingAdditional = () => {
@@ -39,8 +41,13 @@ const OrdersTableComp = () => {
                 )
             }
             
+            
             {/* adding additional product  */}
-            <button onClick={handleAddingAdditional} type='button' className='custom-button2 text-xs py-1'>إضافة</button>
+            {
+                location.pathname == '/order/create' ? (
+                    <button onClick={handleAddingAdditional} type='button' className='custom-button2 text-xs py-1'>إضافة</button>
+                ) : null
+            }
         
         </div>
     </>

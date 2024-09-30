@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import { User_DeleteAction, User_ReadAction, User_UpdateAction } from '../../redux/action/UserAction'
-import { useForm } from 'react-hook-form'
-import { UpdateUserValidation } from '../../validation/UserValidation'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { ValidateInputChanges } from 'validation/Validation'
+import {  User_ReadAction } from '../../redux/action/UserAction'
 import UpdateUserFormComp from 'components/user/UpdateUserFormComp'
 import UserDetailFormComp from 'components/user/UserDetailFormComp'
 import AddressCreateComp from 'components/user/AddressCreateComp'
 import PermissionsComp from 'components/user/permission_roles/PermissionsComp'
 import RolesComp from 'components/user/permission_roles/RolesComp'
+import BlockCreateComp from 'components/user/BlockCreateComp'
 
 const UpdatePage = () => {
     const state = useSelector(state => state.UserReducer)
@@ -43,6 +40,9 @@ const UpdatePage = () => {
 
                     {/* roles  */}
                     <RolesComp/>
+
+                    {/* block form  */}
+                    <BlockCreateComp/>
                 </>
             )
         }

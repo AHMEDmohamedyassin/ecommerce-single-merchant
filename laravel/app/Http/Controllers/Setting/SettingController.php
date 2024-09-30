@@ -35,7 +35,7 @@ class SettingController extends Controller
         try{
             request()->validate([
                 'id' => 'required|exists:settings,id' ,
-                'value' => 'required|max:255'
+                'value' => 'required|max:255|numeric|min:0'
             ]);
             
             // check if setting is updatable

@@ -14,6 +14,8 @@ const LoadingComp = () => {
   const coupon = useSelector(state => state.CouponReducer)
   const store = useSelector(state => state.StoreAddressReducer)
   const order = useSelector(state => state.OrderReducer)
+  const order_list = useSelector(state => state.OrderListReducer)
+  const static_reducer = useSelector(state => state.StaticReducer)
   return (
     <>
       {
@@ -27,7 +29,9 @@ const LoadingComp = () => {
         user_list.status != 'n' ||
         coupon.status != 'n' ||
         store.status != 'n' ||
-        order.status != 'n' 
+        order.status != 'n' ||
+        order_list.status != 'n' ||
+        static_reducer.status != 'n' 
         ? (
           <div className='z-50 fixed top-0 left-0 w-full h-full bg-white/50 flex justify-center items-center'>
               <LargeSpinnerComp/>

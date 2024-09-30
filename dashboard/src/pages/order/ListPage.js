@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { OrderList_ListAction } from '../../redux/action/OrderListAction'
 import OrderTableComp from 'components/orderlist/OrderTableComp'
-import { formattingOrderStatus } from 'validation/OrderValidation'
 import PaginationComp from 'components/public/PaginationComp'
+import { formattingOrderStatus } from 'validation/OrderValidation'
 
 const ListPage = () => {
     const state = useSelector(state => state.OrderListReducer)

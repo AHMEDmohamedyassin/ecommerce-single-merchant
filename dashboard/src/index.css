@@ -99,7 +99,7 @@ input:focus , select:focus{
     }
 
     .custom-dashcontainer{
-        @apply bg-secondarybg custom-border py-8 px-6 rounded-xl shadow mx-2 ms-20 mb-20
+        @apply bg-secondarybg custom-border py-8 px-6 rounded-xl shadow mx-8  mb-20 w-full overflow-hidden
     }
     .custom-dashcontainer .title {
         @apply text-sm font-bold text-gray-500 mb-8 w-full
@@ -110,7 +110,7 @@ input:focus , select:focus{
         @apply relative max-w-full w-fit custom-border border-l-0 border-b-0 mx-auto my-10 overflow-x-auto
     }
     .custom-table .custom-tablerow {
-        @apply  flex w-max  
+        @apply  flex w-max
     }
     .custom-table .custom-tablerow p {
         @apply px-2 custom-border border-r-0 border-t-0 text-start text-sm flex items-center min-h-10 min-w-10

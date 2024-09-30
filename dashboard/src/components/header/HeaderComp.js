@@ -1,10 +1,11 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const HeaderComp = () => {
   return (
-    <div className='w-full bg-maincolor text-secondarybg mb-10'>
+    <div className='z-20 w-full bg-maincolor text-secondarybg fixed top-0 left-0'>
         <div className='custom-container flex items-center justify-between py-4 font-bold'>
-            <div>لوحة التحكم</div>
+            <Link to={'/'}>لوحة التحكم</Link>
         </div>
     </div>
   )

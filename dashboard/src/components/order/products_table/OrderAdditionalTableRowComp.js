@@ -17,7 +17,7 @@ const OrderAdditionalTableRowComp = ({data}) => {
             <p className='w-10 justify-center'><span onClick={() => handleChange({quantity : 0})} className="material-symbols-outlined hover:text-red-500">close</span></p>
             <p className='w-20'><img className='w-full h-full object-cover' src={`${ImageURL}`} loading='lazy'/></p>
             <p className='w-80'>
-                <input onChange={e => handleChange({title : e.target.value})} className='w-full h-full' />
+                <input onChange={e => handleChange({title : e.target.value})} value={data.title} className='w-full h-full' />
             </p>
             <p className='w-40 justify-center'>
                 <span onClick={() => handleChange({quantity : data.quantity + 1})} class="material-symbols-outlined hover:text-blue-500">add</span>

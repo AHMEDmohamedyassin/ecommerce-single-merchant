@@ -159,7 +159,7 @@ class UserController extends Controller
             $users = User::query();
 
             if(request()->has('search'))
-                $users->where('slug' , 'like' , '%'.request('search').'%');
+                $users->where('slug' , 'like' , '%'.$this->CreateSlug(request('search')).'%');
 
             $users->orderby('id' , 'desc');
 
