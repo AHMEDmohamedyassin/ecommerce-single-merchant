@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { UserList_DeleteAction, UserList_ListAction } from '../../redux/action/UserListAction'
 import { formattingDateForUpdate } from 'validation/Validation'
-import SearchComp from '../../components/user/SearchComp'
+import SearchComp from '../../components/public/SearchComp'
 import PaginationComp from 'components/public/PaginationComp'
 import { Link } from 'react-router-dom'
 
@@ -28,10 +28,16 @@ const ListPage = () => {
   } , [])
   return (
     <div className='custom-dashcontainer'>
-      <p className='title'>المستخدمين</p>
+        <div className='title_container'>
+          <p>المستخدمين</p>
+          <Link to={'/user/create'} className=''>
+            <span className="material-symbols-outlined">add</span>
+            <span>إضافة مستخدم</span>  
+          </Link>
+        </div>
 
       {/* search components  */}
-      <SearchComp/>
+      <SearchComp placeholder={'بحث باسم المستخدم و رقم الهاتف و البريد الإليكتروني'} state={state} action={UserList_ListAction} />
 
       <div className='custom-table'>
 

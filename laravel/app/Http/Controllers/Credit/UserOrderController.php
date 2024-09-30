@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Credit;
 use App\Events\OrderCancelEvent;
 use App\Exceptions\CustomException;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Setting\SettingController;
 use App\Traits\PaginateTrait;
 use App\Traits\ResponseTrait;
 use Carbon\Carbon;
@@ -89,6 +90,9 @@ class UserOrderController extends Controller
 
             // adds products to return order data
             $order['products'] = $data;
+
+            // update orders count
+            SettingController::updateCreateSetting(SettingController::$orders_count);
 
             return $this->SuccessResponse($order);
         }catch(\Exception $e){

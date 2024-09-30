@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Users;
 
 use App\Exceptions\CustomException;
+use App\Http\Controllers\Setting\SettingController;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Mail\EmailVerify;
@@ -84,6 +85,9 @@ class AuthController {
                 'slug' => $slug
             ]);
 
+            // update user count in setting table
+            SettingController::updateCreateSetting(SettingController::$user_count);
+
             return $this->SuccessResponse($user);
         }catch(\Exception $e){
             return $this->ErrorResponse(1002 , $e->getCode() , $e->getMessage());
@@ -112,9 +116,6 @@ class AuthController {
      */
     public function GetUserDataAuth(){
         try{
-            // update users visits in setting table
-            // (new SettingController)->UpdateSetting('visitors_count');
-
             $user = request('user');
 
             $user['token'] = request('token');
@@ -291,6 +292,21 @@ class AuthController {
             return view('EmailVerify.Success' , ['user' => $user]);
         }catch(\Exception $e){
             return view('EmailVerify.Fail');
+        }
+    }
+
+
+    /**
+     * @code 1010
+     * record visit
+     */
+    public function visitAuth () {
+        try{
+            SettingController::updateCreateSetting(SettingController::$visits_count);
+
+            return $this->SuccessResponse();
+        }catch(\Exception $e) {
+            return $this->ErrorResponse(code:1010 ,msg: $e->getMessage() , msg_code:$e->getCode());
         }
     }
 

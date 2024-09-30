@@ -13,10 +13,17 @@ class SettingController extends Controller
 {
     use ResponseTrait , PaginateTrait;
 
+    public static $user_count = 'user_count' ; 
+    public static $visits_count = 'visits_count';
+    public static $reviews_count = 'reviews_count';
+    public static $products_count = 'products_count';
+    public static $orders_count = 'orders_count';
+
     /**
      * helper function to get value of setting slug
      * if setting not recorded in database returning the default value in env file
      * if setting not recorded in env file and database throw error
+     * not routed
      */
     public function valueSetting ($slug) {
         $val = Setting::where('slug' , $slug)->first()?->value;
@@ -25,6 +32,35 @@ class SettingController extends Controller
         if($val == null) throw new CustomException('setting is not registered' , 9);
 
         return $val;
+    }
+
+    /**
+     * updating the settings values 
+     * if element not found it will create one
+     * not routed
+     */
+    public static function updateCreateSetting ($label , $increase = true) {
+        $setting = Setting::where('slug' , $label)->first();
+
+        // decrease state
+        if(!$increase){
+            if($setting && $setting->value > 0){
+                $setting->update(['value' => $setting->value - 1]);
+                return $setting->value;
+            }
+            return 0;
+        }
+
+        // increase state
+        if($setting){
+            $setting->update(['value' => $setting->value + 1]);
+            return $setting->value;
+        }
+
+        Setting::create([
+            'slug' => $label,
+            'value' => 1 , 
+        ]);
     }
 
 
@@ -64,9 +100,13 @@ class SettingController extends Controller
      */
     public function ListSetting () {
         try{
+
+            request()->validate([
+                'type' => "nullable|boolean"
+            ]);
             
             $settings = Setting::where([
-                'updatable' => 1
+                'updatable' => request('type' , 1)
             ])->get();
 
             return $this->SuccessResponse($settings);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Setting\SettingController;
 use App\Http\Controllers\Users\AddressController;
 use App\Http\Controllers\Users\AuthController;
 use App\Models\User;
@@ -63,6 +64,9 @@ class UserController extends Controller
 
                 $user['address'] = $address;
             }
+
+            // update users count
+            SettingController::updateCreateSetting(SettingController::$user_count );
 
             return $this->SuccessResponse($user);
         }catch(\Exception $e){
@@ -138,6 +142,9 @@ class UserController extends Controller
             $path = "/users/{$user->id}";
             if(Storage::directoryExists($path))
                 Storage::deleteDirectory($path);
+
+            // update users count
+            SettingController::updateCreateSetting(SettingController::$user_count , false);
 
             return $this->SuccessResponse($user);
         }catch(\Exception $e){

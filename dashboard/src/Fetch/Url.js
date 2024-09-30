@@ -95,3 +95,9 @@ export const BlockUserDisableURL = '/block/user/disable'
 // static
 export const StaticCreateURL = '/static/create'
 export const StaticReadURL = '/static/read'
+
+
+// review 
+export const ReviewListURL = '/review/admin/list'
+export const ReviewPublishURL = '/review/admin/publish'
+export const ReviewDeleteURL = '/review/admin/delete'

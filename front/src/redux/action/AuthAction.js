@@ -1,6 +1,6 @@
 import { store } from '../store'
 import {fetching} from '../../Fetch/Fetch'
-import { ForgetPasswordURL, LoginURL, LogoutURL, RegisterURL, ResetPasswordURL , UpdateURL, UpdateUserDataURL, UserDataURL, VerifyEmailURL } from '../../Fetch/Url';
+import { ForgetPasswordURL, LoginURL, LogoutURL, RegisterURL, ResetPasswordURL , UpdateURL, UpdateUserDataURL, UserDataURL, UserVisitURL, VerifyEmailURL } from '../../Fetch/Url';
 import { notify } from '../../components/public/NotificationComp';
 import { Setting_Msg } from './SettingAction';
 
@@ -174,5 +174,17 @@ export const Auth_DataUpdate = (data) => {
             type:"Auth_Login" ,
             data : req.res
         })
+    }
+}
+
+
+
+
+/**
+ * record user visit
+ */
+export const Auth_VisitAction = () => {
+    return async dispatch => {
+        const req = await fetching(UserVisitURL , {} , "POST" , false)
     }
 }

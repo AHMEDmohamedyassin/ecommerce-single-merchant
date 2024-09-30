@@ -2,7 +2,8 @@ const initial = {
     status : "n" ,
     page_loading : false,
     side_menu : false , 
-    items : []
+    items : [] , 
+    statistics : []
 }
 
 export const SettingReducer = (state = initial , action) => {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Setting\SettingController;
 use App\Models\Category;
 use App\Models\Product;
 use App\Traits\PaginateTrait;
@@ -70,6 +71,9 @@ class ProductController extends Controller
             // writing json file and appending it with response
             $product = $this->WritingJson($product);
 
+            // update products count
+            SettingController::updateCreateSetting(SettingController::$products_count);
+
             return $this->SuccessResponse($product->load('category'));
         }catch(\Exception $e){
             return $this->ErrorResponse(7001 , $e->getCode() , $e->getMessage());
@@ -126,6 +130,9 @@ class ProductController extends Controller
             $product->delete();
 
             Storage::deleteDirectory('/products/' . request('id'));
+            
+            // update products count
+            SettingController::updateCreateSetting(SettingController::$products_count , false);
 
             return $this->SuccessResponse($product);
         }catch(\Exception $e){

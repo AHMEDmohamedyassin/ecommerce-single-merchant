@@ -23,10 +23,15 @@ const CreatePage = () => {
     useEffect(() => {
         if(state.status == 'sc'){
             dispatch({type:"Order_Status" , data : "n"})
-            navigate(`/order/update/${state.id}`)
+            navigate(`/order/review/${state.id}`)
         }
 
     } , [state.status])
+
+    // reset the store
+    useEffect(() => {
+        dispatch({type : "Order_Reset"  })
+    } , [])
   return (
     <div className='custom-dashcontainer'>
         <p className='title'>إنشاء طلب</p>

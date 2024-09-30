@@ -20,4 +20,3 @@ export const Setting_Loading = (state = true) => {
         data : state
     })
 }
-

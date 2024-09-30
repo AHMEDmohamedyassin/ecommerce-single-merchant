@@ -4,6 +4,7 @@ import { msgs } from "Fetch/Msg"
 import { Confirm_Msg } from "Fetch/Confirm_Msg"
 import { fetching } from "../../Fetch/Fetch"
 import { StaticCreateURL, StaticReadURL } from "Fetch/Url"
+import { Setting_Confirm } from "./SettingAction"
 
 
 /**
@@ -11,6 +12,9 @@ import { StaticCreateURL, StaticReadURL } from "Fetch/Url"
  */
 export const Static_CreateAction = (data) => {
     return async dispatch => {
+
+        // confirmation update
+        if(!Setting_Confirm(2000)) return{}
 
         dispatch({type : "Static_Status" , data : "lc"});
 

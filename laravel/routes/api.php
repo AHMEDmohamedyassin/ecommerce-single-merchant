@@ -36,6 +36,7 @@ Route::middleware('TokenRequiredMiddleware' , 'BlockCheckMiddleware' , 'EmailVer
 Route::post('/auth/forgetpassword' , [AuthController::class , 'passwordForgetAuth']);
 Route::post('/auth/passwordreset' , [AuthController::class , 'passwordResetAuth']);
 Route::get('/auth/emailverify/{id}/{hash}' , [AuthController::class , 'CheckEmailVerifyTempUrlAuth'])->name('emailverify');
+Route::post('/auth/visit' , [AuthController::class , 'visitAuth']);
 
 
 // Top Category Controller 2000

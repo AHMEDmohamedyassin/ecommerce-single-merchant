@@ -21,7 +21,7 @@ import AboutPage from "pages/Static/AboutPage";
 import LoadingComp from "components/public/LoadingComp";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { Auth_GetuserdataAction } from "./redux/action/AuthAction";
+import { Auth_GetuserdataAction, Auth_VisitAction } from "./redux/action/AuthAction";
 
 function App() {
   const auth = useSelector(state=>state.AuthReducer)
@@ -29,6 +29,7 @@ function App() {
 
   useEffect(() => {
     dispatch(Auth_GetuserdataAction())
+    dispatch(Auth_VisitAction())
   } , [])
   return (
     <div>

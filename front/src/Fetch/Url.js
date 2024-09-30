@@ -11,6 +11,7 @@ export const ResetPasswordURL = '/auth/passwordreset';
 export const UserDataURL = '/auth/getdata';
 export const LogoutURL = '/auth/logout';
 export const UpdateURL = '/auth/update';
+export const UserVisitURL = '/auth/visit'
 
 // addresses
 export const AddressCreateURL = '/address/create'

@@ -99,10 +99,21 @@ input:focus , select:focus{
     }
 
     .custom-dashcontainer{
-        @apply bg-secondarybg custom-border py-8 px-6 rounded-xl shadow mx-8  mb-20 w-full overflow-hidden
+        @apply bg-secondarybg custom-border py-8 px-6 rounded-xl shadow  w-full overflow-hidden mb-8
     }
     .custom-dashcontainer .title {
         @apply text-sm font-bold text-gray-500 mb-8 w-full
+    }
+
+    /* custom dash container title with adding button  */
+    .custom-dashcontainer .title_container {
+        @apply flex justify-between items-center flex-wrap gap-4 mb-8
+    }
+    .custom-dashcontainer .title_container p {
+        @apply text-sm font-bold text-gray-500  
+    }
+    .custom-dashcontainer .title_container a {
+        @apply custom-border px-4  hover:bg-black/70 disabled:bg-black/70 text-white bg-black py-1 text-xs font-semibold flex items-center 
     }
 
     /* table styling */

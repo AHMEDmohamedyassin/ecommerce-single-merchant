@@ -32,6 +32,26 @@ const SideMenuComp = () => {
             title : "الطلبات" ,
             icon : "shopping_cart"
         },
+        {
+            href : "/permission" , 
+            title : "الصلاحيات" ,
+            icon : "check"
+        },
+        {
+            href : "/category" , 
+            title : "الصلاحيات" ,
+            icon : "category"
+        },
+        {
+            href : "/store-address" , 
+            title : "الفروع" ,
+            icon : "pin_drop"
+        },
+        {
+            href : "/review" , 
+            title : "المراجعات" ,
+            icon : "rate_review"
+        },
     ]
 
     const toggleSideMenu = () => {
@@ -39,7 +59,7 @@ const SideMenuComp = () => {
     }
 
   return (
-    <div data-animate="sidemenu" className='h-fit flex bg-maincolor shadow w-fit'>
+    <div data-animate="sidemenu" className='h-fit flex bg-secondarybg shadow w-fit custom-border rounded-lg ms-2 sticky top-20'>
         <div className='flex flex-col justify-between items-start overflow-y-auto overflow-hidden gap-y-4  px-4 py-6 h-full font-semibold'>
             
             {/* closing and opening icons */}

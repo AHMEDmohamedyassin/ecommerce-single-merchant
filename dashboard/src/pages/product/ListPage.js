@@ -1,10 +1,11 @@
-import SearchComp from 'components/productlist/SearchComp'
+import SearchComp from 'components/public/SearchComp'
 import TableRowComp from 'components/productlist/TableRowComp'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ProductList_SearchAction } from '../../redux/action/ProductListAction'
 import TableHeaderComp from '../../components/productlist/TableHeaderComp'
 import PaginationComp from 'components/public/PaginationComp'
+import { Link } from 'react-router-dom'
 
 const ListPage = () => {
   const state = useSelector(state => state.ProductListReducer)
@@ -22,11 +23,18 @@ const ListPage = () => {
   } , [])
   return (
     <div className='custom-dashcontainer'>
-      <p className='title'>المنتجات</p>
+
+      <div className='title_container'>
+        <p>المنتجات</p>
+        <Link to={'/product/create'} className=''>
+          <span className="material-symbols-outlined">add</span>
+          <span>إضافة منتج</span>  
+        </Link>
+      </div>
 
 
-      {/* search component */}
-      <SearchComp/>
+      {/* search form  */}
+      <SearchComp state={state} placeholder={'بحث في العنوان و السعر و الوصف'} action={ProductList_SearchAction}/>
 
 
       {/* table */}

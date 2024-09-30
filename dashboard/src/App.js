@@ -28,6 +28,8 @@ import FaqPage from "pages/static/FaqPage";
 import AboutPage from "pages/static/AboutPage";
 import ContactPage from "pages/static/ContactPage";
 import PolicyPage from "pages/static/PolicyPage";
+import FooterComp from "components/footer/FooterComp";
+import ReviewPage from "pages/ReviewPage";
 
 function App() {
   const state = useSelector(state => state.AuthReducer)
@@ -37,7 +39,7 @@ function App() {
     dispatch(Auth_GetuserdataAction())
   } ,[])
   return (
-    <div className="bg-mainbg">
+    <div className="bg-mainbg relative">
         <BrowserRouter>
 
           {/* notifications container */}
@@ -49,50 +51,59 @@ function App() {
           {/* loading component */}
           <LoadingComp/>
 
-          <div className="flex min-h-[100vb] pt-20">
+          <div className="flex min-h-[100vb] pt-20 items-start">
             {/* side menu component */}
             <SideMenuComp/>
             
-            {/* pages  */}
-            <Routes>
-              {
-                state.token ? (
-                  <>
-                    <Route path="/" element={<DashboardPage/>} />
-                    <Route path="/products" element={<ListPage/>} />
-                    <Route path="/product/create" element={<CreatePage/>} />
-                    <Route path="/product/update/:id" element={<UpdatePage/>} />
+            <div className="w-full mx-4 overflow-hidden">
+              {/* pages  */}
+              <Routes>
+                {
+                  state.token ? (
+                    <>
+                      <Route path="/" element={<DashboardPage/>} />
+                      
+                      <Route path="/products" element={<ListPage/>} />
+                      <Route path="/product/create" element={<CreatePage/>} />
+                      <Route path="/product/update/:id" element={<UpdatePage/>} />
 
-                    <Route path="/users" element={<UserListPage/>} />
-                    <Route path="/user/create" element={<UserCreatePage/>} />
-                    <Route path="/user/update/:id" element={<UserUpdatePage/>} />
+                      <Route path="/users" element={<UserListPage/>} />
+                      <Route path="/user/create" element={<UserCreatePage/>} />
+                      <Route path="/user/update/:id" element={<UserUpdatePage/>} />
 
-                    <Route path="/coupon" element={<CouponPage/>} />
+                      <Route path="/coupon" element={<CouponPage/>} />
 
-                    <Route path="/permission" element={<PermissionPage/>} />
-                    <Route path="/category" element={<CategoryPage/>} />
+                      <Route path="/permission" element={<PermissionPage/>} />
 
-                    <Route path="/store-address" element={<StoreAddressListPage/>} />
-                    <Route path="/store-address/create" element={<StoreAddressCreatePage/>} />
-                    <Route path="/store-address/update/:id" element={<StoreAddressUpdatePage/>} />
+                      <Route path="/category" element={<CategoryPage/>} />
 
-                    <Route path="/orders" element={<OrderListPage/>} />
-                    <Route path="/order/create" element={<OrderCreatePage/>} />
-                    <Route path="/order/review/:id" element={<OrderReviewPage/>} />
+                      <Route path="/review" element={<ReviewPage/>}/>
 
-                    <Route path="/setting" element={<SettingPage/>}/>
-                    <Route path="/faq" element={<FaqPage/>} />
-                    <Route path="/about" element={<AboutPage/>} />
-                    <Route path="/contact" element={<ContactPage/>} />
-                    <Route path="/policy" element={<PolicyPage/>} />
+                      <Route path="/store-address" element={<StoreAddressListPage/>} />
+                      <Route path="/store-address/create" element={<StoreAddressCreatePage/>} />
+                      <Route path="/store-address/update/:id" element={<StoreAddressUpdatePage/>} />
+
+                      <Route path="/orders" element={<OrderListPage/>} />
+                      <Route path="/order/create" element={<OrderCreatePage/>} />
+                      <Route path="/order/review/:id" element={<OrderReviewPage/>} />
+
+                      <Route path="/setting" element={<SettingPage/>}/>
+                      <Route path="/faq" element={<FaqPage/>} />
+                      <Route path="/about" element={<AboutPage/>} />
+                      <Route path="/contact" element={<ContactPage/>} />
+                      <Route path="/policy" element={<PolicyPage/>} />
+                    </>
+                  ) : <>
+                    <Route path="/*" element={<SessionExpiredPage/>} />
                   </>
-                ) : <>
-                  <Route path="/*" element={<SessionExpiredPage/>} />
-                </>
-              }
-            </Routes>
+                }
+              </Routes>
+
+            </div>
+
           </div>
 
+          <FooterComp/>
 
         </BrowserRouter>
     </div>

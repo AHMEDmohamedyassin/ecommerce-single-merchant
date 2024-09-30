@@ -6,6 +6,7 @@ use App\Events\OrderCancelEvent;
 use App\Events\OrderReadyEvent;
 use App\Exceptions\CustomException;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Setting\SettingController;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
@@ -17,16 +18,6 @@ use Illuminate\Support\Facades\Storage;
 class AdminOrderController extends Controller
 {
     use ResponseTrait , PaginateTrait;
-
-    // "user_id" , 
-    // "shipping_address_id" , 
-    // "billing_address_id" , 
-    // "coupon_id" , 
-    // "cart_total" , 
-    // "currency" , 
-    // "pay_on_diliver" , 
-    // "status" , 
-
 
     /**
      * @error 14001
@@ -112,6 +103,10 @@ class AdminOrderController extends Controller
             // adjusting response data
             $order['additional'] = request('additional');
             $order['product'] = request('products');
+
+
+            // update orders count
+            SettingController::updateCreateSetting(SettingController::$orders_count);
 
             return $this->SuccessResponse($order);
         }catch(\Exception $e){

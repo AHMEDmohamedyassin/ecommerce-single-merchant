@@ -149,7 +149,7 @@ class ImageController extends Controller
             $height = $width * $aspectRatio;
             $image->resizeImage($width, (int)$height, \Imagick::FILTER_LANCZOS, 1);
 
-            Cache::put($cache_key ,  $image->getImageBlob() , now()->addDays(env('CACHE_IMAGE_DAYS' , 5)));
+            Cache::put($cache_key ,  $image->getImageBlob() , now()->addHours(env('CACHE_IMAGE_Hours' , 6)));
 
             $image->clear();
             $image->destroy();

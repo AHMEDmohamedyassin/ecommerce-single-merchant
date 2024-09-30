@@ -1,6 +1,7 @@
-import SearchComp from 'components/user/SearchComp'
+import SearchComp from 'components/public/SearchComp'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { UserList_ListAction } from '../../../redux/action/UserListAction'
 
 const OrderSearchCustomerComp = () => {
     const dispatch = useDispatch()
@@ -30,7 +31,7 @@ const OrderSearchCustomerComp = () => {
                     <div>
                         <p className='text-sm text-gray-500 mb-4'>ابحث عن العميل</p>
 
-                        <SearchComp/>
+                        <SearchComp placeholder={'بحث باسم المستخدم و رقم الهاتف و البريد الإليكتروني'} state={user} action={UserList_ListAction} />
 
                         {/* listing users  */}
                         <div className='flex flex-col mt-4 px-4'>

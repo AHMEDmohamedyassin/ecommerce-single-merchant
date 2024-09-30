@@ -23,7 +23,7 @@ class ReviewController extends Controller
         $product = Product::find($review->product_id);
         $product->update([
             'ratting' => $product->reviews > 1 ? abs(( ( $product->ratting * $product->reviews ) - $review->ratting ) / ( $product->reviews - 1 )) : 0 ,
-            'reviews' => $product->reviews - 1
+            'reviews' => $product->reviews ? $product->reviews - 1 : 0
         ]);
     }
 
@@ -74,6 +74,9 @@ class ReviewController extends Controller
 
             // $reviews = request('user')->review()->with('product')->orderby('reviews.id' , 'desc');
 
+            // record reviews count
+            SettingController::updateCreateSetting(SettingController::$reviews_count);
+
             return $this->SuccessResponse($review);
         }catch(\Exception $e){
             return $this->ErrorResponse(11001 , $e->getCode() , $e->getMessage());
@@ -98,6 +101,9 @@ class ReviewController extends Controller
 
             // updating average product reviews
             $this->ProductDecreaseReview($review);
+
+            // record reviews count
+            SettingController::updateCreateSetting(SettingController::$reviews_count , false);
 
             return $this->SuccessResponse($review);
         }catch(\Exception $e){
@@ -153,7 +159,7 @@ class ReviewController extends Controller
         try{
             request()->validate(['search' => 'nullable|string']);
 
-            $reviews = Review::query();
+            $reviews = Review::query()->with('user')->with('product');
 
             if(request()->has('search'))
                 $reviews->where('slug' , 'LIKE' , '%'.request('search').'%');
@@ -207,6 +213,9 @@ class ReviewController extends Controller
 
             // updating average product reviews
             $this->ProductDecreaseReview($review);
+
+            // record reviews count
+            SettingController::updateCreateSetting(SettingController::$reviews_count , false);
 
             return $this->SuccessResponse($review);
         }catch(\Exception $e){

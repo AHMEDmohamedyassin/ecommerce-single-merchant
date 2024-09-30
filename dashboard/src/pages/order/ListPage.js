@@ -4,6 +4,7 @@ import { OrderList_ListAction } from '../../redux/action/OrderListAction'
 import OrderTableComp from 'components/orderlist/OrderTableComp'
 import PaginationComp from 'components/public/PaginationComp'
 import { formattingOrderStatus } from 'validation/OrderValidation'
+import { Link } from 'react-router-dom'
 
 const ListPage = () => {
     const state = useSelector(state => state.OrderListReducer)
@@ -23,7 +24,13 @@ const ListPage = () => {
     } , [])
   return (
     <div className='custom-dashcontainer'>
-        <p className='title'>الطلابات</p>
+        <div className='title_container'>
+          <p>الطلابات</p>
+          <Link to={'/order/create'} className=''>
+            <span className="material-symbols-outlined">add</span>
+            <span>إضافة طلب</span>  
+          </Link>
+        </div>
 
         {/* select order status */}
         <select onChange={e => handleSelectStatus(e.target.value)} className='custom-border'>

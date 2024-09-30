@@ -41,25 +41,33 @@ export const Setting_Confirm = (msg_code) => {
 /**
  * listing setting
  */
-export const Setting_ListAction = () => {
+export const Setting_ListAction = (type = 1) => {
     return async dispatch => {
         const state = store.getState().SettingReducer
 
         // prevent fetching same data mulitble times 
-        if(state.items?.length)
+        if((type && state.items?.length) || (!type && state.statistics?.length))
             return {}
         
         dispatch({type : "Setting_Status" , data : "ll"})         // loading listing
 
-        const req = await fetching(SettingListURL , {} , "GET")
+        const req = await fetching(`${SettingListURL}?type=${type}` , {} , "GET")
 
         if(!req.success) 
             return dispatch({type : "Setting_Status" , data : "n"})
 
+        if(type)
+            return dispatch({
+                type : "Setting_Data" , 
+                data : {
+                    items : req.res
+                }
+            })
+
         dispatch({
             type : "Setting_Data" , 
             data : {
-                items : req.res
+                statistics : req.res
             }
         })
     }

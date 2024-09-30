@@ -15,7 +15,13 @@ const ListPage = () => {
     } , [])
   return (
     <div className='custom-dashcontainer'>
-        <p className='title'>الفروع</p>
+        <div className='title_container'>
+          <p>الفروع</p>
+          <Link to={'/store-address/create'} className=''>
+            <span className="material-symbols-outlined">add</span>
+            <span>إضافة فرع</span>  
+          </Link>
+        </div>
 
         <div className='custom-table'>
             {/* table header */}
