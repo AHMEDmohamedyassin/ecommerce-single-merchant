@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use App\Models\Collection;
 use App\Models\Product;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
@@ -23,15 +24,15 @@ class ProductImageController extends Controller
     public function UploadImageProduct () {
         try{
             request()->validate([
-                "id" => "required|exists:products,id",
-                "image" => "mimes:jpg,jpeg,png|file|max:2048",
+                "id" => "required|exists:collections,id",
+                "image" => "mimes:jpg,jpeg,png|file|max:2048|required",
                 "color" => "string|nullable" 
             ]);
 
-            $product = Product::find(request('id'));
+            $collection = Collection::find(request('id'));
 
             // retreaving json file if exits
-            $json_path = '/products/' . $product->id . '/json/json.json';
+            $json_path = '/products/' . $collection->id . '/json/json.json';
             $json = [];
             if(Storage::exists($json_path))
                 $json = json_decode(Storage::read($json_path) , true);
@@ -44,7 +45,7 @@ class ProductImageController extends Controller
     
                 $image_name = time() . '_' . rand(0 , 999999) . '.' . $img->getClientOriginalExtension();
     
-                $img->storeAs('/products/' . $product->id . '/images/' . $image_name);
+                $img->storeAs('/products/' . $collection->id . '/images/' . $image_name);
                 
 
                 // images key in json file appending new image
@@ -53,13 +54,6 @@ class ProductImageController extends Controller
                 else $json['images'] = [$image_name => request('color')];
             }
 
-
-            // colors key in json file appending new color
-            if(request()->has('color')){
-                if(isset($json['colors']))
-                    $json['colors'] = array_values(array_unique(array_merge($json['colors'] , [request('color')])));
-                else $json['colors'] = [request('color')];
-            }
 
             // saving changes to json
             Storage::put($json_path , json_encode($json));
@@ -80,19 +74,19 @@ class ProductImageController extends Controller
     public function DeleteImageProduct () {
         try{
             request()->validate([
-                "id" => "required|exists:products,id",
+                "id" => "required|exists:collections,id",
                 "image" => "required",
             ]);
 
-            $product = Product::find(request('id'));
+            $collection = Collection::find(request('id'));
 
             // deleting image directory
-            $image_path = '/products/' . $product->id . '/images/' . request('image');
+            $image_path = '/products/' . $collection->id . '/images/' . request('image');
             Storage::delete($image_path);
 
 
             // retreaving json file if exits and updating it
-            $json_path = '/products/' . $product->id . '/json/json.json';
+            $json_path = '/products/' . $collection->id . '/json/json.json';
             if(!Storage::exists($json_path))
                 return $this->SuccessResponse();
         
