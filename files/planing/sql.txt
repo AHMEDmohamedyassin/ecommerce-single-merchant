@@ -34,19 +34,24 @@ user_id
 permission_id
 
 
-products table (Product) : done
+collection table : multible products instances 
 slug
+serial
 title
 description
-price
-old_price
-quantity           // available pieces 
-expire_date     // for controlling availability of publishing products of public
 publish_date	// for controlling availability of publishing products of public
 views		// count of view
 ratting		// average ratting
 reviews        // count of reviews
-paid_quantity
+
+products table (Product) : done , it is instance of collection
+collection_id
+size
+color
+price
+old_price
+quantity   // available pieces 
+paid_quantity     
 
 categories table (Category) : done // value like  بنطال قميص
 title
@@ -55,14 +60,14 @@ description
 
 product_category table : done
 category_id               // from the categories table
-product_id
+collection_id
 
 
 reviews table (Review) : done // only user paid for product can make review
 comment
 ratting   : 1-5
 user_id
-product_id
+collection_id
 public
 
 
@@ -114,7 +119,7 @@ quantity
 
 favorites table (Favorite) : done
 user_id
-product_id
+collection_id
 
 contacts table (Contact) :  done
 user_id

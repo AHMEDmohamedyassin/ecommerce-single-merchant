@@ -178,7 +178,7 @@ class AdminOrderController extends Controller
             ]);
 
             // getting order with all related data
-            $order = Order::with('product')->with('coupon')
+            $order = Order::with('product.collection')->with('coupon')
                     ->with('user')->with('address')
                     ->with('store_address')->with('transaction')
                     ->find(request('id'));

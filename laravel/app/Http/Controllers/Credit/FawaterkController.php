@@ -57,7 +57,7 @@ class FawaterkController {
             $discount = 0;
 
             // searching for order
-            $order = Order::with('product')->with('address')->where([
+            $order = Order::with('product.collection')->with('address')->where([
                 'id' => request('id') , 
                 'status' => 'pending'
             ])->first();
@@ -71,7 +71,7 @@ class FawaterkController {
             foreach($order->product as $product){
                 $cart_total += $product->price * $product->pivot->quantity;
                 $cart_items[] = [
-                    "name" => $product->title,
+                    "name" => $product->collection->title,
                     "quantity" => $product->pivot->quantity ,
                     "price" => $product->price
                 ];

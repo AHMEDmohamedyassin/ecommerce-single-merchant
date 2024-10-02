@@ -3,6 +3,10 @@ export const APIv = '/api'
 
 // apis
 
+// images
+export const ImageURL = `${APP_URL}${APIv}/image?`
+export const ProductImageURL = `${ImageURL}type=product&`
+
 // auth
 export const LoginURL = '/auth/login';
 export const RegisterURL = '/auth/register';
@@ -19,3 +23,7 @@ export const AddressUpdateURL = '/address/update'
 export const AddressDeleteURL = '/address/delete'
 export const AddressListURL = '/address/list'
 export const AddressReadURL = '/address/read'
+
+
+// product 
+export const ProductReadURL = '/product/read'

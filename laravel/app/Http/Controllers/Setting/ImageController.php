@@ -122,7 +122,7 @@ class ImageController extends Controller
         header('Content-Type: image/png');
         try{
             request()->validate([
-                'width' => 'nullable|numeric|in:100,200,300,400,500,600,700,800' , 
+                'width' => 'nullable|numeric|in:50,100,200,300,400,500,600,700,800' , 
                 'type' => 'required|in:product,user,category,top_category,static,store,setting' , 
                 'id' => [Rule::requiredIf( in_array(request('type') , ["product" , "user" , "category" , "store"]) ) , "numeric"],
                 "page_name" => [Rule::requiredIf(request('type') == 'static')] , 

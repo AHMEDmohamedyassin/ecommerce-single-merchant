@@ -10,37 +10,22 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = [
-        "slug" ,
-        "serial" ,
-        "title" ,
-        "description" ,
+        "collection_id" ,
+        "size" ,
+        "color" ,
         "price" ,
         "old_price" ,
-        "quantity",
-        "ratting" ,
-        "views" ,
-        "reviews" ,
+        "quantity" ,
         "paid_quantity" ,
-        "publish_date" ,
     ] ;
 
-    // relations
 
-    public function category () {
-        return $this->belongsToMany(Category::class , 'product_category' , 'product_id' , 'category_id');
+    public function collection () {
+        return $this->belongsTo(Collection::class , 'collection_id' , 'id');
     }
 
     public function order () {
         return $this->belongsToMany(Order::class , 'product_order' , 'product_id' , 'order_id')->withPivot('id' , 'quantity');
-    }
-
-    public function review () {
-        return $this->hasMany(Review::class , 'product_id' , 'id');
-    }
-
-
-    public function favorite () {
-        return $this->belongsToMany(User::class , 'favorites' , 'product_id' , 'user_id');
     }
 
     public function cart () {

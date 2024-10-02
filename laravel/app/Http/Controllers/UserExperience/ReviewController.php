@@ -5,6 +5,7 @@ namespace App\Http\Controllers\UserExperience;
 use App\Exceptions\CustomException;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Setting\SettingController;
+use App\Models\Collection;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Review;
@@ -20,10 +21,10 @@ class ReviewController extends Controller
 
     // updating product average reviews ( subtraction review from the average )
     public function ProductDecreaseReview($review) {
-        $product = Product::find($review->product_id);
-        $product->update([
-            'ratting' => $product->reviews > 1 ? abs(( ( $product->ratting * $product->reviews ) - $review->ratting ) / ( $product->reviews - 1 )) : 0 ,
-            'reviews' => $product->reviews ? $product->reviews - 1 : 0
+        $collection = Collection::find($review->collection_id);
+        $collection->update([
+            'ratting' => $collection->reviews > 1 ? abs(( ( $collection->ratting * $collection->reviews ) - $review->ratting ) / ( $collection->reviews - 1 )) : 0 ,
+            'reviews' => $collection->reviews ? $collection->reviews - 1 : 0
         ]);
     }
 
@@ -37,42 +38,39 @@ class ReviewController extends Controller
             $req = request()->validate([
                 'comment' => 'string|max:255',
                 'ratting' => 'required|numeric|in:1,2,3,4,5',
-                'id' => 'required|exists:products,id'
+                'id' => 'required|exists:collections,id'
             ]);
 
-            // check if user paid for the product
-            $productId = request('id'); // Assuming this is the product ID
-            $hasPaidForProduct = Order::where('user_id', request('user')->id)->where('status', 'success') 
-                ->whereHas('product', function ($query) use ($productId) {
-                    $query->where('products.id', $productId);
-                })->exists();
+            $collection = Collection::find(request('id'));
+
+            // check if user have paid for any product of the collection
+            $hasPaidForProduct = request('user')->order()->whereHas('product', function ($query) use ($collection) {
+                $query->where('collection_id', $collection->id);
+            })->exists();
 
 
             if(!$hasPaidForProduct)
                 throw new CustomException('product not paid by user' , 21);
 
             // check if user have reviewed the product before
-            if(request('user')->review()->where('product_id' , request('id'))->count())
+            if(request('user')->review()->where('collection_id' , request('id'))->count())
                 throw new CustomException('product has been reviewed before' , 20);
 
             // check setting if it set to auto publish review without admin checking content of review it
             $publish_review = (new SettingController() )->valueSetting('auto_public_review');
 
             // creating review for the product 
-            $review = request('user')->review()->create($req + [
-                'product_id' => request('id'),
+            $review = request('user')->review()->create(array_merge($req , [
+                'collection_id' => request('id'),
                 'slug' => $this->MultiTextSlug(request('ratting') , request('comment')),
                 'public' => (int) $publish_review
-            ]);
+            ]));
 
             // updating product average reviews
-            $product = Product::find(request('id'));
-            $product->update([
-                'ratting' => ( ( $product->ratting * $product->reviews ) + request('ratting') ) / ( $product->reviews + 1 ) ,
-                'reviews' => $product->reviews + 1
+            $collection->update([
+                'ratting' => ( ( $collection->ratting * $collection->reviews ) + request('ratting') ) / ( $collection->reviews + 1 ) ,
+                'reviews' => $collection->reviews + 1
             ]);
-
-            // $reviews = request('user')->review()->with('product')->orderby('reviews.id' , 'desc');
 
             // record reviews count
             SettingController::updateCreateSetting(SettingController::$reviews_count);
@@ -95,7 +93,7 @@ class ReviewController extends Controller
                 'id' => 'required|exists:reviews,id'
             ]);
 
-            $review = request('user')->review()->where('reviews.id' , request('id'))->first()->load('product');
+            $review = request('user')->review()->with('collection')->where('reviews.id' , request('id'))->first();
 
             $review->delete();
 
@@ -119,7 +117,7 @@ class ReviewController extends Controller
     public function ListReview () {
         try{
 
-            $reviews = request('user')->review()->orderBy('reviews.id' , 'desc');
+            $reviews = request('user')->review()->orderBy('reviews.id' , 'desc')->with('collection');
 
             return $this->SuccessResponse($this->paginate($reviews));
         }catch(\Exception $e){
@@ -136,10 +134,10 @@ class ReviewController extends Controller
     public function ListProductReview () {
         try{
             request()->validate([
-                'id' => 'required|exists:products,id'
+                'id' => 'required|exists:collections,id'
             ]);
 
-            $reviews = Product::find(request("id"))
+            $reviews = Collection::find(request("id"))
                         ->review()->where('public' , 1)
                         ->orderby('reviews.id' , 'desc');
 
@@ -159,7 +157,7 @@ class ReviewController extends Controller
         try{
             request()->validate(['search' => 'nullable|string']);
 
-            $reviews = Review::query()->with('user')->with('product');
+            $reviews = Review::query()->with('user')->with('collection');
 
             if(request()->has('search'))
                 $reviews->where('slug' , 'LIKE' , '%'.request('search').'%');
@@ -207,7 +205,7 @@ class ReviewController extends Controller
         try{
             request()->validate(['id' => 'required|exists:reviews,id']);
 
-            $review = Review::find(request('id'))->load('product');
+            $review = Review::find(request('id'))->load('collection');
 
             $review->delete();
 

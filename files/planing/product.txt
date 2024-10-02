@@ -1,3 +1,6 @@
+
+
+v1 : 
 {
     sizes : ["xl" , "lg" , "30"],
     colors : [
@@ -14,6 +17,33 @@
 
     ################## showing and hidding data of product #################################
     
+    "reviews" : false # show or hidden reviews and people comments
+    "reviews_count" : false # show or hidden reviews count
+    "views" : false # show or hidden views count
+    "paid_quantity" : false # show or hidden sold quantity
+    "quantity" : false # show or hidden exists quantity
+}
+
+
+
+
+version 2 : 
+{
+
+    items : [
+        {
+            quantity : 2 ,
+            colors : [] , 
+            sizes : [1,2,3],
+            images : [1,2,3]
+        }
+    ]
+
+    "description" : "description description description description description",
+    "information": "information information information information information information ",
+
+    ################## showing and hidding data of product #################################
+
     "reviews" : false # show or hidden reviews and people comments
     "reviews_count" : false # show or hidden reviews count
     "views" : false # show or hidden views count

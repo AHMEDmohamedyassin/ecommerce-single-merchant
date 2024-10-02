@@ -18,7 +18,7 @@ return new class extends Migration
             $table->boolean('public')->default(0);
             $table->unsignedTinyInteger('ratting')->default(0);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->foreignId('collection_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

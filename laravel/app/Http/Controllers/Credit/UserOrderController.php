@@ -181,7 +181,7 @@ class UserOrderController extends Controller
             
             $order = request('user')->order()
                 ->where('orders.id' , request('id'))
-                ->with('product')->with('coupon')
+                ->with('product.collection')->with('coupon')
                 ->first();
 
             if(!$order)

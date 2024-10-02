@@ -48,7 +48,7 @@ class CartController extends Controller
                 $cart->attach([request('id')]);
             }
 
-            return $this->SuccessResponse($this->paginate(request('user')->cart()->orderby('carts.id' , 'desc')));
+            return $this->SuccessResponse($this->paginate(request('user')->cart()->with('collection')->orderby('carts.id' , 'desc')));
         }catch(\Exception $e){
             return $this->ErrorResponse(10001 , $e->getCode() , $e->getMessage());
         }
@@ -80,7 +80,7 @@ class CartController extends Controller
                     $cart->update(['carts.quantity' => $quantity - 1 ]);
             }
 
-            return $this->SuccessResponse($this->paginate(request('user')->cart()->orderby('carts.id' , 'desc')));
+            return $this->SuccessResponse($this->paginate(request('user')->cart()->with('collection')->orderby('carts.id' , 'desc')));
         }catch(\Exception $e){
             return $this->ErrorResponse(10002 , $e->getCode() , $e->getMessage());
         }
@@ -96,7 +96,7 @@ class CartController extends Controller
                 'id' => 'required|exists:products,id'
             ]);
 
-            $cart = request('user')->cart();
+            $cart = request('user')->cart()->with('collection');
 
             $cart->detach([request('id')]);
 
@@ -128,7 +128,7 @@ class CartController extends Controller
      */
     public function ListCart () {
         try{
-            $cart = request('user')->cart()->orderby('carts.id' , 'desc');
+            $cart = request('user')->cart()->with('collection')->orderby('carts.id' , 'desc');
 
             return $this->SuccessResponse($this->paginate($cart));
         }catch(\Exception $e){

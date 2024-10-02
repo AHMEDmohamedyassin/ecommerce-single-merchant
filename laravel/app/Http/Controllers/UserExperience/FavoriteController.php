@@ -18,7 +18,7 @@ class FavoriteController extends Controller
     public function SyncFavorite () {
         try{
             request()->validate([
-                'id' => 'required|exists:products,id'
+                'id' => 'required|exists:collections,id'
             ]);
 
             $fav = request('user')->favorite();

@@ -18,6 +18,6 @@ class Category extends Model
     // relations
 
     public function product () {
-        return $this->belongsToMany(Product::class , 'product_category' , 'category_id' , 'product_id');
+        return $this->belongsToMany(Collection::class , 'product_category' , 'category_id' , 'collection_id');
     }
 }

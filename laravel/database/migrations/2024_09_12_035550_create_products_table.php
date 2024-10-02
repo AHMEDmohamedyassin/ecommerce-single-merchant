@@ -13,18 +13,15 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->nullable();
-            $table->string('serial')->nullable();
-            $table->string('title')->nullable();
-            $table->string('description')->nullable();
+            
+            $table->foreignId('collection_id')->constrained()->onDelete('cascade');
+            $table->string('size')->nullable();
+            $table->string('color')->nullable();
+
             $table->unsignedFloat('price')->default(0);
             $table->unsignedFloat('old_price')->default(0);
             $table->unsignedSmallInteger('quantity')->default(1);
-            $table->unsignedFloat('ratting')->default(0);
-            $table->unsignedInteger('views')->default(0);
-            $table->unsignedInteger('reviews')->default(0);
             $table->unsignedInteger('paid_quantity')->default(0);
-            $table->dateTime('publish_date')->nullable();
             $table->timestamps();
         });
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Setting\SettingController;
 use App\Models\Category;
+use App\Models\Collection;
 use App\Models\Product;
 use App\Traits\PaginateTrait;
 use App\Traits\ResponseTrait;
@@ -19,24 +20,27 @@ class ProductController extends Controller
 
     // muilti used validation 
     public $validation = [
-        "serial" => "nullable|max:255|string|unique:products,serial",
+        "serial" => "nullable|max:255|string|unique:collections,serial",
         "description" => "nullable|max:255|string",
-        "old_price" => "nullable|max:999999.99" ,
-        "quantity" => "nullable|max:65535" ,
         "publish_date" => "nullable|date_format:d-m-Y H:i" ,
         "categories" => "array|nullable",
         "categories.*" => "numeric|exists:categories,id",
         "json" => "nullable|array" ,
+        "products.*.size" => "required|max:255" ,
+        "products.*.color" => "required|max:255" ,
+        "products.*.price" => "required|max:999999.99|min:0" ,
+        "products.*.old_price" => "nullable|max:999999.99|min:0" ,
+        "products.*.quantity" => "nullable|max:65535|min:0" ,
     ]; 
 
     // writing json
-    public function WritingJson ($product) {
+    public function WritingJson ($collection) {
         if(request()->has('json')){
-            Storage::put('/products/' . $product->id . '/json/json.json' , json_encode(request('json')));
-            $product['json'] = request('json');
+            Storage::put('/products/' . $collection->id . '/json/json.json' , json_encode(request('json')));
+            $collection['json'] = request('json');
         }
 
-        return $product;
+        return $collection;
     }
 
     // reading json content
@@ -54,27 +58,33 @@ class ProductController extends Controller
      */
     public function CreateProduct () {
         try{
-            $req = request()->validate([
+            $req = request()->validate(array_merge([
                 "title" => "required|max:255|string",
-                "price" => "required|max:999999.99" 
-            ] + $this->validation);
+                "products" => "array|required"
+            ] , $this->validation));
 
-            // creating product
-            $product = Product::create(array_merge($req , [
-                'slug' => $this->MultiTextSlug(request('serial') , request('title') , request('price') , request('description')) ,
+            // creating the collection of products
+            $collection = Collection::create(array_merge($req , [
+                'slug' => $this->MultiTextSlug(request('serial') , request('title') , request('description')) ,
                 'publish_date' => request('publish_date' , null) ? Carbon::parse(request('publish_date'))->format('Y-m-d H:i:s') : Carbon::now()
             ]));
+
+
+            // creating product 
+            foreach(request('products') as $product){
+                $collection->product()->create($product);
+            }
             
             // sync cateogries
-            $product->category()->sync(request('categories'));
+            $collection->category()->sync(request('categories'));
 
             // writing json file and appending it with response
-            $product = $this->WritingJson($product);
+            $collection = $this->WritingJson($collection);
 
             // update products count
             SettingController::updateCreateSetting(SettingController::$products_count);
 
-            return $this->SuccessResponse($product->load('category'));
+            return $this->SuccessResponse($collection->load('category')->load('product'));
         }catch(\Exception $e){
             return $this->ErrorResponse(7001 , $e->getCode() , $e->getMessage());
         }
@@ -89,25 +99,33 @@ class ProductController extends Controller
     public function UpdateProduct () {
         try{
             $req = request()->validate([
-                "id" => "required|exists:products,id",
+                "id" => "required|exists:collections,id",
                 "title" => "max:255|string",
-                "price" => "max:999999.99" 
+                "products" => "array|nullable"
             ] + $this->validation);
 
-            $product = Product::find(request('id'));
 
-            $product->update(array_merge($req , [
-                'slug' => $this->MultiTextSlug(request("serial" , $product->serial) , request('title' , $product->title) , request('price' , $product->price) , request('description' , $product->description)) ,
-                'publish_date' => request('publish_date') ? Carbon::parse(request('publish_date')) : $product->publish_date
+            $collection = Collection::find(request('id'));
+
+            // update collection data
+            $collection->update(array_merge($req , [
+                'slug' => $this->MultiTextSlug(request("serial" , $collection->serial) , request('title' , $collection->title) , request('price' , $collection->price) , request('description' , $collection->description)) ,
+                'publish_date' => request('publish_date') ? Carbon::parse(request('publish_date')) : $collection->publish_date
             ]));
 
+
+            // appending products product 
+            foreach(request('products' , []) as $product){
+                $collection->product()->create($product);
+            }
+
             // sync cateogries
-            $product->category()->sync(request('categories'));
+            $collection->category()->sync(request('categories'));
 
             // rewriting json file
-            $product = $this->WritingJson($product);
+            $collection = $this->WritingJson($collection);
 
-            return $this->SuccessResponse($product->load('category'));
+            return $this->SuccessResponse($collection->load('category')->load('product'));
         }catch(\Exception $e){
             return $this->ErrorResponse(7002 , $e->getCode() , $e->getMessage());
         }
@@ -122,10 +140,10 @@ class ProductController extends Controller
     public function DeleteProduct () {
         try{
             request()->validate([
-                "id" => "required|exists:products,id"
+                "id" => "required|exists:collections,id"
             ]);
 
-            $product = Product::find(request('id'));
+            $product = Collection::find(request('id'));
 
             $product->delete();
 
@@ -144,7 +162,6 @@ class ProductController extends Controller
     /**
      * @error 7004
      * searching product
-     * @Admin
      */
     public function SearchProduct () {
         try{
@@ -153,25 +170,30 @@ class ProductController extends Controller
                 'orderby' => 'in:publish_date,price,ratting,quantity,reviews,views,old_price,id,created_at,title,paid_quantity,updated_at,description|nullable' , 
                 'order' => 'in:asc,desc',
                 "categories" => "array|nullable",
-                "categories.*" => "numeric|exists:categories,id"
+                "categories.*" => "numeric|exists:categories,id" ,
+                'with_products' => "boolean|nullable"
             ]);
 
             $orderby = request('orderby' , 'id');
             $order = request('order' , 'desc');
 
-            $product = Product::query();
+            $collection = Collection::query();
+
+            // getting products of collection
+            if(request('with_products' , false))
+                $collection->with('product');
 
             if(request()->has('categories')){
                 $categories = request('categories');
-                $product->whereHas('category' , function ($query) use ($categories) {
+                $collection->whereHas('category' , function ($query) use ($categories) {
                     $query->whereIn('category_id' , $categories);
                 });
             }
 
-            $product = $product->where('slug' , 'LIKE' , '%' . $this->CreateSlug(request('search')) . '%')
+            $collection = $collection->where('slug' , 'LIKE' , '%' . $this->CreateSlug(request('search')) . '%')
                             ->orderBy($orderby , $order);
 
-            return $this->SuccessResponse($this->paginate($product));
+            return $this->SuccessResponse($this->paginate($collection));
         }catch(\Exception $e){
             return $this->ErrorResponse(7004 , $e->getCode() , $e->getMessage());
         }
@@ -185,22 +207,22 @@ class ProductController extends Controller
     public function ReadProduct () {
         try{
             request()->validate([
-                "id" => "required|exists:products,id"
+                "id" => "required|exists:collections,id"
             ]);
 
-            $product = Product::find(request('id'));
+            $collection = Collection::find(request('id'));
 
-            $product->update([
-                'views' => $product->views + 1
+            $collection->update([
+                'views' => $collection->views + 1
             ]);
 
             // retriving json of product
-            $json_path = '/products/' . $product->id . '/json/json.json';
+            $json_path = '/products/' . $collection->id . '/json/json.json';
             if(Storage::exists($json_path))
                 $product['json'] = json_decode(Storage::read($json_path , true));
             
 
-            return $this->SuccessResponse($product->load('category'));
+            return $this->SuccessResponse($collection->load('category')->load('product'));
         }catch(\Exception $e){
             return $this->ErrorResponse(7005 , $e->getCode() , $e->getMessage());
         }
@@ -215,14 +237,64 @@ class ProductController extends Controller
     public function SerialReadProduct () {
         try{
             request()->validate([
-                "serial" => "required|exists:products,serial"
+                "serial" => "required|exists:collections,serial"
             ]);
 
-            $product = Product::where('serial' , request('serial'))->first();
+            $collection = Collection::with('product')->where('serial' , request('serial'))->first();
+            
+            return $this->SuccessResponse($collection);
+        }catch(\Exception $e){
+            return $this->ErrorResponse(7005 , $e->getCode() , $e->getMessage());
+        }
+    }
+
+
+    
+    /**
+     * @error 7007
+     * update sub product
+     * @Admin
+     */
+    public function UpdateSubProduct () {
+        try{
+            $req = request()->validate([
+                "id" => "required|exists:products,id" , 
+                "size" => "nullable|max:255" ,
+                "color" => "nullable|max:255" ,
+                "price" => "nullable|max:999999.99|min:0" ,
+                "old_price" => "nullable|max:999999.99|min:0" ,
+                "quantity" => "nullable|max:65535|min:0" ,
+            ]);
+
+            $product = Product::find(request('id'));
+
+            $product->update($req);
             
             return $this->SuccessResponse($product);
         }catch(\Exception $e){
-            return $this->ErrorResponse(7005 , $e->getCode() , $e->getMessage());
+            return $this->ErrorResponse(7007 , $e->getCode() , $e->getMessage());
+        }
+    }
+
+    
+    /**
+     * @error 7008
+     * delete sub product
+     * @Admin
+     */
+    public function DeleteSubProduct () {
+        try{
+            request()->validate([
+                "id" => "required|exists:products,id" , 
+            ]);
+
+            $product = Product::find(request('id'));
+
+            $product->delete();
+            
+            return $this->SuccessResponse($product);
+        }catch(\Exception $e){
+            return $this->ErrorResponse(7008 , $e->getCode() , $e->getMessage());
         }
     }
 

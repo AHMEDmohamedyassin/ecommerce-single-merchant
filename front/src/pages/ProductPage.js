@@ -4,10 +4,19 @@ import DetailsComp from 'components/product/DetailsComp'
 import GalleryComp from 'components/product/GalleryComp'
 import PathComp from 'components/product/PathComp'
 import CardComp from 'components/search/CardComp'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useParams } from 'react-router-dom'
+import { Product_ReadAction } from '../redux/action/ProductAction'
 
 const ProductPage = () => {
+  const state = useSelector(state => state.ProductReducer) 
+  const dispatch = useDispatch()
+  const params = useParams()
+
+  useEffect(() => {
+    dispatch(Product_ReadAction(params.id))
+  } , [])
   return (
     <div className='custom-container'>
         

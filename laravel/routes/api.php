@@ -86,6 +86,8 @@ Route::post('/product/delete' , [ProductController::class , 'DeleteProduct'])->m
 Route::get('/product/search' , [ProductController::class , 'SearchProduct']);
 Route::get('/product/read' , [ProductController::class , 'ReadProduct']);
 Route::get('/product/serial' , [ProductController::class , 'SerialReadProduct'])->middleware("AdminMiddleware:product_serial"); #admin
+Route::post('/product/sub/update' , [ProductController::class , 'UpdateSubProduct'])->middleware("AdminMiddleware:product_update"); #admin
+Route::post('/product/sub/delete' , [ProductController::class , 'DeleteSubProduct'])->middleware("AdminMiddleware:product_delete"); #admin
 
 
 // Product Image Controller 8000

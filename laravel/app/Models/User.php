@@ -77,7 +77,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function favorite () {
-        return $this->belongsToMany(Product::class , 'favorites' , 'user_id' , 'product_id')->withPivot('id' , 'updated_at');
+        return $this->belongsToMany(Collection::class , 'favorites' , 'user_id' , 'collection_id')->withPivot('id' , 'updated_at');
     }
 
     public function cart () {
@@ -87,5 +87,5 @@ class User extends Authenticatable implements JWTSubject
     public function transaction () {
         return $this->hasMany(Transaction::class , 'user_id' , 'id');
     }
-    
+
 }
