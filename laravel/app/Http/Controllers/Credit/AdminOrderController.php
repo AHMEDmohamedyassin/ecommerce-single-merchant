@@ -178,10 +178,12 @@ class AdminOrderController extends Controller
             ]);
 
             // getting order with all related data
-            $order = Order::with('product.collection')->with('coupon')
-                    ->with('user')->with('address')
-                    ->with('store_address')->with('transaction')
-                    ->find(request('id'));
+            $order = Order::with(['product' => function ($query) {
+                $query->withTrashed();
+            } , 'product.collection' => function ($query) {
+                $query->withTrashed();
+            } , 'coupon' , 'user' , 'address' , 'store_address' , 'transaction'])->find(request('id'));
+            
 
             // getting additional informations in json file
             $path = "/orders/{$order->id}/json.json";

@@ -13,10 +13,12 @@ import { Product_CreateAction } from '../../redux/action/ProductAction'
 import { useNavigate } from 'react-router-dom'
 import { Setting_Msg } from '../../redux/action/SettingAction'
 import ProductPiecesComp from 'components/product/ProductPiecesComp'
+import MainFromInputsComp from 'components/product/MainFromInputsComp'
 
 const CreatePage = () => {
     const [selectedCategory , setSelectedCategory] = useState([])
-    const categories = useSelector(state => state.CategoryReducer)
+    const [reactSelectCategoryValues , setReactSelectCategoryValues] = useState([])    // this for operation of input itself
+    const [colors , setColors] = useState([])
     const state = useSelector(state => state.ProductReducer)
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -40,6 +42,12 @@ const CreatePage = () => {
             ]
         }
     })
+
+    // watch changes in colors field to add it or remove from the select input colors options for images
+    const watchColors = watch('products')
+    useEffect(() => {
+        setColors([...new Set(watchColors?.map(e => e.color))] ?? [])
+    } , [watchColors])
 
     // submitting form 
     const submitForm = (form_data) => {
@@ -67,60 +75,8 @@ const CreatePage = () => {
         <div className='flex flex-col gap-4'>
             <form onSubmit={handleSubmit(submitForm)} className='flex flex-col gap-4'>
                 
-                <div className='custom-inputcontainer'>
-                    <label>عنوان المنتج</label>
-                    <input {...register("title")} />
-                    {errors.title && <p>{errors.title.message}</p>}
-                </div>
-                
-                <div className='custom-inputcontainer'>
-                    <label>وصف المنتج</label>
-                    <input {...register("description")} />
-                    {errors.description && <p>{errors.description.message}</p>}
-                </div>
-                
-                <div className='custom-inputcontainer'>
-                    <label>كود المنتج</label>
-                    <input {...register("serial")} />
-                    {errors.serial && <p>{errors.serial.message}</p>}
-                </div>
-
-                
-                <div className='custom-inputcontainer'>
-                    <label>تاريخ النشر</label>
-                    <ReactInputMask 
-                        style={{direction:'ltr'}} 
-                        {...register("publish_date")}
-                        placeholder="DD-MM-YYYY HH:mm" mask={'99-99-9999 99:99'}
-                    />
-                    {errors.publish_date && <p>{errors.publish_date.message}</p>}
-                </div>
-                
-                <div className='custom-inputcontainer'>
-                    <label>الأقسام</label>
-                    <Select
-                    closeMenuOnSelect={true}
-                    isMulti
-                    styles={selectStyle}
-                    placeholder={'اختر الأقسام الخاصة بالمنتج'}
-                    options={categories.categories.map(e => ({value : e.id , label : e.title}) )}
-                    onChange={(e) => setSelectedCategory(e.map(ele => ele.value))}
-                    />
-                </div>
-
-                {/* json file data */}
-
-                <div className='custom-inputcontainer'>
-                    <label>وصف مفصل عن المنتج</label>
-                    <textarea {...register("json.description")} rows={4}> </textarea>
-                    {errors.json?.description && <p>{errors.json.description.message}</p>}
-                </div>
-
-                <div className='custom-inputcontainer'>
-                    <label>سياسة التبديل و الإرجاء</label>
-                    <textarea {...register("json.restore")} rows={4}> </textarea>
-                    {errors.json?.restore && <p>{errors.json.restore.message}</p>}
-                </div>
+                {/* main form inputs  */}
+                <MainFromInputsComp register={register} errors={errors} setSelectedCategory={setSelectedCategory} reactSelectCategoryValues={reactSelectCategoryValues}  setReactSelectCategoryValues={setReactSelectCategoryValues}/>
 
                 {/* product pieces  */}
                 <ProductPiecesComp errors={errors} register={register} reset={reset}/>
@@ -128,7 +84,7 @@ const CreatePage = () => {
             </form>
 
             {/* images the product */}
-            <ImagesComp watch={watch}/>
+            <ImagesComp colors={colors}/>
 
             {/* submitting the main form */}
             <button onClick={handleSubmit(submitForm)} className='custom-button2 w-fit self-center mt-4'>تأكيد البيانات</button>

@@ -25,13 +25,10 @@ const TableHeaderComp = () => {
         <p className='w-32 bg-mainbg' title='صورة'>صورة</p>
         <TableHeaderRowComp state={state} value={'title'} title={'العنوان'} w={80} handleOrder={handleOrder} />
         <TableHeaderRowComp state={state} value={'description'} title={'الوصف'} w={80} handleOrder={handleOrder} />
-        <TableHeaderRowComp state={state} value={'price'} title={'سعر'} w={20} handleOrder={handleOrder} />
-        <TableHeaderRowComp state={state} value={'old_price'} title={'السعر قبل الخصم'} w={20} handleOrder={handleOrder} />
         <TableHeaderRowComp state={state} value={'quantity'} title={'الكمية'} w={20} handleOrder={handleOrder} />
         <TableHeaderRowComp state={state} value={'ratting'} title={'التقييم'} w={20} handleOrder={handleOrder} />
         <TableHeaderRowComp state={state} value={'views'} title={'المشاهدات'} w={20} handleOrder={handleOrder} />
         <TableHeaderRowComp state={state} value={'reviews'} title={'المراجعات'} w={20} handleOrder={handleOrder} />
-        <TableHeaderRowComp state={state} value={'paid_quantity'} title={'المبيعات'} w={20} handleOrder={handleOrder} />
         <TableHeaderRowComp state={state} value={'publish_date'} title={'تاريخ النشر'} w={40} handleOrder={handleOrder} />
         <TableHeaderRowComp state={state} value={'updated_at'} title={'تاريخ التعديل'} w={40} handleOrder={handleOrder} />
         <TableHeaderRowComp state={state} value={'id'} title={'تاريخ الإنشاء'} w={40} handleOrder={handleOrder} />

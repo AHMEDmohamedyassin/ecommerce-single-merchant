@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Order_CreateAction } from '../../redux/action/OrderAction'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import ChooseProductComp from 'components/order/ChooseProductComp'
 
 const CreatePage = () => {
     const state = useSelector(state => state.OrderReducer)
@@ -35,6 +36,9 @@ const CreatePage = () => {
   return (
     <div className='custom-dashcontainer'>
         <p className='title'>إنشاء طلب</p>
+
+        {/* choose Product from collection  */}
+        <ChooseProductComp/>
 
         {/* products table  */}
         <OrdersTableComp/>

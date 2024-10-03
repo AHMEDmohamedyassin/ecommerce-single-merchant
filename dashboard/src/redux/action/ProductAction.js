@@ -244,7 +244,7 @@ export const product_SubProductUpdateAction = (data) => {
         dispatch({
             type : "Product_Data" ,
             data : {
-                product : product
+                product
             }
         })
     }

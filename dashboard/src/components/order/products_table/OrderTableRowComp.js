@@ -23,7 +23,7 @@ const OrderTableRowComp = ({data}) => {
   return (
         <div className='custom-tablerow'>
             <p className='w-10 justify-center'><span onClick={() => handleCount(true , 0)} className="material-symbols-outlined hover:text-red-500">close</span></p>
-            <p className='w-20'><img className='w-full h-full object-cover' src={`${ImageURL}?type=product&id=${data.id}&width=200`} loading='lazy'/></p>
+            <p className='w-20'><img className='w-full h-full object-cover' src={`${ImageURL}?type=product&id=${data.collection_id}&width=200`} loading='lazy'/></p>
             <p className='w-80'>{data.title}</p>
             <p className='w-40 justify-center'>
                 <span onClick={handleCount} class="material-symbols-outlined hover:text-blue-500">add</span>

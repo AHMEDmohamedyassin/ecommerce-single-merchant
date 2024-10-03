@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-const ProductPiecesComp = ({register , errors , reset , initialCount}) => {
+const ProductPiecesComp = ({register , errors , reset , initialCount , setData}) => {
     const [values , setValues] = useState({})
 
     // adding piece form
@@ -21,14 +21,13 @@ const ProductPiecesComp = ({register , errors , reset , initialCount}) => {
 
     // removing piece form
     const handleRemovePiece = (index) => {
-        let new_values = values
-        delete new_values[index]
+        const {[index] :removed , ...rest_data} = values
 
         // remove the object from the values
-        setValues(new_values)
+        setValues(rest_data)
 
         // remove the object from react form hook products.object 
-        reset(values => ({...values , products : Object.values(new_values) }))
+        reset(values => ({...values , products : Object.values(rest_data) }))
     }
 
     useEffect(() => {
@@ -37,11 +36,18 @@ const ProductPiecesComp = ({register , errors , reset , initialCount}) => {
         })
     } , [initialCount])
 
-    useEffect(() => reset(old_values => ({...old_values , products : Object.values(values) })) , [values])
+    useEffect(() => {
+        reset(old_values => ({...old_values , products : Object.values(values) }))
+
+        // appending values to outer state
+        if(setData)
+            setData(Object.values(values))
+
+    } , [values])
   return (
     <div className='flex flex-col gap-4'>
         {/* all pieces title */}
-        <p className=' text-gray-500'>إضافة قطع {Object.keys(values).length} </p>
+        <p className=' text-gray-500'>إضافة قطع #{Object.keys(values).length} </p>
         {
             Object.keys(values).map((e , index) => (
                 <div key={e} className='p-4 grid lg:grid-cols-3 sm:grid-cols-2 items-start gap-2 custom-border rounded-xl shadow relative'>

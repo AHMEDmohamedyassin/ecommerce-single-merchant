@@ -3,12 +3,11 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Product_ImagesUploadAction } from '../../redux/action/ProductAction'
 
-const ImagesComp = ({watch}) => {
+const ImagesComp = ({watch , colors}) => {
     const state = useSelector(state => state.ProductReducer)
     const dispatch = useDispatch()
     const submit_button = useRef(null)
     const [imageCount , setImageCount] = useState(1)
-    const [colors , setColors] = useState([])
  
     // submit form of images
     const submitHandle = (e) => {
@@ -20,12 +19,6 @@ const ImagesComp = ({watch}) => {
     const controlImagesCount = (add = true) => {
         setImageCount(e => add ? e + 1 : e - 1)
     }    
-
-    // watch changes in colors field to add it or remove from the select input options
-    const watchColors = watch('products')
-    useEffect(() => {
-        setColors([...new Set(watchColors?.map(e => e.color))] ?? [])
-    } , [watchColors])
 
     // submitting the form on the product data uploaded
     useEffect(() => {

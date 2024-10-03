@@ -9,29 +9,6 @@ import { Setting_Msg } from "./SettingAction";
  */
 export const Order_ProductSerailRetrieveAction = serial => {
     return async dispatch => {
-        let products = store.getState().OrderReducer?.products ?? []
-
-        // check if product is retrieved before
-        let stored_product = products.find(e => e.serial == serial)
-        if(stored_product){
-
-            // check the avalibility of product
-            if(stored_product.quantity <= stored_product.count){
-                // notification of not sufficient products
-                Setting_Msg(32000)
-                return {}
-            }
-
-            // increasing quantity of product if it is previously scanned
-            products = products.map(e => e.serial == serial ? {...e , count : e.count + 1} : e)
-            return dispatch({
-                type : "Order_Data" , 
-                data : {
-                    products
-                }
-            })
-        }
-
         dispatch({type : "Order_Status" , data : "ls"}); // loading serial
 
         const req = await fetching(`${ProductSerialURL}?serial=${serial}` , {} , "GET")
@@ -39,23 +16,58 @@ export const Order_ProductSerailRetrieveAction = serial => {
         if(!req.success)
             return dispatch({type : "Order_Status" , data : "n"});
 
-        // check if retrieve product has avalible quantities
-        if(req.res.quantity < 1){   
-            Setting_Msg(32000)
-            return dispatch({type : "Order_Status" , data : "n"}); 
-        }
-
-        // updating products 
-        products = [...products , {...req.res , count : 1}]
 
         dispatch({
             type:"Order_Data" , 
             data : {
+                collection : req.res
+            }
+        })
+    }
+}
+
+
+
+/**
+ * handle select product from collection
+ */
+export const Order_ProductSelectAction = (id) => {
+    return async dispatch => {
+        const state = store.getState().OrderReducer 
+        let products = state.products ?? [] 
+        let selected_product = state.collection?.product?.find(ele => ele.id == id) ?? {}
+        
+        // check if product is stored before
+        let stored_product = products.find(e => e.id == id)
+        if(stored_product)
+            if(stored_product.quantity > stored_product.count)   // check if product available quantity is greater than the required quantity
+                products = products.map(e => e.id == id ? {...e , count : e.count + 1} : e)
+            else {          // if product available quantity is less than required return with clearing colleciton object
+                Setting_Msg(32000)
+                return dispatch({ type : "Order_Data" , data : {collection : {}}})
+            }       
+        // update products selected by adding new product to products list in store
+        else
+            products = [
+                ...products , 
+                {
+                    ...selected_product , 
+                    count : 1 , 
+                    collection_id : state.collection?.id , 
+                    title : `${state.collection?.title} - ${selected_product.size} - ${selected_product.color}`
+                }
+            ]
+
+        dispatch({
+            type :"Order_Data" , 
+            data : {
+                collection : {} , 
                 products
             }
         })
     }
 }
+
 
 
 /**
@@ -217,7 +229,7 @@ export const Order_ReadAction = (id) => {
         // modify the response to be readed by appliction
         let res = {
             ...req.res , 
-            products : req.res?.product?.map(({title , id , pivot}) => ({count : pivot?.quantity , price : pivot?.price , title , id })) , 
+            products : req.res?.product?.map(({size , color , id , pivot , collection}) => ({count : pivot?.quantity , price : pivot?.price , title : `${collection?.title} - ${size} - ${color}` , id , collection_id : collection?.id})) , 
             order_state : req.res?.status
         }
         delete res.product // error in returned name of collection that containing products , [products] should be [product]

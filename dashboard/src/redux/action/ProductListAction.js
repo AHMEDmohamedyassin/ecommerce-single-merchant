@@ -1,7 +1,7 @@
 import { store } from "../../redux/store"
 import { fetching } from "../../Fetch/Fetch"
-import { ProductDeleteURL, ProductSearchURL } from "../../Fetch/Url"
-import { Setting_Msg } from "./SettingAction"
+import { ProductDeleteSubURL, ProductDeleteURL, ProductSearchURL } from "../../Fetch/Url"
+import { Setting_Confirm, Setting_Msg } from "./SettingAction"
 
 
 
@@ -16,7 +16,7 @@ export const ProductList_SearchAction = (data) => {
             return 
 
         // perparing parameters , by getting stored parameters in store and update on it by provided {data}
-        let params = `?page=1&orderby=${state.orderby}&order=${state.order}&search=${state.search}&`
+        let params = `?page=1&orderby=${state.orderby}&order=${state.order}&search=${state.search}&with_products=1&`
         for(const key in data ){
             params = params.concat(key , "=" , data[key] , "&")
         }
@@ -46,6 +46,9 @@ export const ProductList_SearchAction = (data) => {
  */
 export const ProductList_DeleteAction = (id) => {
     return async dispatch => {
+        // confirmation 
+        if(!Setting_Confirm(1000)) return {}
+
         let items = store.getState().ProductListReducer.items ?? []
 
         dispatch({type : "ProductList_Status" , data : "ld"}) // loading delete product
@@ -58,6 +61,42 @@ export const ProductList_DeleteAction = (id) => {
 
         // updating items list 
         items = items.filter(e => e.id != id) 
+
+        // notification 
+        Setting_Msg(20000)
+
+        dispatch({
+            type : "ProductList_Data" ,
+            data : {
+                items
+            }
+        })
+    }
+}
+
+
+
+/**
+ * delete product and update the list
+ * same as Product_DeleteAction but this action update the shown list
+ */
+export const ProductList_DeleteSubProductAction = (collection_id,  product_id) => {
+    return async dispatch => {
+        // confirmation 
+        if(!Setting_Confirm(1000)) return {}
+
+        let items = store.getState().ProductListReducer.items ?? []
+
+        dispatch({type : "ProductList_Status" , data : "lds"}) // loading delete sub product
+
+        const req = await fetching(ProductDeleteSubURL , {id : product_id})
+
+        if(!req.success)
+            return  dispatch({type : "ProductList_Status" , data : "n"})
+
+
+        // updating items list removing deleted product form list of products inside collection 
+        items = items.map(e => e.id == collection_id ? {...e , product : (e.product || []).filter(ele => ele.id != product_id)  } : e) 
 
         // notification 
         Setting_Msg(20000)

@@ -1,6 +1,7 @@
 const initial = {
     status : "n",   // n : normal ,  l : loading , s : success , f : fail
     products : [] , 
+    collection : {},
     additional : [] ,
     user : null , 
     coupon : null , 
