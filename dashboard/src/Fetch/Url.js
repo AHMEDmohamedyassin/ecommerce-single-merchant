@@ -41,6 +41,8 @@ export const ProductReadURL = '/product/read';
 export const ProductSerialURL = '/product/serial';
 export const ProductUploadImageURL = '/product/image/upload';
 export const ProductDeleteImageURL = '/product/image/delete';
+export const ProductUpdateSubURL = '/product/sub/update'
+export const ProductDeleteSubURL = '/product/sub/delete'
 
 
 // user 

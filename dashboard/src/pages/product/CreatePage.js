@@ -12,6 +12,7 @@ import ImagesComp from 'components/product/ImagesComp'
 import { Product_CreateAction } from '../../redux/action/ProductAction'
 import { useNavigate } from 'react-router-dom'
 import { Setting_Msg } from '../../redux/action/SettingAction'
+import ProductPiecesComp from 'components/product/ProductPiecesComp'
 
 const CreatePage = () => {
     const [selectedCategory , setSelectedCategory] = useState([])
@@ -30,9 +31,13 @@ const CreatePage = () => {
         mode:"onBlur" , 
         resolver:zodResolver(CreateProductValidation),
         defaultValues:{
-            price: 0 ,
-            old_price : 0,
-            quantity : 0
+            products : [
+                {
+                    price: 0 ,
+                    old_price : 0,
+                    quantity : 1
+                }
+            ]
         }
     })
 
@@ -79,26 +84,7 @@ const CreatePage = () => {
                     <input {...register("serial")} />
                     {errors.serial && <p>{errors.serial.message}</p>}
                 </div>
-                
-                <div className='custom-inputcontainer'>
-                    <label>السعر</label>
-                    <input {...register("price", { valueAsNumber: true })} />
-                    {errors.price && <p>{errors.price.message}</p>}
-                </div>
-                
-                <div className='custom-inputcontainer'>
-                    <label>السعر قبل الخصم</label>
-                    <input {...register("old_price", { valueAsNumber: true })} />
-                    {errors.old_price && <p>{errors.old_price.message}</p>}
-                </div>
-                
-                <div className='custom-inputcontainer'>
-                    <label>الكمية</label>
-                    <input {...register("quantity", { valueAsNumber: true }
 
-                    )} />
-                    {errors.quantity && <p>{errors.quantity.message}</p>}
-                </div>
                 
                 <div className='custom-inputcontainer'>
                     <label>تاريخ النشر</label>
@@ -122,15 +108,7 @@ const CreatePage = () => {
                     />
                 </div>
 
-
                 {/* json file data */}
-                
-                {/* sizes array input */}
-                <ArrayInputComp register={register} reset={reset} errors={errors} name={"size"} title={"المقاسات"}/>
-                
-                {/* colors array input */}
-                <ArrayInputComp register={register} reset={reset} errors={errors} name={"colors"} title={"الألوان"}/>
-
 
                 <div className='custom-inputcontainer'>
                     <label>وصف مفصل عن المنتج</label>
@@ -143,6 +121,9 @@ const CreatePage = () => {
                     <textarea {...register("json.restore")} rows={4}> </textarea>
                     {errors.json?.restore && <p>{errors.json.restore.message}</p>}
                 </div>
+
+                {/* product pieces  */}
+                <ProductPiecesComp errors={errors} register={register} reset={reset}/>
 
             </form>
 

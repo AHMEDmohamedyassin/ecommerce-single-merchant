@@ -22,9 +22,9 @@ const ImagesComp = ({watch}) => {
     }    
 
     // watch changes in colors field to add it or remove from the select input options
-    const watchColors = watch('json.colors')
+    const watchColors = watch('products')
     useEffect(() => {
-        setColors(watchColors)
+        setColors([...new Set(watchColors?.map(e => e.color))] ?? [])
     } , [watchColors])
 
     // submitting the form on the product data uploaded

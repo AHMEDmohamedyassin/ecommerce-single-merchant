@@ -219,7 +219,7 @@ class ProductController extends Controller
             // retriving json of product
             $json_path = '/products/' . $collection->id . '/json/json.json';
             if(Storage::exists($json_path))
-                $product['json'] = json_decode(Storage::read($json_path , true));
+                $collection['json'] = json_decode(Storage::read($json_path , true));
             
 
             return $this->SuccessResponse($collection->load('category')->load('product'));

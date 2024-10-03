@@ -1,6 +1,6 @@
-import { ProductCreateURL, ProductDeleteImageURL, ProductDeleteURL, ProductReadURL, ProductUpdateURL, ProductUploadImageURL } from "Fetch/Url"
+import { ProductCreateURL, ProductDeleteImageURL, ProductDeleteSubURL, ProductDeleteURL, ProductReadURL, ProductUpdateSubURL, ProductUpdateURL, ProductUploadImageURL } from "Fetch/Url"
 import { fetching } from "../../Fetch/Fetch"
-import { Setting_Msg } from "./SettingAction"
+import { Setting_Confirm, Setting_Msg } from "./SettingAction"
 import { store } from "../../redux/store"
 
 
@@ -210,6 +210,76 @@ export const product_UpdateAction = (data) => {
             data : {
                 status : 'su' , // success update
                 ...req.res 
+            }
+        })
+    }
+}
+
+
+
+/**
+ * update sub product 
+ */
+export const product_SubProductUpdateAction = (data) => {
+    return async dispatch => {
+        // confirmation 
+        if(!Setting_Confirm(2000)) return {}
+
+        let product = store.getState().ProductReducer?.product ?? []       /// getting sub products
+
+        dispatch({type : "Product_Status" , data : "lus"}) // loading update sub product
+
+        const req = await fetching(ProductUpdateSubURL , data)
+
+        if(!req.success)
+            return  dispatch({type : "Product_Status" , data : "n"})
+
+
+        // notification 
+        Setting_Msg(21000)
+
+        // update product in products array
+        product = product.map(e => e.id == data.id ? data : e)
+
+        dispatch({
+            type : "Product_Data" ,
+            data : {
+                product : product
+            }
+        })
+    }
+}
+
+
+
+/**
+ * delete sub product 
+ */
+export const product_SubProductDeleteAction = (id) => {
+    return async dispatch => {
+        // confirmation 
+        if(!Setting_Confirm(1000)) return {}
+
+        let product = store.getState().ProductReducer?.product ?? []       /// getting sub products
+
+        dispatch({type : "Product_Status" , data : "lds"}) // loading delete sub product
+
+        const req = await fetching(ProductDeleteSubURL , {id})
+
+        if(!req.success)
+            return  dispatch({type : "Product_Status" , data : "n"})
+
+
+        // notification 
+        Setting_Msg(20000)
+
+        // update product in products array
+        product = product.filter(e => e.id != id)
+
+        dispatch({
+            type : "Product_Data" ,
+            data : {
+                product
             }
         })
     }

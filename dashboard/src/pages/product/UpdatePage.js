@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import ReactInputMask from 'react-input-mask'
 import { useDispatch, useSelector } from 'react-redux'
-import { CreateProductValidation } from '../../validation/ProductValidation'
-import { formattingDateForUpdate } from '../../validation/Validation'
+import { UpdateProductValidation } from '../../validation/ProductValidation'
+import { formattingDateForUpdate, ValidateInputChanges } from '../../validation/Validation'
 import ArrayInputComp from 'components/product/ArrayInputComp'
 import Select from 'react-select'
 import { selectStyle } from '../../config'
@@ -15,6 +15,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import ProductExistsImages from 'components/product/ProductExistsImages'
 import { Setting_Msg } from '../../redux/action/SettingAction'
 import ProductDetailsComp from 'components/product/ProductDetailsComp'
+import ProductPiecesComp from 'components/product/ProductPiecesComp'
+import ProductPieceUpdateComp from 'components/product/ProductPieceUpdateComp'
 
 const UpdatePage = () => {
     const [selectedCategory , setSelectedCategory] = useState([]) // this for submitting form
@@ -40,15 +42,15 @@ const UpdatePage = () => {
         watch
     } = useForm({
         mode:"onBlur" , 
-        resolver:zodResolver(CreateProductValidation),
-        defaultValues : {price: 0 ,old_price : 0,quantity : 0}
+        resolver:zodResolver(UpdateProductValidation),
+        defaultValues : {}
     })
 
 
     // submitting form 
-    const submitForm = (form_data) => {
-        const data = {...form_data , categories : selectedCategory}
-        dispatch(product_UpdateAction(data))
+    const submitForm = () => {
+        let data = ValidateInputChanges(watch , state)
+        dispatch(product_UpdateAction({...data , categories : selectedCategory}))
     }
 
     // resetting form with default values
@@ -116,26 +118,6 @@ const UpdatePage = () => {
                         </div>
                         
                         <div className='custom-inputcontainer'>
-                            <label>السعر</label>
-                            <input {...register("price", { valueAsNumber: true })} />
-                            {errors.price && <p>{errors.price.message}</p>}
-                        </div>
-                        
-                        <div className='custom-inputcontainer'>
-                            <label>السعر قبل الخصم</label>
-                            <input {...register("old_price", { valueAsNumber: true })} />
-                            {errors.old_price && <p>{errors.old_price.message}</p>}
-                        </div>
-                        
-                        <div className='custom-inputcontainer'>
-                            <label>الكمية</label>
-                            <input {...register("quantity", { valueAsNumber: true }
-
-                            )} />
-                            {errors.quantity && <p>{errors.quantity.message}</p>}
-                        </div>
-                        
-                        <div className='custom-inputcontainer'>
                             <label>تاريخ النشر</label>
                             <ReactInputMask 
                                 style={{direction:'ltr'}} 
@@ -160,13 +142,6 @@ const UpdatePage = () => {
 
 
                         {/* json file data */}
-                        
-                        {/* sizes array input */}
-                        <ArrayInputComp key={`size_${rerender_key}`} register={register} reset={reset} errors={errors} name={"size"} title={"المقاسات"} initialLength={state?.json?.size?.length ?? 1}/>
-                        
-                        {/* colors array input */}
-                        <ArrayInputComp key={`colors_${rerender_key}`} register={register} reset={reset} errors={errors} name={"colors"} title={"الألوان"} initialLength={state?.json?.colors?.length ?? 1}/>
-
 
                         <div className='custom-inputcontainer'>
                             <label>وصف مفصل عن المنتج</label>
@@ -180,7 +155,18 @@ const UpdatePage = () => {
                             {errors.json?.restore && <p>{errors.json.restore.message}</p>}
                         </div>
 
+
                     </form>
+
+                    {/* product pieces update and review and delete  */}
+                    {
+                        state.product?.map((e , index) => (
+                            <ProductPieceUpdateComp key={index} data={e} />
+                        ))
+                    }
+
+                    {/* product pieces  */}
+                    {/* <ProductPiecesComp errors={errors} register={register} reset={reset}/> */}
 
                     {/* reviewing the exists images of prodcut */}
                     <ProductExistsImages/>
