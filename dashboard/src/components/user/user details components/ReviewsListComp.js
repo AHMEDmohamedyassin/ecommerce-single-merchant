@@ -42,7 +42,7 @@ const ReviewsListComp = () => {
                                         <p onClick={() => handlePublishToggle(e.id)} className='w-40 justify-center hover:cursor-pointer hover:text-maincolor'>{e.public ? "عام" : "مخفي"}</p>
                                         <p className='justify-center w-40'>{formattingDateForUpdate(e.updated_at)}</p>
                                         <p className='justify-center w-40'>{formattingDateForUpdate(e.created_at)}</p>
-                                        <p className='justify-center w-40'><Link className='text-center w-full hover:text-blue-500' to={`/product/update/${e.product_id}`}>مشاهدة المنتج</Link></p>
+                                        <p className='justify-center w-40'><Link className='text-center w-full hover:text-blue-500' to={`/product/update/${e.collection_id}`}>مشاهدة المنتج</Link></p>
                                     </div>
                                 ))
                             }

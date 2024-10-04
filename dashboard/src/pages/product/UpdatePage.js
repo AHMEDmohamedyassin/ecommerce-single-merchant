@@ -107,7 +107,9 @@ const UpdatePage = () => {
             navigate('/products')
         }
 
-        resetForm()
+        // check if data is fetched before
+        if(!watch('title'))
+            resetForm()
     } , [state.status])
   return (
     <div className='custom-dashcontainer'>

@@ -2,23 +2,21 @@ import React from 'react'
 import ButtonsComp from './ButtonsComp'
 import { useDispatch, useSelector } from 'react-redux'
 import {ProductImageURL} from "../../Fetch/Url"
+import { Product_ColorSelectAction, Product_SizeSelectAction } from '../../redux/action/ProductAction'
 
 const DetailsComp = () => {
   const state = useSelector(state => state.ProductReducer)
   const dispatch = useDispatch()
 
-  // handle selecting sizes , images
-  const handleSelect = (data) => {
-    dispatch({type:"Product_Data" , data })
+
+  // handle select color
+  const handleSelectColor = (color) => {
+    dispatch(Product_ColorSelectAction(color))
   }
 
-  const handleSelectImageSize = e => {
-    const image = Object.keys(state.json?.images).find(ele => state.json.images[ele] == e)
-    // selecting color
-    handleSelect({selected_color:e})
-    // selecting image if exists
-    if(image != undefined)
-      handleSelect({selected_image : image})
+  // handle size select 
+  const handleSelectSize = (size) => {
+    dispatch(Product_SizeSelectAction(size))
   }
 
   return (
@@ -32,12 +30,12 @@ const DetailsComp = () => {
             
             {/* price */}
             <div className='flex items-center gap-4'>
-              <h2 className='text-2xl font-extrabold text-secondarycolor'>{state.price} جم</h2>
+              <h2 className='text-2xl font-extrabold text-secondarycolor'>{state.selected_product.price} جم</h2>
               {
-                state.old_price ? (
+                state.selected_product.old_price ? (
                   <div className='relative w-fit'>
                     <div className='absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 h-[2px] w-10 bg-gray-300 -rotate-45'></div>
-                    <h2 className=' font-extrabold text-gray-300'>{state.old_price} جم</h2>
+                    <h2 className=' font-extrabold text-gray-300'>{state.selected_product.old_price} جم</h2>
                   </div>
                 ) : null
               }
@@ -55,13 +53,13 @@ const DetailsComp = () => {
 
             {/* colors */}
             {
-              state.json?.colors?.length ? (
+              state.colors?.length ? (
                 <div className='flex flex-col gap-2'>
-                  <p className='text-xs font-bold'>لون : {state.selected_color ?? state.json.colors[0] }</p>
+                  <p className='text-xs font-bold'>لون : {state.selected_product?.color }</p>
                   <div className='flex flex-wrap gap-2'>
                     {
-                      state.json?.colors?.map((e, index) => (
-                        <img onClick={() => handleSelectImageSize(e)} key={index} src={`${ProductImageURL}id=${state.id}&width=50&image=${Object.keys(state.json?.images).find(ele => state.json.images[ele] == e) }`}  className={`aspect-square w-10 custom-border rounded hover:cursor-pointer hover:border-secondarycolor ${state.selected_color == e ? "border-secondarycolor" : ""} border-[1px]`} loading='lazy' />
+                      state.colors?.map((e, index) => (
+                        <img onClick={() => handleSelectColor(e)} title={e} key={index} src={`${ProductImageURL}id=${state.id}&width=50&image=${state.images.find(ele => state.json.images[ele] == e) }`}  className={`aspect-square w-10 custom-border rounded hover:cursor-pointer hover:border-secondarycolor ${e == state.selected_product?.color ? "border-secondarycolor" : ""} border-[1px]`} loading='lazy' />
                       ))
                     }
                   </div>
@@ -70,20 +68,16 @@ const DetailsComp = () => {
             }
 
             {/* sizes */}
-            {
-              state.json?.size?.length ? (
-                <div className='flex flex-col gap-2'>
-                  <p className='text-xs font-bold'>مقاس : {state.selected_size ?? state.json.size[0] }</p>
-                  <div className='flex flex-wrap gap-2'>
-                    {
-                      state.json.size.map((e , index) => (
-                        <p onClick={() => handleSelect({selected_size : e})} key={index} className={`aspect-square p-1 rounded-full custom-border text-sm hover:text-white hover:bg-secondarycolor  ${state.selected_size == e ? "text-white bg-secondarycolor" : "text-gray-500" } hover:cursor-pointer`}>{e}</p>
-                      ))
-                    }
-                  </div>
-                </div>
-              ) : null
-            }
+            <div className='flex flex-col gap-2'>
+              <p className='text-xs font-bold'>مقاس : {state.selected_product?.size}</p>
+              <div className='flex flex-wrap gap-2'>
+                {
+                  [...new Set(state.product.filter(e => e.color == state.selected_product?.color ).map(e => e.size))].map((e , index) => (
+                    <p onClick={() => handleSelectSize(e) } key={index} className={`rounded-lg p-2 py-1 custom-border text-sm hover:text-white hover:bg-secondarycolor hover:cursor-pointer flex items-center justify-center ${state.selected_product?.size == e ? "text-white bg-secondarycolor" : "text-gray-500" }`}>{e}</p>
+                  ))
+                }
+              </div>
+            </div>
 
             {/* buttons section */}
             <ButtonsComp/>

@@ -1,8 +1,16 @@
 import React from 'react'
 import SearchBarComp from 'components/header/SearchBarComp'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { Cart_ToggleMenuAction } from '../../redux/action/CartAction'
 
 const HeaderComp = () => {
+  const dispatch = useDispatch()
+
+  // openning the cart
+  const handleOpenCart = () => {
+    dispatch(Cart_ToggleMenuAction())
+  }
   return (
     <div className='w-full mb-6'>
 
@@ -26,7 +34,7 @@ const HeaderComp = () => {
           {/* icons */}
           <div className='flex justify-end items-center sm:gap-x-2 gap-x-1'>
             <span className="material-symbols-outlined hover:cursor-pointer max-sm:text-xl  lg:hidden">search</span>
-            <span data-menubutton="cartmenu" className="material-symbols-outlined hover:cursor-pointer max-sm:text-xl">shopping_cart</span>
+            <span onClick={handleOpenCart} data-menubutton="cartmenu" className="material-symbols-outlined hover:cursor-pointer max-sm:text-xl">shopping_cart</span>
             <Link to={'/account'}>
               <span className="material-symbols-outlined hover:cursor-pointer max-sm:text-xl max-sm:hidden">person</span>
             </Link>

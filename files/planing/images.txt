@@ -1,4 +1,6 @@
 product list dashboard page : 200
 product dashboard update page  : 400
+product color image in product page : 50
+product thumbnail image in gallery of product in product page : 200
 
 thumbnail  for users search page: 200

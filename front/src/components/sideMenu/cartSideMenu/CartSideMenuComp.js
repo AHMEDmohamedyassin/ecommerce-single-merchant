@@ -1,31 +1,52 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import CardComp from 'components/sideMenu/cartSideMenu/CardComp'
 import CheckOutComp from 'components/sideMenu/cartSideMenu/CheckOutComp'
+import { Cart_ToggleMenuAction } from '../../../redux/action/CartAction'
+import { useDispatch, useSelector } from 'react-redux'
 
 const CartSideMenuComp = () => {
+  const state = useSelector(state => state.CartReducer)
+  const dispatch = useDispatch()
+  const cartContainer = useRef(null)
+  const closeButton = useRef(null)
+
+  // closing cart menu
+  const handleCloseCart = e => {
+    if(e.target == cartContainer.current || e.target == closeButton.current)
+      dispatch(Cart_ToggleMenuAction(false))
+  }
+  
   return (
-    <div data-menu="cartmenu" data-status="close" data-direction="left" className='max-h-full hidden'>
-        <div className='custom-side-menu -left-full max-h-full'>
+    <>
+      {
+        state.side_cart ? (
+            <div ref={cartContainer} onClick={handleCloseCart} data-menu="cartmenu" data-status="close" data-direction="left" className='max-h-full w-full h-full bg-white/50 fixed top-0 left-0 z-40'>
 
-            {/* title */}
-            <div className='flex justify-between items-center p-4 border-b-[1px] border-gray-200'>
-                <span>عربة التسوق</span>
-                <span data-menubutton="cartmenu" className="material-symbols-outlined hover:cursor-pointer">close</span>
+                <div className='custom-side-menu left-0 max-h-full custom-border shadow-2xl shadow-black/50 flex-col flex'>
+
+                    {/* title */}
+                    <div className='flex justify-between items-center p-4 border-b-[1px] border-gray-200'>
+                        <span>عربة التسوق</span>
+                        <span ref={closeButton} data-menubutton="cartmenu" className="material-symbols-outlined hover:cursor-pointer">close</span>
+                    </div>
+
+                    {/* products */}
+                    <div className='px-4 h-max overflow-y-auto flex-1'>
+                        {
+                          state.items.length ? state.items?.map((e , index) => (
+                            <CardComp key={index} data={e}/>
+                          )) : <p className='text-sm text-center my-20'>لا توجد منتجات</p>
+                        }
+                    </div>
+
+                    {/* checkout comp */}
+                    <CheckOutComp/>
+
+                </div>
             </div>
-
-            {/* products */}
-            <div className='px-4 h-max overflow-y-auto'>
-                <CardComp/>
-                <CardComp/>
-                <CardComp/>
-                <CardComp/>
-            </div>
-
-            {/* checkout comp */}
-            <CheckOutComp/>
-
-        </div>
-    </div>
+        ) : null
+      }
+    </>
   )
 }
 

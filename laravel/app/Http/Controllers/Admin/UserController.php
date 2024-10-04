@@ -232,6 +232,12 @@ class UserController extends Controller
                 $detail = $this->paginate($detail);
     
                 $user[request('detail')] = $detail;
+            }elseif (request('detail') == "cart") {
+                // get cart details of user and appending it to user object
+                $detail = $user->cart()->with('collection');
+                $detail = $this->paginate($detail);
+    
+                $user[request('detail')] = $detail;
             }else {
                 // get details of user and appending it to user object
                 $detail_type = request()->input('detail');

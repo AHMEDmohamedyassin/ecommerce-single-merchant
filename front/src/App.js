@@ -22,14 +22,17 @@ import LoadingComp from "components/public/LoadingComp";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Auth_GetuserdataAction, Auth_VisitAction } from "./redux/action/AuthAction";
+import { Cart_Initiate } from "./redux/action/CartAction";
 
 function App() {
   const auth = useSelector(state=>state.AuthReducer)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(Auth_GetuserdataAction())
-    dispatch(Auth_VisitAction())
+    dispatch(Auth_GetuserdataAction()).then(() => {
+      dispatch(Auth_VisitAction())
+      dispatch(Cart_Initiate())
+    })
   } , [])
   return (
     <div>

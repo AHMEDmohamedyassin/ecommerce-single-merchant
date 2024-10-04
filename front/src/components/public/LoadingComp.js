@@ -11,7 +11,7 @@ const LoadingComp = () => {
         setting.page_loading || 
         ['ll' , 'lg' , "lr" , "lpr" , "lud"].includes(auth.status) 
         ? (
-          <div className='fixed top-0 left-0 w-full h-full bg-white/50 flex justify-center items-center'>
+          <div className='fixed top-0 left-0 w-full h-full bg-white/50 flex justify-center items-center z-50'>
               <LargeSpinnerComp/>
           </div>
         ) : null

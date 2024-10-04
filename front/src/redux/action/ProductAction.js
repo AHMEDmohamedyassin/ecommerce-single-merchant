@@ -21,10 +21,90 @@ export const Product_ReadAction = (id) => {
         if(!req.success)
             return dispatch({type : "Product_Status" , data : "n"})
 
+
+        let selected_product = (req.res?.product || [])[0]
+        let colors = [...new Set((req.res?.product || []).map(e => e.color))]
+        let images = Object.keys(req.res.json?.images || [])
+        let selected_image = images.find(ele => req.res.json.images[ele] == selected_product?.color)
+        
         dispatch({
             type : "Product_Data" , 
             data : {
-                ...req.res
+                ...req.res , 
+                selected_product  , 
+                colors , 
+                selected_color : selected_product?.color , 
+                selected_image , 
+                images
+            }
+        })
+    }
+}
+
+
+/**
+ * handle Select color 
+ */
+export const Product_ColorSelectAction = (color) => {
+    return async dispatch => {
+        const state = store.getState().ProductReducer
+
+        let selected_product = state.product.find(e => e.color == color)
+        let selected_image = state.images.find(ele => (state.json?.images || [])[ele] == selected_product?.color)
+
+        dispatch({
+            type : "Product_Data", 
+            data : {
+                selected_product , 
+            }
+        })
+
+        store.dispatch(Product_ImageSelectAction(selected_image))
+    }
+}
+
+
+/**
+ * handle size select
+ */
+export const Product_SizeSelectAction = (size) => {
+    return async dispatch => {
+        const products = store.getState().ProductReducer.product
+        const old_selected_product = store.getState().ProductReducer.selected_product
+
+        let selected_product = products.find(e => e.color == old_selected_product.color && e.size == size)
+
+        dispatch({
+            type : "Product_Data", 
+            data : {
+                selected_product
+            }
+        })
+    }
+}
+
+
+/**
+ * selecting image
+ */
+export const Product_ImageSelectAction = (selected_image) => {
+    return async dispatch => {
+        const images = store.getState().ProductReducer?.images
+
+        const container = document.getElementById('scrollContainer');
+        const element = document.getElementById(selected_image);
+    
+        if (element && container) {
+            container.scrollTo({
+                left: element.offsetLeft - container.offsetLeft - 150,
+                behavior: 'smooth' // Smooth scroll effect
+            });
+        }
+
+        dispatch({
+            type : "Product_Data" , 
+            data : {
+                selected_image : selected_image ?? images[0]
             }
         })
     }

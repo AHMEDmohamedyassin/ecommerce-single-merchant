@@ -4,7 +4,11 @@
 
 
 :root{
-    --bg-main-color : #f5f9f9
+    --bg-main-color : #f5f9f9;
+    --maincolor : #e81c3f ;
+    --secondarybg : #fff ;
+    --mainbg : #f5f9f9 ;
+    --secondarycolor : #34b36b
 }
 
 *{
@@ -114,12 +118,18 @@ input:focus{
 }
 
 
-/* scroll bar styling */
-.hide-scrollbar::-webkit-scrollbar {
-    display: none; /* Hides the scrollbar for WebKit browsers (Chrome, Safari) */
-  }
-  
-  .hide-scrollbar {
-    -ms-overflow-style: none;  /* Hides scrollbar for Internet Explorer and Edge */
-    scrollbar-width: none;     /* Hides scrollbar for Firefox */
-  }
+/* scroll bar */
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--secondarybg);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--maincolor);
+    border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--maincolor);
+}

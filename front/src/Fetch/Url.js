@@ -27,3 +27,11 @@ export const AddressReadURL = '/address/read'
 
 // product 
 export const ProductReadURL = '/product/read'
+
+
+// cart 
+export const CartAddURL = '/cart/add'
+export const CartSubURL = '/cart/sub'
+export const CartDeleteURL = '/cart/delete'
+export const CartDeleteAllURL = '/cart/delete/all'
+export const CartListURL = '/cart/list'

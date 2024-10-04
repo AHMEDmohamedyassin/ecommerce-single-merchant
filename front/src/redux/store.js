@@ -4,12 +4,14 @@ import { AuthReducer } from "./reducer/AuthReducer";
 import { SettingReducer } from './reducer/SettingReducer';
 import { AddressReducer } from './reducer/AddressReducer';
 import { ProductReducer } from './reducer/ProductReducer';
+import { CartReducer } from './reducer/CartReducer';
 
 const rootReducer = combineReducers({
     AuthReducer ,
     SettingReducer ,
     AddressReducer ,
-    ProductReducer
+    ProductReducer ,
+    CartReducer ,
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

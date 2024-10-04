@@ -6,7 +6,7 @@ import PathComp from 'components/product/PathComp'
 import CardComp from 'components/search/CardComp'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { Product_ReadAction } from '../redux/action/ProductAction'
 
 const ProductPage = () => {
@@ -36,13 +36,8 @@ const ProductPage = () => {
 
         {/* additonal details */}
         <section className='custom-productsection flex flex-col gap-4'>
-
-          <CollabsedDetailsComp/>
-          <CollabsedDetailsComp/>
-          <CollabsedDetailsComp/>
-          <CollabsedDetailsComp/>
-          <CollabsedDetailsComp/>
-
+          <CollabsedDetailsComp title={'وصف المنتج'} data={state.json?.description} />
+          <CollabsedDetailsComp title={'سياسة الاسترجاع'} data={state.json?.restore} />
         </section>
 
 

@@ -27,8 +27,8 @@ const CartListComp = () => {
                                 state.cart?.items.map((e , index) => (
                                     <div key={index} className='custom-tablerow'>
                                         <p className='justify-center '>{e.id}</p>
-                                        <p className='justify-center w-40'>{e.serial}</p>
-                                        <p className='justify-center w-80'>{e.title}</p>
+                                        <p className='justify-center w-40'>{e.collection?.serial}</p>
+                                        <p className='justify-center w-80'>{e.collection?.title}</p>
                                         <p className='justify-center w-20'>{e.price}</p>
                                         <p className='justify-center w-20'>{e.old_price}</p>
                                         <p className={`justify-center w-20 ${e.quantity < e.pivot?.quantity ? "text-red-500" : ""}`}>{e.pivot?.quantity}</p>

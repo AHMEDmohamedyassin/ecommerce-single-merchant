@@ -1,8 +1,10 @@
 const initial = {
     status : "n",   // n : normal ,  l : loading , s : success , f : fail
     selected_image : null ,
-    selected_size : null ,
+    selected_product : 0 , 
+    colors : [] ,
     selected_color : null ,
+    images : [],
 
     id: null,
     slug: null,
@@ -20,7 +22,8 @@ const initial = {
     created_at: null,
     updated_at: null,
     json: {},
-    category:[]
+    category:[],
+    product : []
 } 
 
 
