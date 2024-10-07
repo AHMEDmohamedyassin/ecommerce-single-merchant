@@ -1,9 +1,19 @@
 import CardComp from 'components/search/CardComp'
 import SelectionComp from 'components/search/SelectionComp'
 import SideFilterMenuComp from 'components/sideMenu/sideFilterMenu/SideFilterMenuComp'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { ProductList_List } from '../redux/action/ProductListAction'
 
 const SearchPage = () => {
+  const state = useSelector(state => state.ProductListReducer)
+  const dispatch = useDispatch()
+
+  // initiate the page
+  useEffect(() => {
+    if(!state.items?.length)
+      dispatch(ProductList_List())
+  } , [])
   return (
     <div>
 
@@ -26,15 +36,11 @@ const SearchPage = () => {
 
         {/* searching results of products */}
         <section className='custom-products-grid'>
-            <CardComp/>
-            <CardComp/>
-            <CardComp/>
-            <CardComp/>
-            <CardComp/>
-            <CardComp/>
-            <CardComp/>
-            <CardComp/>
-            <CardComp/>
+          {
+            state.items.map((e , index) => (
+              <CardComp key={e.id} data={e}/>
+            ))
+          }
         </section>
     </div>
   )

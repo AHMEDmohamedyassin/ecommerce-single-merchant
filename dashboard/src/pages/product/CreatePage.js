@@ -1,12 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import ReactInputMask from 'react-input-mask'
 import { useDispatch, useSelector } from 'react-redux'
 import { CreateProductValidation } from '../../validation/ProductValidation'
-import ArrayInputComp from 'components/product/ArrayInputComp'
-import Select from 'react-select'
-import { selectStyle } from '../../config'
 import { Category_ListAction } from '../../redux/action/CategoryAction'
 import ImagesComp from 'components/product/ImagesComp'
 import { Product_CreateAction } from '../../redux/action/ProductAction'
@@ -18,7 +14,6 @@ import MainFromInputsComp from 'components/product/MainFromInputsComp'
 const CreatePage = () => {
     const [selectedCategory , setSelectedCategory] = useState([])
     const [reactSelectCategoryValues , setReactSelectCategoryValues] = useState([])    // this for operation of input itself
-    const [colors , setColors] = useState([])
     const state = useSelector(state => state.ProductReducer)
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -42,12 +37,6 @@ const CreatePage = () => {
             ]
         }
     })
-
-    // watch changes in colors field to add it or remove from the select input colors options for images
-    const watchColors = watch('products')
-    useEffect(() => {
-        setColors([...new Set(watchColors?.map(e => e.color))] ?? [])
-    } , [watchColors])
 
     // submitting form 
     const submitForm = (form_data) => {
@@ -84,7 +73,7 @@ const CreatePage = () => {
             </form>
 
             {/* images the product */}
-            <ImagesComp colors={colors}/>
+            <ImagesComp/>
 
             {/* submitting the main form */}
             <button onClick={handleSubmit(submitForm)} className='custom-button2 w-fit self-center mt-4'>تأكيد البيانات</button>

@@ -15,7 +15,11 @@ const CardComp = ({data}) => {
     <div className='grid grid-cols-2 gap-x-2 text-sm items-center border-b-[1px] border-gray-200 py-6'>
         {/* image */}
         <div>
-            <img className='custom-img-cover' loading='lazy' src={`${ProductImageURL}id=${data.collection?.id}&width=200`} />
+            {
+              data.image ? 
+              <img className='custom-img-cover' loading='lazy' src={`${ProductImageURL}id=${data.collection?.id}&image=${data.image}&width=200`} /> :
+              <img className='custom-img-cover' loading='lazy' src={`${ProductImageURL}id=${data.collection?.id}&width=200`} /> 
+            }
         </div>
     
         {/* details */}

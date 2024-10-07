@@ -59,7 +59,14 @@ const DetailsComp = () => {
                   <div className='flex flex-wrap gap-2'>
                     {
                       state.colors?.map((e, index) => (
-                        <img onClick={() => handleSelectColor(e)} title={e} key={index} src={`${ProductImageURL}id=${state.id}&width=50&image=${state.images.find(ele => state.json.images[ele] == e) }`}  className={`aspect-square w-10 custom-border rounded hover:cursor-pointer hover:border-secondarycolor ${e == state.selected_product?.color ? "border-secondarycolor" : ""} border-[1px]`} loading='lazy' />
+                        <img 
+                          onClick={() => handleSelectColor(e)} 
+                          title={e} 
+                          key={index} 
+                          src={`${ProductImageURL}id=${state.id}&width=50&image=${state.product?.filter(ele => ele.color == e).find(e => e.image != null)?.image}`}  
+                          className={`aspect-square w-10 custom-border rounded hover:cursor-pointer hover:border-secondarycolor ${e == state.selected_product?.color ? "border-secondarycolor" : ""} border-[1px]`} 
+                          loading='lazy' 
+                        />
                       ))
                     }
                   </div>

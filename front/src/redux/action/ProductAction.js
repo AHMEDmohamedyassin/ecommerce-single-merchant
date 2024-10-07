@@ -22,10 +22,9 @@ export const Product_ReadAction = (id) => {
             return dispatch({type : "Product_Status" , data : "n"})
 
 
-        let selected_product = (req.res?.product || [])[0]
+        let selected_product = (req.res?.product || []).find(e => e.image != null)
         let colors = [...new Set((req.res?.product || []).map(e => e.color))]
-        let images = Object.keys(req.res.json?.images || [])
-        let selected_image = images.find(ele => req.res.json.images[ele] == selected_product?.color)
+        let selected_image = selected_product.image
         
         dispatch({
             type : "Product_Data" , 
@@ -35,7 +34,6 @@ export const Product_ReadAction = (id) => {
                 colors , 
                 selected_color : selected_product?.color , 
                 selected_image , 
-                images
             }
         })
     }
@@ -50,7 +48,9 @@ export const Product_ColorSelectAction = (color) => {
         const state = store.getState().ProductReducer
 
         let selected_product = state.product.find(e => e.color == color)
-        let selected_image = state.images.find(ele => (state.json?.images || [])[ele] == selected_product?.color)
+
+        // if product piece not have an image it will select first image
+        let selected_image = selected_product?.image ?? state.images[0]
 
         dispatch({
             type : "Product_Data", 

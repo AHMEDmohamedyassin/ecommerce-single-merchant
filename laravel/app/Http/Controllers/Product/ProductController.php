@@ -220,6 +220,22 @@ class ProductController extends Controller
             $json_path = '/products/' . $collection->id . '/json/json.json';
             if(Storage::exists($json_path))
                 $collection['json'] = json_decode(Storage::read($json_path , true));
+        
+        
+        
+            // retrieving product images 
+            $images_path = '/products/' . $collection->id . '/images';
+            if(Storage::directoryExists($images_path)){
+                $all_files = Storage::allFiles($images_path);
+                $all_files_name = [];
+                // getting only the name of image
+                foreach($all_files as $file){
+                    $path_array = explode('/' , $file);
+                    $all_files_name[] = $path_array[count($path_array) - 1];
+                }
+                // appending images to response
+                $collection['images'] = $all_files_name;
+            }
             
 
             return $this->SuccessResponse($collection->load('category')->load('product'));
@@ -264,6 +280,7 @@ class ProductController extends Controller
                 "price" => "nullable|max:999999.99|min:0" ,
                 "old_price" => "nullable|max:999999.99|min:0" ,
                 "quantity" => "nullable|max:65535|min:0" ,
+                "image"  => "nullable|max:255"
             ]);
 
             $product = Product::find(request('id'));

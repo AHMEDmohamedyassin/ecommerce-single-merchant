@@ -1,13 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import ReactInputMask from 'react-input-mask'
 import { useDispatch, useSelector } from 'react-redux'
 import { SubProductValidation, UpdateProductValidation } from '../../validation/ProductValidation'
 import { formattingDateForUpdate, ValidateInputChanges } from '../../validation/Validation'
-import ArrayInputComp from 'components/product/ArrayInputComp'
-import Select from 'react-select'
-import { selectStyle } from '../../config'
 import { Category_ListAction } from '../../redux/action/CategoryAction'
 import ImagesComp from 'components/product/ImagesComp'
 import { product_DeleteAction, Product_ReadAction, product_UpdateAction } from '../../redux/action/ProductAction'
@@ -19,16 +15,15 @@ import ProductPiecesComp from 'components/product/ProductPiecesComp'
 import ProductPieceUpdateComp from 'components/product/ProductPieceUpdateComp'
 import { z } from 'zod'
 import MainFromInputsComp from 'components/product/MainFromInputsComp'
+import ProductPieceAppendImage from 'components/product/ProductPieceAppendImage'
 
 const UpdatePage = () => {
     const [selectedCategory , setSelectedCategory] = useState([]) // this for submitting form
     const [reactSelectCategoryValues , setReactSelectCategoryValues] = useState([])    // this for operation of input itself
-    const [colors , setColors] = useState([])
     const state = useSelector(state => state.ProductReducer)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const params = useParams()
-    const [rerender_key , setRerender_key] = useState(1)
     const [subProduct , setSubProduct] = useState({})
 
     // main form 
@@ -50,12 +45,6 @@ const UpdatePage = () => {
         resolver:zodResolver(z.object({products : z.array(SubProductValidation)})),
         defaultValues : {}
     })
-
-    // watch changes in colors field in subProductFrom to add it or remove from the select input options
-    const watchColors = subProductForm.watch('products')
-    useEffect(() => {
-        setColors(e => ([ ...new Set([...(state.product || []).map(ele => ele.color) , ...(watchColors || [])?.map(e => e.color)]) ]) )
-    } , [watchColors])
 
 
     // submitting form 
@@ -81,7 +70,6 @@ const UpdatePage = () => {
         reset({...state , publish_date:  formattingDateForUpdate(state.publish_date) })
         setReactSelectCategoryValues(state?.category?.map(e => ({value : e.id , label : e.title})))
         setSelectedCategory(state?.category?.map(e => e.id))
-        setColors(e => ([...new Set([...e , ...(state.product || []).map(ele => ele.color)])]))
     }
 
     // delete product
@@ -120,6 +108,9 @@ const UpdatePage = () => {
                 <>
                 {/* product statistics details  */}
                 <ProductDetailsComp/>
+
+                {/* form used to append image to product piece */}
+                <ProductPieceAppendImage/>
                 
                 <div className='flex flex-col gap-4'>
                     <form onSubmit={handleSubmit(submitForm)} className='flex flex-col gap-4'>
@@ -145,7 +136,7 @@ const UpdatePage = () => {
                     <ProductExistsImages/>
 
                     {/* images the product */}
-                    <ImagesComp colors={colors}/>
+                    <ImagesComp/>
 
 
                     {/* buttons  */}

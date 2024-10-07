@@ -27,7 +27,7 @@ const ImageInputUploaderComp = ({name , setFile}) => {
         <button type='button' onClick={ClickInputHandle} className=' w-full h-full overflow-hidden'>
             {
                 url ? 
-                    <img className=' object-cover w-full' src={url}/> : 
+                    <img className=' object-cover w-full h-full' src={url}/> : 
                     <span className="material-symbols-outlined" style={{fontSize:100}}>add_photo_alternate</span>
             }
         </button>

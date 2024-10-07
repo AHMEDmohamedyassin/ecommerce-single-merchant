@@ -1,5 +1,8 @@
 const initial = {
     status : "n",   // n : normal ,  l : loading , s : success , f : fail
+
+    update_image_id : null ,
+
     id : null,
     slug : null ,   
     serial : null ,
@@ -16,7 +19,8 @@ const initial = {
     created_at : null ,  
     updated_at : null ,   
     json : {},
-    category : []
+    category : [],
+    images : []
 }
 
 

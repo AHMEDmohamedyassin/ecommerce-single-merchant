@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Product_ImagesUploadAction } from '../../redux/action/ProductAction'
 
-const ImagesComp = ({watch , colors}) => {
+const ImagesComp = () => {
     const state = useSelector(state => state.ProductReducer)
     const dispatch = useDispatch()
     const submit_button = useRef(null)
@@ -34,16 +34,7 @@ const ImagesComp = ({watch , colors}) => {
                     <div key={index} className='relative'>
 
                         {/* image input with review and selection of colors */}
-                        <div className='w-full flex flex-col items-center gap-2'>
-                            <ImageInputUploaderComp name={`image_${index}`}/>
-                            <select name={`color_${index}`} className='custom-border w-full text-sm'>
-                                {
-                                    colors?.map((e , index) => (
-                                        <option key={index}>{e}</option>
-                                    ))
-                                }
-                            </select>
-                        </div>
+                        <ImageInputUploaderComp name={`image_${index}`}/>
 
                         {/* adding and removing image buttons  */}
                         {

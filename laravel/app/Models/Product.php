@@ -18,6 +18,7 @@ class Product extends Model
         "old_price" ,
         "quantity" ,
         "paid_quantity" ,
+        "image" ,
     ] ;
 
 

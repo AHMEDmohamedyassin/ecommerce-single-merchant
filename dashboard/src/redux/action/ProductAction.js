@@ -122,7 +122,7 @@ export const Product_DeleteImageAction = (image) => {
     return async dispatch => {
         const id = store.getState().ProductReducer?.id
         let json = store.getState().ProductReducer?.json ?? {}
-        let images = store.getState().ProductReducer?.json?.images ?? {}
+        let images = store.getState().ProductReducer?.images ?? []
 
         dispatch({type : "Product_Status" , data : "ldi"}) // loading delete image
 
@@ -136,15 +136,12 @@ export const Product_DeleteImageAction = (image) => {
         Setting_Msg(19000)
 
         // unset the deleted image
-        delete images[image]
+        images = images.filter(e => e != image)
 
         dispatch({
             type : "Product_Data" ,
             data : {
-                json : {
-                    ...json , 
-                    images
-                }
+                images
             }
         })
     }
@@ -280,6 +277,44 @@ export const product_SubProductDeleteAction = (id) => {
             type : "Product_Data" ,
             data : {
                 product
+            }
+        })
+    }
+}
+
+
+
+
+/**
+ * update sub product 
+ */
+export const product_SubProductImageAppendAction = (image) => {
+    return async dispatch => {
+        // confirmation 
+        if(!Setting_Confirm(2000)) return {}
+
+        let id = store.getState().ProductReducer?.update_image_id       /// getting sub product id
+        let product = store.getState().ProductReducer?.product ?? []    /// getting sub products
+
+        dispatch({type : "Product_Status" , data : "lusi"}) // loading update sub product image
+
+        const req = await fetching(ProductUpdateSubURL , {id , image})
+
+        if(!req.success)
+            return  dispatch({type : "Product_Status" , data : "n"})
+
+
+        // notification 
+        Setting_Msg(21000)
+
+        // update product in products array
+        product = product.map(e => e.id == id ? {...e , image} : e)
+
+        dispatch({
+            type : "Product_Data" ,
+            data : {
+                product , 
+                update_image_id  : null
             }
         })
     }

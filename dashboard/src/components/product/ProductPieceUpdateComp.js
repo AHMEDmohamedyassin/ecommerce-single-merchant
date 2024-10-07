@@ -26,6 +26,11 @@ const ProductPieceUpdateComp = ({data}) => {
         reset(data)
     }
 
+    // opening image append form
+    const openImageAppendFrom = () => {
+        dispatch({type:'Product_Data' , data : {update_image_id : data.id}})
+    } 
+
     useEffect(() => {
         handleReset()
     } , [data])
@@ -70,6 +75,7 @@ const ProductPieceUpdateComp = ({data}) => {
         {/* buttons  */}
         <div className='flex items-end justify-center gap-4 self-end'>
             <button type='submit' className='custom-button2'>تأكيد</button>
+            <button onClick={openImageAppendFrom} type='button' className='custom-button2'>تعيين صورة</button>
             <button onClick={handleReset} type='button' className='custom-button hover:bg-blue-500'>إعادة</button>
         </div>
     </form>

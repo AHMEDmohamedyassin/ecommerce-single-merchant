@@ -27,6 +27,7 @@ export const AddressReadURL = '/address/read'
 
 // product 
 export const ProductReadURL = '/product/read'
+export const ProductSearchURL = '/product/search'
 
 
 // cart 
