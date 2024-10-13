@@ -35,7 +35,19 @@ const CardComp = ({data}) => {
         })
     } , [])
   return (
-    <div className='bg-secondarybg rounded shadow overflow-hidden flex flex-col'>
+    <div className='relative bg-secondarybg rounded shadow overflow-hidden flex flex-col'>
+        
+        {/* discount and empty  */}
+        <div className='absolute top-2 w-full flex'>
+            {
+                selectedProduct && selectedProduct.price && selectedProduct.old_price ? 
+                    <div className='bg-yellow-500 shadow px-1 text-sm absolute right-4 font-bold'>-{((selectedProduct.price / selectedProduct.old_price) * 100).toFixed(1)} %</div> : null
+            }
+            {
+                selectedProduct && selectedProduct.quantity < 1 ? 
+                <div className='text-sm bg-red-500 shadow px-2 absolute left-4 text-white'>نفذ</div> : null
+            }
+        </div>
 
         {/* main image */}
         <section className='h-40'>

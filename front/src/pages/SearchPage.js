@@ -4,16 +4,23 @@ import SideFilterMenuComp from 'components/sideMenu/sideFilterMenu/SideFilterMen
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ProductList_List } from '../redux/action/ProductListAction'
+import { useSearchParams } from 'react-router-dom'
+import PaginationComp from 'components/search/PaginationComp'
 
 const SearchPage = () => {
   const state = useSelector(state => state.ProductListReducer)
   const dispatch = useDispatch()
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // opening filter menu 
+  const openFilterMenu = () => {
+    dispatch(({type:"ProductList_Data" , data : {filterMenu : true}}))
+  }
 
   // initiate the page
   useEffect(() => {
-    if(!state.items?.length)
-      dispatch(ProductList_List())
-  } , [])
+    dispatch(ProductList_List(searchParams))
+  } , [searchParams])
   return (
     <div>
 
@@ -27,7 +34,7 @@ const SearchPage = () => {
             <SelectionComp/>
 
             {/* filtering button */}
-            <button data-menubutton="filtermenu" className='flex justify-between items-center bg-secondarybg custom-border select-none px-4 py-2 rounded-full'>
+            <button onClick={openFilterMenu} className='flex justify-between items-center bg-secondarybg custom-border select-none px-4 py-2 rounded-full'>
                 <span className="material-symbols-outlined">filter_alt</span>
                 <span>التصفية</span>
             </button>
@@ -42,6 +49,10 @@ const SearchPage = () => {
             ))
           }
         </section>
+
+
+        {/* pagination  */}
+        <PaginationComp/>
     </div>
   )
 }

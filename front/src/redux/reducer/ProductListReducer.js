@@ -1,6 +1,8 @@
 const initial = {
     status : "n",   // n : normal ,  l : loading , s : success , f : fail
     search : "" , 
+    filterMenu : false , 
+    
     categories : [] , 
     orderby : [] , 
 

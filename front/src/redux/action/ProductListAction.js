@@ -5,12 +5,26 @@ import {store} from '../store'
 
 /**
  * listing products 
+ *     // "orderby" : "id" 
+    // "order" : "desc" ,
+    // "search" : "products",
+    // "with_products" : false , 
+    "categories" : [1] , 
+    "page" : 1
  */
-export const ProductList_List = () => {
+export const ProductList_List = (searchParams) => {
     return async dispatch => {
         dispatch({type:"ProductList_Status"  , data : "ll"})          // loading list
 
-        const req = await fetching(`${ProductSearchURL}?with_products=1` , {} , "GET")
+        // query handling
+        let query = ""
+        for(const [key , value] of searchParams.entries()){
+          if(key == 'categories')
+            query = query.concat('&' , key , '[]=' , value)
+          else query = query.concat('&' , key , '=' , value)
+        }
+
+        const req = await fetching(`${ProductSearchURL}?with_products=1${query}` , {} , "GET")
 
         if(!req.success)
             dispatch({type:"ProductList_Status"  , data : "n"})
