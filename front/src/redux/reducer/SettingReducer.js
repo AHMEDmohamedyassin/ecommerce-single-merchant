@@ -1,5 +1,6 @@
 const initial = {
     page_loading : false,
+    side_menu : false 
 }
 
 export const SettingReducer = (state = initial , action) => {

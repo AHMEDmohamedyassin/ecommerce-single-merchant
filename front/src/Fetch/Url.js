@@ -36,3 +36,7 @@ export const CartSubURL = '/cart/sub'
 export const CartDeleteURL = '/cart/delete'
 export const CartDeleteAllURL = '/cart/delete/all'
 export const CartListURL = '/cart/list'
+
+
+// categories 
+export const TopCategoriesReadURL = '/topcategory/read'

@@ -70,10 +70,17 @@ class ProductController extends Controller
             ]));
 
 
-            // creating product 
+            // creating product
+            $total_subproduct_price = 0; 
             foreach(request('products') as $product){
                 $collection->product()->create($product);
+                $total_subproduct_price += $product['price'];
             }
+
+            // updating collection average price 
+            $collection->update([
+                'average_price' => $total_subproduct_price / count(request('products' , []))
+            ]);
             
             // sync cateogries
             $collection->category()->sync(request('categories'));
@@ -107,17 +114,21 @@ class ProductController extends Controller
 
             $collection = Collection::find(request('id'));
 
+
+            // appending products product 
+            $total_subproduct_price = 0;
+            foreach(request('products' , []) as $product){
+                $collection->product()->create($product);
+                $total_subproduct_price += $product['price'];
+            }
+
+
             // update collection data
             $collection->update(array_merge($req , [
                 'slug' => $this->MultiTextSlug(request("serial" , $collection->serial) , request('title' , $collection->title) , request('price' , $collection->price) , request('description' , $collection->description)) ,
-                'publish_date' => request('publish_date') ? Carbon::parse(request('publish_date')) : $collection->publish_date
+                'publish_date' => request('publish_date') ? Carbon::parse(request('publish_date')) : $collection->publish_date ,
+                'average_price' => ( $total_subproduct_price + ($collection->product()->count() - count(request('products' , []))) * $collection->average_price) /  $collection->product()->count()    // updateing average price
             ]));
-
-
-            // appending products product 
-            foreach(request('products' , []) as $product){
-                $collection->product()->create($product);
-            }
 
             // sync cateogries
             $collection->category()->sync(request('categories'));
@@ -167,8 +178,7 @@ class ProductController extends Controller
         try{
             request()->validate([
                 'search' => 'nullable|max:255' , 
-                // 'orderby' => 'in:publish_date,price,ratting,quantity,reviews,views,old_price,id,created_at,title,paid_quantity,updated_at,description|nullable' , 
-                'orderby' => 'in:publish_date,ratting,reviews,views,id,created_at,title,updated_at,description|nullable' , 
+                'orderby' => 'in:publish_date,ratting,reviews,views,id,created_at,title,updated_at,description,average_price|nullable' , 
                 'order' => 'in:asc,desc',
                 "categories" => "array|nullable",
                 "categories.*" => "numeric|exists:categories,id" ,
@@ -286,6 +296,17 @@ class ProductController extends Controller
 
             $product = Product::find(request('id'));
 
+            // recalculating the average price
+            if(request()->has('price')){
+                $collection = $product->collection;
+                $average_price = $collection->average_price;
+                $products_count = $collection->product()->count();
+                $total_price = $products_count * $average_price;
+                $collection->update([
+                    'average_price' => ($total_price - $product->price + request('price')) / $products_count
+                ]);
+            }
+
             $product->update($req);
             
             return $this->SuccessResponse($product);
@@ -307,6 +328,14 @@ class ProductController extends Controller
             ]);
 
             $product = Product::find(request('id'));
+
+            $collection = $product->collection;
+            $average_price = $collection->average_price;
+            $products_count = $collection->product()->count();
+            $total_price = $products_count * $average_price;
+            $collection->update([
+                'average_price' => ($total_price - $product->price ) / ($products_count - 1)
+            ]);
 
             $product->delete();
             

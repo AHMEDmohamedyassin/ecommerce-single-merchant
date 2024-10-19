@@ -18,6 +18,16 @@ const SelectionComp = () => {
             order : "asc" , 
             orderby : "id"
         },
+        {
+            title : "من السعر الأقل إلي الأعلي" ,
+            order : "asc" , 
+            orderby : "average_price"
+        },
+        {
+            title : "من السعر الأعلي إلي الأقل" ,
+            order : "desc" , 
+            orderby : "average_price"
+        },
     ]
     
     // handle order function 

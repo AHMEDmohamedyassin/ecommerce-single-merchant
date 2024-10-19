@@ -19,6 +19,7 @@ class Collection extends Model
         "views" ,
         "reviews" ,
         "publish_date" ,
+        "average_price" ,
     ];
 
     // relations

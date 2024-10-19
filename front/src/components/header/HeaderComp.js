@@ -3,6 +3,8 @@ import SearchBarComp from 'components/header/SearchBarComp'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Cart_ToggleMenuAction } from '../../redux/action/CartAction'
+import CategoriesRibbonComp from './CategoriesRibbonComp'
+import { Setting_SideMenuAction } from '../../redux/action/SettingAction'
 
 const HeaderComp = () => {
   const dispatch = useDispatch()
@@ -11,6 +13,12 @@ const HeaderComp = () => {
   const handleOpenCart = () => {
     dispatch(Cart_ToggleMenuAction())
   }
+
+  // opening side menu 
+  const openSideMenu = () => {
+    dispatch(Setting_SideMenuAction())
+  }
+
   return (
     <div className='w-full mb-6'>
 
@@ -18,13 +26,13 @@ const HeaderComp = () => {
           
           {/* side menu icon */}
           <div className='flex items-center lg:hidden'>
-            <span  data-menubutton="sidemenu" className="material-symbols-outlined sm:text-3xl text-2xl hover:cursor-pointer">segment</span>
+            <span  onClick={openSideMenu} className="material-symbols-outlined sm:text-3xl text-2xl hover:cursor-pointer">segment</span>
           </div>
 
           {/* logo */}
-          <div className='flex items-center justify-center'>
+          <Link to={'/'} className='flex items-center justify-center'>
             <img className='lg:w-48 w-28' src='https://cdn.shopify.com/s/files/1/0760/7992/3480/files/T_N_logotype_fullcolor_rgb.svg?v=1695484067' />
-          </div>
+          </Link>
         
           {/* search bar */}
           <div className='max-lg:hidden'>
@@ -44,24 +52,7 @@ const HeaderComp = () => {
         </section>
 
         {/* categories ribbon */}
-        <section className='max-lg:hidden bg-secondarybg'>
-          <div className=' custom-container flex items-center gap-x-4 py-2'>
-            {/* side menu icon */}
-            <div className='flex items-center -my-10'>
-              <span  data-menubutton="sidemenu" className="material-symbols-outlined sm:text-3xl text-2xl hover:cursor-pointer">segment</span>
-            </div>
-
-            <div>ahmed</div>
-            <div className='w-[1px] h-[10px] bg-maincolor'></div>
-            <div>ahmed</div>
-            <div className='w-[1px] h-[10px] bg-maincolor'></div>
-            <div>ahmed</div>
-            <div className='w-[1px] h-[10px] bg-maincolor'></div>
-            <div>ahmed</div>
-            <div className='w-[1px] h-[10px] bg-maincolor'></div>
-            <div>ahmed</div>
-          </div>
-        </section>
+        <CategoriesRibbonComp/>
 
     </div>
   )

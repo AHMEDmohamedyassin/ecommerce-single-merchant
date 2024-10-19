@@ -2,45 +2,47 @@ import { ProductImageURL } from 'Fetch/Url'
 import React, { useEffect, useState } from 'react'
 
 const CardComp = ({data}) => {
+    console.log(data)
+    const [selectedImage , setSelectedImage] = useState(null )
+    const [selected_color , setSelected_color] = useState(null )
+    const [colors , setColors] = useState([])
     const [selectedProduct  ,setSelectedProduct] = useState(null)
-    const [products , setProducts] = useState([])
 
     // selecting color
-    const handleSelectProduct = e => {
-        setSelectedProduct(e)
+    const handleSelectImage = color => {
+        setSelectedProduct(data.product.find(e => e.color == color))
     }
 
     // initiate product card
     useEffect(() => {
-
-        // setting products data
-        setProducts(e => {
-            let products = data.product.reduce((acc , curr) => {
-
-                // check if color is repeated 
-                if(acc.find(e => e.color == curr.color))
-                    acc = acc.map(e => e.color == curr.color ? {...e , sizes : [...e.sizes , curr.size]} : e)
-                else acc = [...acc , {...curr , sizes : [curr.size] }]
-
-                return acc
-            } , [])
-
-            // setting initial product
-            let initial_product = products.find(e => e.image != null)
-            setSelectedProduct(initial_product ?? ( products[0] ?? {} ))
-
-            return products
+        // getting colors in array
+        setColors(e => {
+            return [...new Set((data.product.filter(e => e.color != null && e.image != null) || [])?.map(e => e.color))]
         })
-        
-    } , [data])
+
+        // select image
+        setSelectedImage(e => {
+            let product = data.product.find(e => e.image != null && e.color != null)
+            
+            if(!product) return e
+            
+            setSelected_color(product.color)
+            return product.image
+        })
+
+        // selecte product
+        setSelectedProduct(e => {
+            return data.product.find(e => e.image != null && e.color != null)
+        })
+    } , [])
   return (
     <div className='relative bg-secondarybg rounded shadow overflow-hidden flex flex-col'>
         
         {/* discount and empty  */}
         <div className='absolute top-2 w-full flex'>
             {
-                selectedProduct && selectedProduct.price && selectedProduct.old_price && selectedProduct.price < selectedProduct.old_price ? 
-                    <div className='bg-yellow-500 shadow px-1 text-sm absolute right-4 font-bold'>% {(100 - (selectedProduct.price / selectedProduct.old_price) * 100).toFixed(1)}-</div> : null
+                selectedProduct && selectedProduct.price && selectedProduct.old_price ? 
+                    <div className='bg-yellow-500 shadow px-1 text-sm absolute right-4 font-bold'>-{((selectedProduct.price / selectedProduct.old_price) * 100).toFixed(1)} %</div> : null
             }
             {
                 selectedProduct && selectedProduct.quantity < 1 ? 
@@ -61,11 +63,7 @@ const CardComp = ({data}) => {
         {/* details and available images */}
         <section className='p-4 flex flex-col gap-2 justify-start flex-1'>
 
-            <div className=' flex-1 flex flex-col gap-1'>
-                <div className='flex items-center gap-2'>
-                    <p className=' text-nowrap'>{selectedProduct?.color} - </p>
-                    <p className='line-clamp-1 text-sm'>{selectedProduct?.sizes?.join(' , ')}</p>
-                </div>
+            <div className=' flex-1'>
                 <p className='line-clamp-2 text-sm font-semibold'>{data.title}</p>
             </div>
 
@@ -85,14 +83,17 @@ const CardComp = ({data}) => {
             {/* available images */}
             <div className='flex items-center gap-3 mt-1'>
                 {
-                    products?.map((e , index) => (
+                    colors?.map((e , index) => (
                         <img 
                             key={index}
-                            className={`${e.id == selectedProduct?.id ? "border-secondarycolor" : ""} rounded-full custom-border shadow-sm aspect-square lg:w-8 sm:w-6 w-4 hover:cursor-pointer`} 
+                            className={`${e == selectedProduct.color ? "border-secondarycolor" : ""} rounded-full custom-border shadow-sm aspect-square lg:w-8 sm:w-6 w-4 hover:cursor-pointer`} 
                             loading='lazy' 
-                            onClick={() => handleSelectProduct(e)}
-                            title={e.color}
-                            src={`${ProductImageURL}id=${data.id}&width=200&image=${e.image}`}
+                            onClick={() => handleSelectImage(e)}
+                            src={
+                                data.product.find(ele => ele.color == e)?.image ? 
+                                    `${ProductImageURL}id=${data.id}&width=50&image=${data.product.find(ele => ele.color == e)?.image}` : 
+                                    `${ProductImageURL}id=${data.id}&width=50`
+                            }
                         />
                     ))
                 }

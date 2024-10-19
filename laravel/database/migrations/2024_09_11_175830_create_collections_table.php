@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('serial')->nullable();
             $table->string('title')->nullable();
             $table->string('description')->nullable();
+            $table->unsignedFloat('average_price')->default(0);
             $table->unsignedFloat('ratting')->default(0);
             $table->unsignedInteger('views')->default(0);
             $table->unsignedInteger('reviews')->default(0);

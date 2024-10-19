@@ -35,3 +35,16 @@ export const Setting_Confirm = (msg_code) => {
     }
     return true
 }
+
+
+/**
+ * side menu control
+ */
+export const Setting_SideMenuAction = (open = true) => {
+    return {
+        type : "Setting_Data" , 
+        data : {
+            side_menu : open
+        }
+    }
+}
