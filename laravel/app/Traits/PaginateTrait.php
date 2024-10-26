@@ -4,13 +4,18 @@ namespace App\Traits;
 
 Trait PaginateTrait {
 
-    public function paginate($class , $perPage = 0){
-        request()->validate(['page' => 'numeric']);
+    public function paginate($class){      // perpage variable not used
+        request()->validate([
+            'page' => 'numeric' , 
+            'perpage' => 'numeric|nullable'
+        ]);
         $page = request('page') ?? 1;
 
-        if(!$perPage) $perPage = env('PER_PAGE' , 20);
+        $perpage = request('perpage' , env('PER_PAGE' , 20));
 
-        $data = $class->paginate($perPage , ['*'] , 'page' , $page);
+        if(!$perpage || $perpage > env('PER_PAGE' , 20)) $perpage = env('PER_PAGE' , 20);
+
+        $data = $class->paginate($perpage , ['*'] , 'page' , $page);
 
         $result = [
             'current' => $data->currentPage(),

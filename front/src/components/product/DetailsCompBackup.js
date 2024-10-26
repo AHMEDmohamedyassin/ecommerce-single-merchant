@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import ButtonsComp from './ButtonsComp'
 import { useDispatch, useSelector } from 'react-redux'
 import {ProductImageURL} from "../../Fetch/Url"
-import { Product_SizeSelectAction } from '../../redux/action/ProductAction'
+import { Product_ColorSelectAction, Product_SizeSelectAction } from '../../redux/action/ProductAction'
 
 const DetailsComp = () => {
   const state = useSelector(state => state.ProductReducer)
   const dispatch = useDispatch()
 
 
-  // handle select product
-  const handleSelectProduct = (prod) => {
-    dispatch({type:"Product_Data" , data :{selected_product : prod} })
+  // handle select color
+  const handleSelectColor = (color) => {
+    dispatch(Product_ColorSelectAction(color))
   }
 
   // handle size select 
@@ -57,18 +57,18 @@ const DetailsComp = () => {
 
                 {/* colors */}
                 {
-                  state.products.length ? (
+                  state.colors?.length ? (
                     <div className='flex flex-col gap-2'>
                       <p className='text-xs font-bold'>لون : {state.selected_product?.color }</p>
                       <div className='flex flex-wrap gap-2'>
                         {
-                          state.products?.map((e, index) => (
+                          state.colors?.map((e, index) => (
                             <img 
-                              onClick={() => handleSelectProduct(e)} 
-                              title={e.color} 
+                              onClick={() => handleSelectColor(e)} 
+                              title={e} 
                               key={index} 
-                              src={`${ProductImageURL}id=${state.id}&width=50&image=${e.image}`}  
-                              className={`aspect-square w-10 custom-border rounded hover:cursor-pointer hover:border-secondarycolor ${e.color == state.selected_product?.color ? "border-secondarycolor" : ""} border-[1px]`} 
+                              src={`${ProductImageURL}id=${state.id}&width=50&image=${state.product?.filter(ele => ele.color == e).find(e => e.image != null)?.image}`}  
+                              className={`aspect-square w-10 custom-border rounded hover:cursor-pointer hover:border-secondarycolor ${e == state.selected_product?.color ? "border-secondarycolor" : ""} border-[1px]`} 
                               loading='lazy' 
                             />
                           ))
@@ -83,7 +83,7 @@ const DetailsComp = () => {
                   <p className='text-xs font-bold'>مقاس : {state.selected_product?.size}</p>
                   <div className='flex flex-wrap gap-2'>
                     {
-                      state.selected_product?.sizes?.map((e , index) => (
+                      [...new Set(state.product.filter(e => e.color == state.selected_product?.color ).map(e => e.size))].map((e , index) => (
                         <p onClick={() => handleSelectSize(e) } key={index} className={`rounded-lg p-2 py-1 custom-border text-sm hover:text-white hover:bg-secondarycolor hover:cursor-pointer flex items-center justify-center ${state.selected_product?.size == e ? "text-white bg-secondarycolor" : "text-gray-500" }`}>{e}</p>
                       ))
                     }

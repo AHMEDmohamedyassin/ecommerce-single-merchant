@@ -39,3 +39,30 @@ export const ProductList_List = (searchParams) => {
         })
     }
 }
+
+
+/**
+ * listing products with categories
+ */
+export const ProductList_Categories = (categories) => {
+    return async dispatch => {
+        dispatch({type:"ProductList_Status"  , data : "ll"})          // loading list
+
+        let query = ''
+        categories.forEach(e => query = query.concat('&categories[]=' , e) )
+
+        const req = await fetching(`${ProductSearchURL}?with_products=1&perpage=8&${query}` , {} , "GET")
+
+        if(!req.success)
+            dispatch({type:"ProductList_Status"  , data : "n"})
+
+
+        // appending data to store 
+        dispatch({
+            type : "ProductList_Data" , 
+            data : {
+                ...req.res
+            }
+        })
+    }
+}

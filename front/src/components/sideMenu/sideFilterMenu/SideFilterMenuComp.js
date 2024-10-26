@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Link, useSearchParams } from "react-router-dom"
+import { Link, useNavigate, useSearchParams } from "react-router-dom"
 
 const SideFilterMenuComp = () => {
     const state = useSelector(state => state.ProductListReducer)
@@ -8,6 +8,7 @@ const SideFilterMenuComp = () => {
     const dispatch = useDispatch()
     const filterMenu = useRef(null)
     const [searchParams , setSearchParams] = useSearchParams()
+    const navigate = useNavigate()
     const [selectedCategories , setSelectedCategories] = useState([])
 
     // closing filter menu 
@@ -32,6 +33,12 @@ const SideFilterMenuComp = () => {
         })
 
         setSearchParams(newSearchParams);
+    }
+
+    // handle reset 
+    const handleReset = () => {
+        closeFilterMenu()
+        navigate('/search')
     }
 
     useEffect(() => {
@@ -80,7 +87,7 @@ const SideFilterMenuComp = () => {
                         {/* submit button  */}
                         <div style={{boxShadow: '5px 5px 15px rgba(0, 0, 0, 0.3)'}} className=' px-4 py-6 flex gap-4'>
                             <button className="custom-button2 w-full">تأكيد</button>
-                            <Link to={'/search'} className="custom-button2 w-full">إعادة</Link>
+                            <button onClick={handleReset} className="custom-button2 w-full">إعادة</button>
                         </div>
                     </form>
                 </div>

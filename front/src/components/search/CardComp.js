@@ -1,5 +1,6 @@
 import { ProductImageURL } from 'Fetch/Url'
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const CardComp = ({data}) => {
     const [selectedProduct  ,setSelectedProduct] = useState(null)
@@ -19,7 +20,7 @@ const CardComp = ({data}) => {
 
                 // check if color is repeated 
                 if(acc.find(e => e.color == curr.color))
-                    acc = acc.map(e => e.color == curr.color ? {...e , sizes : [...e.sizes , curr.size]} : e)
+                    acc = acc.map(e => e.color == curr.color ? {...e , sizes : [...e.sizes , curr.size] , image : !e.image ? curr.image : null } : e)
                 else acc = [...acc , {...curr , sizes : [curr.size] }]
 
                 return acc
@@ -49,14 +50,14 @@ const CardComp = ({data}) => {
         </div>
 
         {/* main image */}
-        <section className='h-40'>
+        <Link to={`/product/${data.id}`} className='h-40'>
             {
                 selectedProduct?.image ? 
                     <img className='custom-img-cover' loading='lazy' src={`${ProductImageURL}id=${data.id}&width=200&image=${selectedProduct?.image}`} />
                     : 
                     <img className='custom-img-cover' loading='lazy' src={`${ProductImageURL}id=${data.id}&width=200`} />
             }
-        </section>
+        </Link>
 
         {/* details and available images */}
         <section className='p-4 flex flex-col gap-2 justify-start flex-1'>
@@ -66,7 +67,7 @@ const CardComp = ({data}) => {
                     <p className=' text-nowrap'>{selectedProduct?.color} - </p>
                     <p className='line-clamp-1 text-sm'>{selectedProduct?.sizes?.join(' , ')}</p>
                 </div>
-                <p className='line-clamp-2 text-sm font-semibold'>{data.title}</p>
+                <Link to={`/product/${data.id}`} className='line-clamp-2 text-sm font-semibold'>{data.title}</Link>
             </div>
 
             {/* price and old price data  */}

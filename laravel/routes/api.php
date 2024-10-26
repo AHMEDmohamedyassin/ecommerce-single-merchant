@@ -88,6 +88,7 @@ Route::get('/product/read' , [ProductController::class , 'ReadProduct']);
 Route::get('/product/serial' , [ProductController::class , 'SerialReadProduct'])->middleware("AdminMiddleware:product_serial"); #admin
 Route::post('/product/sub/update' , [ProductController::class , 'UpdateSubProduct'])->middleware("AdminMiddleware:product_update"); #admin
 Route::post('/product/sub/delete' , [ProductController::class , 'DeleteSubProduct'])->middleware("AdminMiddleware:product_delete"); #admin
+Route::get('/product/ids' , [ProductController::class , 'WithIdsProduct']);
 
 
 // Product Image Controller 8000
@@ -99,6 +100,7 @@ Route::post('/product/image/delete' , [ProductImageController::class , 'DeleteIm
 Route::middleware('TokenRequiredMiddleware' , 'BlockCheckMiddleware' , 'EmailVerifyMiddleware')->group(function () {
     Route::post('/favorite/sync' , [FavoriteController::class , 'SyncFavorite']);
     Route::get('/favorite/list' , [FavoriteController::class , 'ListFavorite']);
+    Route::post('/favorite/check' , [FavoriteController::class , 'CheckFavorite']);
 });
 
 

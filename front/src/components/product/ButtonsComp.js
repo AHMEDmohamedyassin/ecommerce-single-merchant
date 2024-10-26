@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Cart_AddingAction } from '../../redux/action/CartAction';
+import { Favorite_SyncAction } from '../../redux/action/FavoriteAction';
 
 const ButtonsComp = () => {
   const state = useSelector(state => state.ProductReducer)
@@ -13,6 +14,11 @@ const ButtonsComp = () => {
     dispatch(Cart_AddingAction(state.selected_product?.id))
   } 
 
+  // sync product to favorite
+  const handleFavoriteSync = () => {
+    dispatch(Favorite_SyncAction())
+  }
+
   useEffect(() => {
     setSelectedQuantity(cart.items.find(e => e.id == state.selected_product?.id)?.pivot?.quantity ?? 0)
   } , [state.selected_product , cart.items])
@@ -22,16 +28,10 @@ const ButtonsComp = () => {
 
         <div className='flex gap-4 max-sm:flex-col'>
 
-          {/* count selection */}
-          {/* {
-            state.selected_product?.quantity ? (
-              <div className='w-28 max-sm:col-span-2 custom-border border-gray-800 rounded-lg flex justify-between items-center px-2 select-none py-1'>
-                <span className='text-xl font-bold hover:cursor-pointer hover:text-maincolor'>+</span>
-                <span>3</span>
-                <span className='text-xl font-bold hover:cursor-pointer hover:text-maincolor'>-</span>
-              </div>
-            ) : null
-          } */}
+          {/* favorite button  */}
+          <button onClick={handleFavoriteSync} className='p-1 px-2 text-xs font-semibold rounded-lg custom-border text-maincolor'>
+            <span className={`${state.is_favorite ? "fill" : ""} hoverfill material-symbols-outlined text-xl`}>favorite</span>
+          </button>
 
           {/* add to cart button */}
           <button onClick={addToCart} disabled={!state.selected_product?.quantity || selectedQuantity >= state.selected_product?.quantity} className='disabled:bg-secondarycolor/50 disabled:cursor-not-allowed flex-1 flex items-center justify-center gap-2 sm:col-span-3 col-span-4 bg-secondarycolor text-white py-1 text-xs font-semibold rounded-lg custom-border hover:bg-maincolor'>

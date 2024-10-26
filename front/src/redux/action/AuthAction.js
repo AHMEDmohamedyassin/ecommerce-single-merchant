@@ -3,6 +3,7 @@ import {fetching} from '../../Fetch/Fetch'
 import { ForgetPasswordURL, LoginURL, LogoutURL, RegisterURL, ResetPasswordURL , UpdateURL, UpdateUserDataURL, UserDataURL, UserVisitURL, VerifyEmailURL } from '../../Fetch/Url';
 import { notify } from '../../components/public/NotificationComp';
 import { Setting_Msg } from './SettingAction';
+import { Favorite_ListAction } from './FavoriteAction';
 
 /**
  * login / register action
@@ -30,6 +31,9 @@ export const Auth_LoginAction = (data) => {
                 ... req.res,
             }
         });
+
+        // refresh favorites of user
+        store.dispatch(Favorite_ListAction(1,1))
     }
 }
 
@@ -50,6 +54,9 @@ export const Auth_LogoutAction = () => {
         dispatch({
             type : "Auth_Logout" 
         });
+
+        // refresh favorites of user
+        store.dispatch(Favorite_ListAction(1,1))
     }
 }
 

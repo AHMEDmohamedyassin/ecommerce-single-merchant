@@ -22,62 +22,48 @@ export const Product_ReadAction = (id) => {
             return dispatch({type : "Product_Status" , data : "n"})
 
 
-        let selected_product = (req.res?.product || []).find(e => e.image != null)
-        let colors = [...new Set((req.res?.product || []).map(e => e.color))]
-        let selected_image = selected_product.image
-        
+        // combine same products sizes in one product 
+        let products = req.res.product.reduce((acc , curr) => {
+            // check if color is repeated and append image if not appended previously
+            if(acc.find(e => e.color == curr.color))
+                acc = acc.map(e => e.color == curr.color ? {...e , sizes : [...e.sizes , curr.size] , image : !e.image ? curr.image : null } : e)
+            else acc = [...acc , {...curr , sizes : [curr.size] }]
+
+            return acc
+        } , [])
+
+        // setting initial product
+        let initial_product = products.find(e => e.image != null)
+
+
         dispatch({
             type : "Product_Data" , 
             data : {
                 ...req.res , 
-                selected_product  , 
-                colors , 
-                selected_color : selected_product?.color , 
-                selected_image , 
+                selected_product : initial_product ?? ( products[0] ?? {} ) , 
+                products
             }
         })
     }
 }
 
-
-/**
- * handle Select color 
- */
-export const Product_ColorSelectAction = (color) => {
-    return async dispatch => {
-        const state = store.getState().ProductReducer
-
-        let selected_product = state.product.find(e => e.color == color)
-
-        // if product piece not have an image it will select first image
-        let selected_image = selected_product?.image ?? state.images[0]
-
-        dispatch({
-            type : "Product_Data", 
-            data : {
-                selected_product , 
-            }
-        })
-
-        store.dispatch(Product_ImageSelectAction(selected_image))
-    }
-}
 
 
 /**
  * handle size select
+ * change all product data except the sizes list and the image
  */
 export const Product_SizeSelectAction = (size) => {
     return async dispatch => {
         const products = store.getState().ProductReducer.product
-        const old_selected_product = store.getState().ProductReducer.selected_product
+        const {image , sizes , color} = store.getState().ProductReducer.selected_product
 
-        let selected_product = products.find(e => e.color == old_selected_product.color && e.size == size)
+        let selected_product = products.find(e => e.size == size && e.color == color)
 
         dispatch({
             type : "Product_Data", 
             data : {
-                selected_product
+                selected_product : {...selected_product , image , sizes }
             }
         })
     }
@@ -86,10 +72,12 @@ export const Product_SizeSelectAction = (size) => {
 
 /**
  * selecting image
+ * select the related product to the selected image
  */
 export const Product_ImageSelectAction = (selected_image) => {
     return async dispatch => {
-        const images = store.getState().ProductReducer?.images
+        const products = store.getState().ProductReducer.products
+        const selected_product = store.getState().ProductReducer.selected_product
 
         const container = document.getElementById('scrollContainer');
         const element = document.getElementById(selected_image);
@@ -104,7 +92,7 @@ export const Product_ImageSelectAction = (selected_image) => {
         dispatch({
             type : "Product_Data" , 
             data : {
-                selected_image : selected_image ?? images[0]
+                selected_product : selected_product.image == selected_image ? selected_product : (products.find(e => e.image == selected_image) ?? {...selected_product , image : selected_image})
             }
         })
     }

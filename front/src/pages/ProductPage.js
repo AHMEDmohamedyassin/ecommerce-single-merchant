@@ -3,20 +3,33 @@ import CollabsedDetailsComp from 'components/product/CollabsedDetailsComp'
 import DetailsComp from 'components/product/DetailsComp'
 import GalleryComp from 'components/product/GalleryComp'
 import PathComp from 'components/product/PathComp'
-import CardComp from 'components/search/CardCompBackup'
+import CardComp from 'components/search/CardComp'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { Product_ReadAction } from '../redux/action/ProductAction'
+import { Favorite_CheckAction } from '../redux/action/FavoriteAction'
+import { ProductList_Categories } from '../redux/action/ProductListAction'
 
 const ProductPage = () => {
   const state = useSelector(state => state.ProductReducer) 
+  const auth = useSelector(state => state.AuthReducer) 
+  const products = useSelector(state => state.ProductListReducer)
   const dispatch = useDispatch()
   const params = useParams()
 
   useEffect(() => {
     dispatch(Product_ReadAction(params.id))
   } , [])
+  
+  useEffect(() => {
+    dispatch(Favorite_CheckAction(params.id))
+  } , [auth])
+
+  useEffect(() => {
+    if(!products.items.length && state.id == params.id)
+      dispatch(ProductList_Categories( state.category.map(e => e.id) ))
+  } , [state])
   return (
     <div className='custom-container'>
         
@@ -45,15 +58,11 @@ const ProductPage = () => {
         <section>
           <p className='text-xl text-center font-bold mt-12 mb-6'>منتجات ذات صلة</p>
           <div className='custom-products-grid'>
-            <CardComp/>
-            <CardComp/>
-            <CardComp/>
-            <CardComp/>
-            <CardComp/>
-            <CardComp/>
-            <CardComp/>
-            <CardComp/>
-            <CardComp/>
+            {
+              products.items.map((e , index) => (
+                <CardComp key={e.id} data={e}/>
+              ))
+            }
           </div>
         </section>
     </div>

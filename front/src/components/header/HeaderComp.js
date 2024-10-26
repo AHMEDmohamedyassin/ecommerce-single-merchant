@@ -1,12 +1,13 @@
 import React from 'react'
 import SearchBarComp from 'components/header/SearchBarComp'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Cart_ToggleMenuAction } from '../../redux/action/CartAction'
 import CategoriesRibbonComp from './CategoriesRibbonComp'
 import { Setting_SideMenuAction } from '../../redux/action/SettingAction'
 
 const HeaderComp = () => {
+  const fav = useSelector(state => state.FavoriteReducer)
   const dispatch = useDispatch()
 
   // openning the cart
@@ -46,7 +47,14 @@ const HeaderComp = () => {
             <Link to={'/account'}>
               <span className="material-symbols-outlined hover:cursor-pointer max-sm:text-xl max-sm:hidden">person</span>
             </Link>
-            <span className="material-symbols-outlined hover:cursor-pointer max-sm:text-xl max-sm:hidden">favorite</span>
+            <Link className='relative' to={'/favorite'}>
+              <span className={`${fav.total ? "fill text-red-500" : ""} material-symbols-outlined cursor-pointer hover:text-red-500 hoverfill max-sm:text-xl max-sm:hidden`}>favorite</span>
+              {
+                fav.total ? (
+                  <span className='absolute -bottom-1 right-0'>{fav.total}</span>
+                ) : null
+              }
+            </Link>
           </div>
 
         </section>

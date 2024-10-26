@@ -1,10 +1,12 @@
 const initial = {
     status : "n",   // n : normal ,  l : loading , s : success , f : fail
     selected_image : null ,
-    selected_product : 0 , 
+    selected_product : {} , 
     colors : [] ,
     selected_color : null ,
     images : [],
+    products : [],
+    is_favorite : 0 ,
 
     id: null,
     slug: null,

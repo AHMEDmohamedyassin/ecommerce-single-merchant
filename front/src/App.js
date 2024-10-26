@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import HomePage from "pages/HomePage";
 import HeaderComp from "components/header/HeaderComp";
 import { NotifyContainer } from "components/public/NotificationComp";
@@ -24,21 +24,26 @@ import { useEffect } from "react";
 import { Auth_GetuserdataAction, Auth_VisitAction } from "./redux/action/AuthAction";
 import { Cart_Initiate } from "./redux/action/CartAction";
 import { Category_ListAction } from "./redux/action/CategoryAction";
+import FavoritePage from "pages/FavoritePage";
+import { Favorite_ListAction } from "./redux/action/FavoriteAction";
 
 function App() {
   const auth = useSelector(state=>state.AuthReducer)
   const dispatch = useDispatch()
+  const location = useLocation()
 
   useEffect(() => {
     dispatch(Auth_GetuserdataAction()).then(() => {
       dispatch(Auth_VisitAction())
       dispatch(Cart_Initiate())
       dispatch(Category_ListAction())
+      
+      if(location.pathname != '/favorite')
+        dispatch(Favorite_ListAction(1,1))
     })
   } , [])
   return (
     <div>
-        <BrowserRouter>
 
           {/* notifications container */}
           <NotifyContainer/>
@@ -59,6 +64,7 @@ function App() {
             <Route path="/" element={<HomePage/>} />
             <Route path="/search" element={<SearchPage/>} />
             <Route path="/product/:id" element={<ProductPage/>}/>
+            <Route path="/favorite" element={<FavoritePage/>}/>
 
             {
               auth.token ? (
@@ -90,7 +96,6 @@ function App() {
           </Routes>
 
           <FooterComp/>
-        </BrowserRouter>
     </div>
   );
 }

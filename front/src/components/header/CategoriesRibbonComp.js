@@ -21,11 +21,11 @@ const CategoriesRibbonComp = () => {
 
             {
               categories?.top_categories?.map((e , index) => (
-                <>
+                <div key={index}>
                   {
                     e.categories?.length ? (
 
-                      <div onMouseEnter={() => setTopCat(e.title)} key={index} className='flex items-center gap-2'>
+                      <div onMouseEnter={() => setTopCat(e.title)} className='flex items-center gap-2'>
                         {/* top category title  */}
                         <div className={`hover:cursor-pointer ${e.title == topCat ? "text-maincolor" : ""}`}>{e.title != "other" ? e.title : "أقسام أخري"}</div>
                         
@@ -51,7 +51,7 @@ const CategoriesRibbonComp = () => {
                       </div>
                     ) : null
                   }
-                </>
+                </div>
               ))
             }
           </div>

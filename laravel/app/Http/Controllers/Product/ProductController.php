@@ -346,4 +346,22 @@ class ProductController extends Controller
     }
 
 
+    /**
+     * @error 7009
+     * get collections with ids
+     */
+    public function WithIdsProduct () {
+        try{
+            request()->validate([
+                'ids' => 'array|required|min:1',
+                'ids.*' => 'numeric',
+            ]);
+
+            $collections = Collection::whereIn('id' , request('ids'))->with('product')->orderby('id' , 'desc');
+
+            return $this->SuccessResponse($this->paginate($collections));
+        }catch(\Exception $e){
+            return $this->ErrorResponse(7008 , $e->getCode() , $e->getMessage());
+        }
+    }
 }

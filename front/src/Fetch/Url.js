@@ -28,6 +28,7 @@ export const AddressReadURL = '/address/read'
 // product 
 export const ProductReadURL = '/product/read'
 export const ProductSearchURL = '/product/search'
+export const ProductWithIdsURL = '/product/ids'
 
 
 // cart 
@@ -36,6 +37,11 @@ export const CartSubURL = '/cart/sub'
 export const CartDeleteURL = '/cart/delete'
 export const CartDeleteAllURL = '/cart/delete/all'
 export const CartListURL = '/cart/list'
+
+// favorites
+export const FavoriteSyncURL = '/favorite/sync'
+export const FavoriteListURL = '/favorite/list'
+export const FavoriteCheckURL = '/favorite/check'
 
 
 // categories 
