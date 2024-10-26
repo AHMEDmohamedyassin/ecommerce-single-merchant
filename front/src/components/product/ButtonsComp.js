@@ -12,6 +12,7 @@ const ButtonsComp = () => {
   // adding item to cart
   const addToCart = () => {
     dispatch(Cart_AddingAction(state.selected_product?.id))
+    dispatch({type:"Cart_Data" , data : {side_cart : true}})      // opening side cart on adding product
   } 
 
   // sync product to favorite

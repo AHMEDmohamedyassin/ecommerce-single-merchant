@@ -1,0 +1,40 @@
+import { useSelector } from 'react-redux'
+import CardComp from '../components/cart/CardComp'
+import React from 'react'
+
+const CartPage = () => {
+  const state = useSelector(state => state.CartReducer)
+
+  return (
+    <div className='custom-container'>
+      <p className='font-semibold text-lg text-gray-500 text-center mb-10'>عربة الشراء</p>
+
+      {/* table of products  */}
+      <div className='w-full flex flex-col border-y-[1px] border-gray-200 lg:shadow'>
+
+        {/* table title of cart  */}
+        <div className='grid grid-cols-7'>
+          <div className='text-center py-3 border-inherit border-l-[1px]  bg-secondarybg'>صورة</div>
+          <div className='text-center py-3 border-inherit border-l-[1px]  bg-secondarybg col-span-2'>العنوان</div>
+          <div className='text-center py-3 border-inherit border-l-[1px]  bg-secondarybg '>سعر الوحدة</div>
+          <div className='text-center py-3 border-inherit border-l-[1px]  bg-secondarybg '>الكمية</div>
+          <div className='text-center py-3 border-inherit border-l-[1px]  bg-secondarybg '>إجمالي الوحدة</div>
+          <div className='text-center py-3 border-inherit border-l-[1px]  bg-secondarybg '>حذف</div>
+        </div>
+
+        {/* the cart contents  */}
+        {
+          state.items.length ? state.items?.map((e , index) => (
+            <CardComp key={e.id} data={e}/>
+          )) : <p className='text-sm text-center my-20'>لا توجد منتجات</p>
+        }
+      </div>
+
+
+
+      <div>cart payment details and total details</div>
+    </div>
+  )
+}
+
+export default CartPage

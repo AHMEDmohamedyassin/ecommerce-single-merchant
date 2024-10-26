@@ -1,6 +1,7 @@
 import { fetching } from "Fetch/Fetch"
 import { CartAddURL, CartDeleteAllURL, CartDeleteURL, CartListURL, CartSubURL } from "Fetch/Url"
 import { Setting_Confirm } from "./SettingAction"
+import { store } from "../../redux/store"
 
 
 
@@ -48,6 +49,7 @@ export const Cart_Initiate = () => {
  */
 export const Cart_AddingAction = (id , type = "add") => {// product id 
     return async dispatch => {
+        const cart = store.getState().CartReducer
 
         dispatch({type:"Cart_Status" , data : "la"})        // loading adding to cart
 
@@ -79,7 +81,6 @@ export const Cart_AddingAction = (id , type = "add") => {// product id
         dispatch({
             type : "Cart_Data" , 
             data : {
-                side_cart : true , 
                 ...req.res
             }
         })

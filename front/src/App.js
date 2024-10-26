@@ -26,6 +26,7 @@ import { Cart_Initiate } from "./redux/action/CartAction";
 import { Category_ListAction } from "./redux/action/CategoryAction";
 import FavoritePage from "pages/FavoritePage";
 import { Favorite_ListAction } from "./redux/action/FavoriteAction";
+import CartPage from "pages/CartPage";
 
 function App() {
   const auth = useSelector(state=>state.AuthReducer)
@@ -35,9 +36,8 @@ function App() {
   useEffect(() => {
     dispatch(Auth_GetuserdataAction()).then(() => {
       dispatch(Auth_VisitAction())
-      dispatch(Cart_Initiate())
       dispatch(Category_ListAction())
-      
+
       if(location.pathname != '/favorite')
         dispatch(Favorite_ListAction(1,1))
     })
@@ -73,6 +73,8 @@ function App() {
                   <Route path="/auth/*" element={<AccountPage/>}/>
                   <Route path="/account" element={<AccountPage/>}/>
                   <Route path="/account/addresses" element={<AddressesPage/>}/>
+
+                  <Route path="/cart" element={<CartPage/>}/>
                 </>
               ) : (
                 <>

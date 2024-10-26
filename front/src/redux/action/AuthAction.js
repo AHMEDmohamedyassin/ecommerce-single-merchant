@@ -4,6 +4,7 @@ import { ForgetPasswordURL, LoginURL, LogoutURL, RegisterURL, ResetPasswordURL ,
 import { notify } from '../../components/public/NotificationComp';
 import { Setting_Msg } from './SettingAction';
 import { Favorite_ListAction } from './FavoriteAction';
+import { Cart_Initiate } from './CartAction';
 
 /**
  * login / register action
@@ -34,6 +35,7 @@ export const Auth_LoginAction = (data) => {
 
         // refresh favorites of user
         store.dispatch(Favorite_ListAction(1,1))
+        store.dispatch(Cart_Initiate())
     }
 }
 
@@ -57,6 +59,9 @@ export const Auth_LogoutAction = () => {
 
         // refresh favorites of user
         store.dispatch(Favorite_ListAction(1,1))
+
+        // reset cart
+        dispatch({type : "Cart_Reset"})
     }
 }
 
@@ -77,16 +82,24 @@ export const Auth_GetuserdataAction = () => {
         const req = await fetching(UserDataURL , {token} , "POST" , false);
 
         if(req.success){
-            return dispatch({
+            dispatch({
                 type:'Auth_Login',
                 data : req.res
             });
+
+            // cart initate
+            store.dispatch(Cart_Initiate())
+
+            return {}
         }
 
         dispatch({
             type : "Auth_Status" ,
             data : 'n'
         })
+
+        // reset cart
+        dispatch({type : "Cart_Reset"})
     }
 }
 
