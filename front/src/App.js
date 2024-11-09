@@ -27,6 +27,7 @@ import { Category_ListAction } from "./redux/action/CategoryAction";
 import FavoritePage from "pages/FavoritePage";
 import { Favorite_ListAction } from "./redux/action/FavoriteAction";
 import CartPage from "pages/CartPage";
+import OrdersPage from "pages/Account/OrdersPage";
 
 function App() {
   const auth = useSelector(state=>state.AuthReducer)
@@ -73,6 +74,7 @@ function App() {
                   <Route path="/auth/*" element={<AccountPage/>}/>
                   <Route path="/account" element={<AccountPage/>}/>
                   <Route path="/account/addresses" element={<AddressesPage/>}/>
+                  <Route path="/account/orders" element={<OrdersPage/>}/>
 
                   <Route path="/cart" element={<CartPage/>}/>
                 </>

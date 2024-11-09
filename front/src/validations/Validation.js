@@ -48,3 +48,19 @@ export const ValidateInputChanges = (watch , defaultValues) => {
 
     return changedValues
 }
+
+
+
+// reformation the date to be as the input fomate
+export const formattingDateForUpdate = (date = null) => {
+    if(!date)
+        return "00-00-0000 00:00"
+    let d = new Date(date)
+    let day = String(d.getDate()).padStart(2 , '0')
+    let month = String(d.getMonth()+ 1).padStart(2 , '0') 
+    let year = String(d.getFullYear()).padStart(2 , '0')
+    let hours = String(d.getHours()).padStart(2 , '0')
+    let minutes = String(d.getMinutes()).padStart(2 , '0')
+
+    return `${day}/${month}/${year} ${'\u00A0'}${'\u00A0'}${'\u00A0'} ${hours > 12 ? hours - 12 : hours}:${minutes} ${hours > 12 ? "م" :"ص"}`
+} 

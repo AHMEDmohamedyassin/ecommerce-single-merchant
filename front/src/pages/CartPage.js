@@ -1,16 +1,19 @@
 import { useSelector } from 'react-redux'
 import CardComp from '../components/cart/CardComp'
 import React from 'react'
+import CartSummaryComp from 'components/cart/CartSummaryComp'
+import CartButtonsComp from 'components/cart/CartButtonsComp'
+import CartCouponComp from 'components/cart/CartCouponComp'
+import AddressComp from 'components/cart/AddressComp'
 
 const CartPage = () => {
   const state = useSelector(state => state.CartReducer)
-
   return (
-    <div className='custom-container'>
-      <p className='font-semibold text-lg text-gray-500 text-center mb-10'>عربة الشراء</p>
+    <div className='custom-container flex flex-col gap-10'>
+      <p className='font-semibold text-lg text-gray-500 text-center '>عربة الشراء</p>
 
       {/* table of products  */}
-      <div className='w-full flex flex-col border-y-[1px] border-gray-200 lg:shadow'>
+      <div className='w-full flex flex-col border-y-[1px] border-gray-300 lg:shadow'>
 
         {/* table title of cart  */}
         <div className='grid grid-cols-7'>
@@ -31,8 +34,28 @@ const CartPage = () => {
       </div>
 
 
+      
+      {
+        state.items.length ? (
+          <>
 
-      <div>cart payment details and total details</div>
+            {/* address selection */}
+            <AddressComp/>
+
+            {/* coupon  */}
+            <CartCouponComp/>
+
+            {/* cart summary  */}
+            <CartSummaryComp/>
+
+            
+            {/* buttons  */}
+            <CartButtonsComp/>
+            
+          </>
+        ) : null
+      }
+
     </div>
   )
 }

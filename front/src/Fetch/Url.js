@@ -46,3 +46,12 @@ export const FavoriteCheckURL = '/favorite/check'
 
 // categories 
 export const TopCategoriesReadURL = '/topcategory/read'
+
+
+// order 
+export const OrderCreateURL = '/order/user/create'
+export const OrderCancelURL = '/order/user/cancel'
+export const OrderListURL = '/order/user/list'
+export const OrderReadURL = '/order/user/read'
+export const CouponCheckURL = '/coupon/read'
+export const SendPaymentURL = '/transaction/fawaterk/sendpayment'

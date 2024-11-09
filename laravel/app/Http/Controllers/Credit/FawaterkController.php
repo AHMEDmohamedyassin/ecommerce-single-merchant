@@ -66,6 +66,14 @@ class FawaterkController {
             if(!$order) 
                 throw new CustomException('order not found or canceled' , 13);
 
+            // check if order have no products
+            if(!count($order->product))
+                throw new CustomException('order have no products' , 25);
+
+            // check if total is greater than zero
+            if($order->cart_total <= 0)
+                throw new CustomException('no money pay for' , 26);
+
 
             // handeling cart items and cart total
             foreach($order->product as $product){

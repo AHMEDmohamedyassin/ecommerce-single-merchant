@@ -1,8 +1,10 @@
 const initial = {
     status : "n",   // n : normal ,  l : loading , s : success , f : fail
-    side_cart : false , 
-    coupon_valid : true , 
-    coupon_value : 0,
+
+    coupon : null , 
+    shipping_address_id : null , 
+    pay_on_diliver : false , 
+    order_id : 0 ,
 
     current: 0,
     last: 0,
@@ -13,20 +15,20 @@ const initial = {
 } 
 
 
-export const CartReducer = (state = initial , action) => {
+export const OrderReducer = (state = initial , action) => {
     switch (action.type){
-        case "Cart_Data":
+        case "Order_Data":
             return {
                 ...state,
                 status: "n",
                 ...action.data
             }
-        case "Cart_Status":
+        case "Order_Status":
             return {
                 ...state,
                 status: action.data
             }
-        case "Cart_Reset":
+        case "Order_Reset":
             return {
                 ...initial,
                 ...action.data

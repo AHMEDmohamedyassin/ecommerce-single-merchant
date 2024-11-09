@@ -19,9 +19,9 @@ const NavigationComp = () => {
             icon : "person_pin_circle"
         },
         {
-            title : "بيانات المستخدم" ,
-            url : "/account/user",
-            icon : "person"
+            title : "الطلبات" ,
+            url : "/account/orders",
+            icon : "shopping_bag"
         },
     ]
 

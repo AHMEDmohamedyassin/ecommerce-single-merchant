@@ -1,5 +1,5 @@
 import { fetching } from "Fetch/Fetch"
-import { CartAddURL, CartDeleteAllURL, CartDeleteURL, CartListURL, CartSubURL } from "Fetch/Url"
+import { CartAddURL, CartDeleteAllURL, CartDeleteURL, CartListURL, CartSubURL, CouponCheckURL } from "Fetch/Url"
 import { Setting_Confirm } from "./SettingAction"
 import { store } from "../../redux/store"
 
@@ -86,3 +86,52 @@ export const Cart_AddingAction = (id , type = "add") => {// product id
         })
     }
 }
+
+
+/**
+ * check if coupon is available
+ */
+export const Cart_CouponCheckAction = (coupon) => {
+    return async dispatch => {
+
+        dispatch({type : "Cart_Status" , data : "lc"})          // loading coupon check
+
+        const req = await fetching(CouponCheckURL , {coupon} , "POST" , false)
+
+        // checking if coupon is valid
+        if(!req.success){
+            // removing coupon to order reducer in case of it is valid
+            dispatch({
+                type : "Order_Data" ,
+                data : {
+                    coupon : null
+                }
+            })
+
+            return dispatch({
+                type : "Cart_Data" , 
+                data : {
+                    coupon_valid : false , 
+                    coupon_value : 0
+                }
+            })  // invalid coupon
+        }
+
+
+        dispatch({
+            type : "Cart_Data" , 
+            data : {
+                coupon_value : req.res.value , 
+                coupon_valid : true
+            }
+        })
+
+        // adding coupon to order reducer in case of it is valid
+        return dispatch({
+            type : "Order_Data" ,
+            data : {
+                coupon
+            }
+        })
+    }
+} 
