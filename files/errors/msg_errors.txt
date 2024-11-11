@@ -24,3 +24,4 @@
 24 => not found
 25 => order have no products
 26 => no money pay for
+27 => cart is full

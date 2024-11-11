@@ -15,23 +15,25 @@ const CardComp = ({data}) => {
     useEffect(() => {
 
         // setting products data
-        setProducts(e => {
-            let products = data.product.reduce((acc , curr) => {
-
-                // check if color is repeated 
-                if(acc.find(e => e.color == curr.color))
-                    acc = acc.map(e => e.color == curr.color ? {...e , sizes : [...e.sizes , curr.size] , image : !e.image ? curr.image : null } : e)
-                else acc = [...acc , {...curr , sizes : [curr.size] }]
-
-                return acc
-            } , [])
-
-            // setting initial product
-            let initial_product = products.find(e => e.image != null)
-            setSelectedProduct(initial_product ?? ( products[0] ?? {} ))
-
-            return products
-        })
+        if(data.product?.length){
+            setProducts(e => {
+                let products = data.product?.reduce((acc , curr) => {
+    
+                    // check if color is repeated 
+                    if(acc?.find(e => e.color == curr.color))
+                        acc = acc.map(e => e.color == curr.color ? {...e , sizes : [...e.sizes , curr.size] , image : !e.image ? curr.image : null } : e)
+                    else acc = [...acc , {...curr , sizes : [curr.size] }]
+    
+                    return acc
+                } , [])
+    
+                // setting initial product
+                let initial_product = products?.find(e => e.image != null)
+                setSelectedProduct(initial_product ?? ( products[0] ?? {} ))
+    
+                return products
+            })
+        } 
         
     } , [data])
   return (

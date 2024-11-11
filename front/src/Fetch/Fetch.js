@@ -50,7 +50,7 @@ export const fetching = async (url , data = {} , method = "POST" , error = true 
 
         // logging response
         if(window.globalConfig.APP_DEBUG){
-            console.log('res' , res)
+            console.log('res' , url , res)
             console.log('body' , body)
             console.log('headers' , headers)
         }

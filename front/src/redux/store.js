@@ -9,6 +9,7 @@ import { ProductListReducer } from './reducer/ProductListReducer';
 import { CategoryReducer } from './reducer/CategoryReducer';
 import { FavoriteReducer } from './reducer/FavoriteReducer';
 import { OrderReducer } from './reducer/OrderReducer';
+import { HomeReducer } from './reducer/HomeReducer';
 
 const rootReducer = combineReducers({
     AuthReducer ,
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
     ProductListReducer ,
     CategoryReducer ,
     FavoriteReducer ,
-    OrderReducer
+    OrderReducer , 
+    HomeReducer 
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

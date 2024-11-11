@@ -41,6 +41,10 @@ class CartController extends Controller
             // attach product to cart if it is not previously exists
             else{
 
+                // check if user have maximum allowable products in cart
+                if(request('user')->cart()->count() >= env('max_cart_products' , 10))
+                    throw new CustomException('cart is full' , 27); 
+
                 // check if product quantity less than required quantity
                 if(Product::find(request('id'))->quantity <= 0 )
                     throw new CustomException("reached maximum available product quantity" , 18);
