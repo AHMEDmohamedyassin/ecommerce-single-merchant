@@ -97,6 +97,7 @@ export const BlockUserDisableURL = '/block/user/disable'
 // static
 export const StaticCreateURL = '/static/create'
 export const StaticReadURL = '/static/read'
+export const StaticLogoUpdateURL = '/static/logo/update'
 
 
 // review 

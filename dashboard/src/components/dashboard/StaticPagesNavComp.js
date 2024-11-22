@@ -6,6 +6,7 @@ const StaticPagesNavComp = () => {
     <div className='mt-20'>
         <p className='text-sm text-gray-500 mb-2 font-bold'>الصفحات الثابته</p>
         <div className='flex gap-4 flex-wrap'>
+            <Link to={'/identity'} className='custom-button'>الشعار</Link>
             <Link to={'/about'} className='custom-button'>معلومات عنا</Link>
             <Link to={'/contact'} className='custom-button'>تواصل معنا</Link>
             <Link to={'/faq'} className='custom-button'>الأسئلة الأكثر شيوعا</Link>

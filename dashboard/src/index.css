@@ -163,3 +163,10 @@ input:focus , select:focus{
   -ms-overflow-style: none;  /* Hides scrollbar for Internet Explorer and Edge */
   scrollbar-width: none;     /* Hides scrollbar for Firefox */
 }
+
+
+@media print {
+    *{
+        direction: rtl;
+    }
+}

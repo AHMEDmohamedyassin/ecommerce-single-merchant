@@ -1,6 +1,6 @@
 import CategoriesComp from 'components/home/CategoriesComp'
 import ProductsQueryComp from 'components/home/ProductsQueryComp'
-import ProductStoredComp from 'components/home/ProductStoredComp'
+import FavoritesComp from 'components/home/FavoritesComp'
 import React from 'react'
 
 const HomePage = () => {
@@ -8,7 +8,7 @@ const HomePage = () => {
     <div className=''>
       <CategoriesComp/>
 
-      <ProductStoredComp store={"FavoriteReducer"} title={'منتجاتك المفضلة'} />
+      <FavoritesComp store={"FavoriteReducer"} title={'منتجاتك المفضلة'} />
 
       <ProductsQueryComp list={'latest'} title={'أحدث المنتجات'}/>
       <ProductsQueryComp list={'review'} title={'الأعلي تقييما'}/>

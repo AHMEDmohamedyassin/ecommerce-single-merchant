@@ -307,8 +307,13 @@ export const product_SubProductImageAppendAction = (image) => {
         // notification 
         Setting_Msg(21000)
 
-        // update product in products array
-        product = product.map(e => e.id == id ? {...e , image} : e)
+        // get the selected product data to update image of all products have same color in store
+        let the_updated_product = product.find(e => e.id == id)
+        if(the_updated_product?.color)
+            product = product.map(e => e.color == the_updated_product.color ? {...e , image} : e)
+        else 
+            // update the only selected product in products array
+            product = product.map(e => e.id == id ? {...e , image} : e)
 
         dispatch({
             type : "Product_Data" ,

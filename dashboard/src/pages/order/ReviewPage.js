@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { formattingOrderStatus } from '../../validation/OrderValidation'
 import { formattingDateForUpdate } from 'validation/Validation'
+import OrderPrintComp from 'components/order/OrderPrintComp'
 
 const ReviewPage = () => {
     const state = useSelector(state => state.OrderReducer)
@@ -122,6 +123,7 @@ const ReviewPage = () => {
             }
 
 
+            <OrderPrintComp/>
         </div>
     </div>
   )

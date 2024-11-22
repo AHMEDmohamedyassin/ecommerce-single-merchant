@@ -2,7 +2,7 @@ import CardComp from 'components/search/CardComp'
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-const ProductStoredComp = ({store , title}) => {
+const FavoritesComp = ({store , title}) => {
     const state = useSelector(state => state[store])
   return (
     <>
@@ -25,4 +25,4 @@ const ProductStoredComp = ({store , title}) => {
   )
 }
 
-export default ProductStoredComp
+export default FavoritesComp

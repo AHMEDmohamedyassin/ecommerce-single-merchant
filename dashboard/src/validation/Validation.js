@@ -25,5 +25,6 @@ export const formattingDateForUpdate = (date = null) => {
     let hours = String(d.getHours()).padStart(2 , '0')
     let minutes = String(d.getMinutes()).padStart(2 , '0')
 
+    // return `${day}/${month}/${year} ${'\u00A0'}${'\u00A0'}${'\u00A0'} ${hours > 12 ? hours - 12 : hours}:${minutes} ${hours > 12 ? "م" :"ص"}`
     return `${day}-${month}-${year} ${hours}:${minutes}`
 } 

@@ -3,8 +3,8 @@ import { store } from "../store"
 import { msgs } from "Fetch/Msg"
 import { Confirm_Msg } from "Fetch/Confirm_Msg"
 import { fetching } from "../../Fetch/Fetch"
-import { StaticCreateURL, StaticReadURL } from "Fetch/Url"
-import { Setting_Confirm } from "./SettingAction"
+import { StaticCreateURL, StaticLogoUpdateURL, StaticReadURL } from "Fetch/Url"
+import { Setting_Confirm, Setting_Msg } from "./SettingAction"
 
 
 /**
@@ -58,5 +58,24 @@ export const Static_ReadAction = (type) => {
                 [type] : req.res
             }
         })
+    }
+}
+
+
+/**
+ * logo change 
+ */
+export const Static_LogoAction = (form) => {
+    return async dispatch => {
+        dispatch({type : "Static_Status" , data : "lg"});      // loading logo
+
+        const formData = new FormData(form.target)
+
+        const req = await fetching(StaticLogoUpdateURL , {} , "POST" , true , {} , formData)
+
+        dispatch({type : "Static_Status" , data : "n"});
+
+        // notification 
+        Setting_Msg(36000)
     }
 }

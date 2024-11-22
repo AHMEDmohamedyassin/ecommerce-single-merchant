@@ -53,7 +53,27 @@ class StaticController extends Controller
             
             return $this->SuccessResponse($json);
         }catch(\Exception $e){
-            return $this->ErrorResponse(22001 , $e->getCode() , $e->getMessage());
+            return $this->ErrorResponse(22002 , $e->getCode() , $e->getMessage());
+        }
+    }
+
+
+    /**
+     * logo update
+     */
+    public function LogoUpdate () {
+        try{
+            request()->validate([
+                'image' => 'mimes:jpg,jpeg,png|file|max:2048|required',
+            ]);
+
+            $img = request()->file('image');
+    
+            $img->storeAs('/settings/images/default.jpg');
+            
+            return $this->SuccessResponse();
+        }catch(\Exception $e){
+            return $this->ErrorResponse(22003 , $e->getCode() , $e->getMessage());
         }
     }
 }

@@ -67,6 +67,7 @@ class PermissionSeeder extends Seeder
             ["title" => "تعديل بيانات الفرع" , "slug" => "store_update"] ,
             ["title" => "حذف الفرع" , "slug" => "store_delete"] ,            
             ["title" => "إنشاء محتوي صفحات البيانات" , "slug" => "static_create"] ,            
+            ["title" => "تعديل الشعار" , "slug" => "logo_update"] ,            
         ]);
     }
 }

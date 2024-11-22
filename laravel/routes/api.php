@@ -201,3 +201,4 @@ Route::get('/image' , [ImageController::class , 'ImageSetting']);
 // static controller 22,000
 Route::post('/static/create' , [StaticController::class , 'CreateStatic'])->middleware("AdminMiddleware:static_create");  #admin
 Route::get('/static/read' , [StaticController::class , 'ReadStatic']);
+Route::post('/static/logo/update' , [StaticController::class , 'LogoUpdate'])->middleware("AdminMiddleware:logo_update");  #admin

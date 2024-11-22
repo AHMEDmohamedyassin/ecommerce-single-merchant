@@ -307,6 +307,13 @@ class ProductController extends Controller
                 ]);
             }
 
+            // update image of all products related to same collection and have same color 
+            if(request('image')){
+                $product->collection->product()->where('color' , request('color', $product->color))->update([
+                    'image' => request('image')
+                ]);
+            }
+
             $product->update($req);
             
             return $this->SuccessResponse($product);

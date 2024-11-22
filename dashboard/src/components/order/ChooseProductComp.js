@@ -23,7 +23,7 @@ const ChooseProductComp = () => {
                             <option>اختر القطعة المناسبة</option>
                             {
                                 state.collection?.product?.map((e , index) => (
-                                    <option key={index} value={e.id} className='flex items-center gap-6'>{`${e.color} -  ${e.size} - [  القطع متاحة : ${e.quantity} ]`}</option>
+                                    <option key={index} value={e.id} className='flex items-center gap-6' disabled={e.quantity < 1}>{`${e.color} -  ${e.size} - `} {e.quantity < 1 ? "غير متاح" : `[  القطع متاحة : ${e.quantity} ]` }</option>
                                 ))
                             }
                         </select>
