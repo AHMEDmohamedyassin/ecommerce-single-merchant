@@ -19,8 +19,7 @@ const SideMenuComp = () => {
       {
         title : "خدمة العملاء" ,
         links : [
-          {title : "سياسة الاستبدال و الاسترجاع" , url : "/exchange-policies"} ,
-          {title : "سياسة الشحن" , url : "/shipping-policies"} ,
+          {title : "سياسة الاستبدال و الاسترجاع" , url : "/policies"} ,
           {title : "الأسئلة الأكثر شيوعا" , url : "/faqs"} ,
           {title : "الدعم و المساعدة" , url : "/contact"} ,
           {title : "تواصل معنا" , url : "/contact"} ,
@@ -30,7 +29,7 @@ const SideMenuComp = () => {
         title : "روابط هامة" ,
         links : [
           {title : "الفروع التابعة" , url : "/contact"} ,
-          {title : "قصة التوحيد و النور" , url : "/about"} ,
+          {title : "معلومات عنا" , url : "/about"} ,
         ]
       }
     ]

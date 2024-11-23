@@ -13,6 +13,7 @@ import { ProductList_Categories } from '../redux/action/ProductListAction'
 
 const ProductPage = () => {
   const state = useSelector(state => state.ProductReducer) 
+  const static_store = useSelector(state => state.StaticReducer)
   const auth = useSelector(state => state.AuthReducer) 
   const products = useSelector(state => state.ProductListReducer)
   const dispatch = useDispatch()
@@ -20,7 +21,8 @@ const ProductPage = () => {
 
   useEffect(() => {
     dispatch(Product_ReadAction(params.id))
-  } , [])
+    window.scrollTo({top:0 , behavior : "smooth"})
+  } , [params.id])
   
   useEffect(() => {
     dispatch(Favorite_CheckAction(params.id))
@@ -50,7 +52,19 @@ const ProductPage = () => {
         {/* additonal details */}
         <section className='custom-productsection flex flex-col gap-4'>
           <CollabsedDetailsComp title={'وصف المنتج'} data={state.json?.description} />
-          <CollabsedDetailsComp title={'سياسة الاسترجاع'} data={state.json?.restore} />
+
+          {/* showing the global return policy of store if the return policy of the product not assigned */}
+          {
+            static_store.policy?.return_policy ? 
+              <CollabsedDetailsComp title={'سياسة الاسترجاع'} data={state.json?.restore ?? static_store.policy.return_policy} />
+            : null
+          }
+          
+          {
+            static_store.policy?.shipping_policy? (
+              <CollabsedDetailsComp title={'سياسة الشحن'} data={static_store.policy.shipping_policy} />
+            ) : null
+          }
         </section>
 
 

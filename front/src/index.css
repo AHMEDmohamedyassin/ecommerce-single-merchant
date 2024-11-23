@@ -87,6 +87,9 @@ input:focus{
     .custom-inputcontainer2 input , .custom-inputcontainer2 textarea{
         @apply w-full bg-secondarybg custom-border text-xs text-gray-500 px-4 py-2 focus:border-gray-300
     }
+    .custom-inputcontainer2 p{
+        @apply text-xs text-red-500
+    }
 
     .custom-button {
         @apply py-2 px-4 rounded-full custom-border text-sm text-center

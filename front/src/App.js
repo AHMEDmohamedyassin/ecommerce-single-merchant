@@ -13,8 +13,6 @@ import AccountPage from "pages/Account/AccountPage";
 import AddressesPage from "pages/Account/AddressesPage";
 import ProductPage from "pages/ProductPage";
 import FooterComp from "components/footer/FooterComp";
-import ExchangePolicyPage from "pages/Static/ExchangePolicyPage";
-import ShippingPoliciesPage from "pages/Static/ShippingPoliciesPage";
 import ContactPage from "pages/Static/ContactPage";
 import FAQsPage from "pages/Static/FAQsPage";
 import AboutPage from "pages/Static/AboutPage";
@@ -28,6 +26,8 @@ import FavoritePage from "pages/FavoritePage";
 import { Favorite_ListAction } from "./redux/action/FavoriteAction";
 import CartPage from "pages/CartPage";
 import OrdersPage from "pages/Account/OrdersPage";
+import PoliciesPage from "pages/Static/PoliciesPage";
+import { Static_ReadAction } from "./redux/action/StaticAction";
 
 function App() {
   const auth = useSelector(state=>state.AuthReducer)
@@ -42,6 +42,7 @@ function App() {
       if(location.pathname != '/favorite')
         dispatch(Favorite_ListAction(1,1))
     })
+    dispatch(Static_ReadAction('policy'))
   } , [])
   return (
     <div>
@@ -91,8 +92,7 @@ function App() {
             }
 
             {/* static pages  */}
-            <Route path="/exchange-policies" element={<ExchangePolicyPage/>}/>
-            <Route path="/shipping-policies" element={<ShippingPoliciesPage/>}/>
+            <Route path="/policies" element={<PoliciesPage/>}/>
             <Route path="/contact" element={<ContactPage/>}/>
             <Route path="/faqs" element={<FAQsPage/>}/>
             <Route path="/about" element={<AboutPage/>}/>

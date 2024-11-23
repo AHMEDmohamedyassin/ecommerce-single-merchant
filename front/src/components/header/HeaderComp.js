@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Cart_ToggleMenuAction } from '../../redux/action/CartAction'
 import CategoriesRibbonComp from './CategoriesRibbonComp'
 import { Setting_SideMenuAction } from '../../redux/action/SettingAction'
+import { ImageURL } from 'Fetch/Url'
 
 const HeaderComp = () => {
   const fav = useSelector(state => state.FavoriteReducer)
@@ -33,7 +34,7 @@ const HeaderComp = () => {
 
           {/* logo */}
           <Link to={'/'} className='flex items-center justify-center'>
-            <img className='lg:w-48 w-28' src='https://cdn.shopify.com/s/files/1/0760/7992/3480/files/T_N_logotype_fullcolor_rgb.svg?v=1695484067' />
+            <img className='lg:w-48 w-28' src={`${ImageURL}type=setting&width=400`} />
           </Link>
         
           {/* search bar */}

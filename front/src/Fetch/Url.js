@@ -55,3 +55,13 @@ export const OrderListURL = '/order/user/list'
 export const OrderReadURL = '/order/user/read'
 export const CouponCheckURL = '/coupon/read'
 export const SendPaymentURL = '/transaction/fawaterk/sendpayment'
+
+
+// static 
+export const StaticReadURL = '/static/read'
+
+// stores addresses
+export const StoreListURL = '/store/list'
+
+// contact
+export const ContactCreateURL = '/contact/create'

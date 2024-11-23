@@ -1,38 +1,77 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Static_ContactSendAction, Static_ListStoresAction, Static_ReadAction } from '../../redux/action/StaticAction'
+import { ContactValidation } from 'validations/ContactValidation'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 const ContactPage = () => {
+  const dispatch = useDispatch()
+  const state = useSelector(state => state.StaticReducer)
+  const auth = useSelector(state => state.AuthReducer)
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm({
+    mode : "onBlur" ,
+    resolver: zodResolver(ContactValidation)
+  });
+
+  // sending contact message
+  const submitFrom = (data)  => {
+    dispatch(Static_ContactSendAction(data))
+    reset()
+  }
+
+  useEffect(() => {
+    dispatch(Static_ReadAction('contact'))
+    dispatch(Static_ListStoresAction())
+  } , [])
   return (
     <div className='custom-container'>
       
       <div className='grid sm:grid-cols-2 gap-10'>
 
         {/* contact form  */}
-        <form className='flex flex-col gap-4'>
+        <form onSubmit={handleSubmit(submitFrom)} className='flex flex-col gap-4'>
           
           <p className='font-bold text-lg'>اترك لنا رسالة</p>
 
-          {/* name input */}
-          <div className='custom-inputcontainer2'>
-            <label>الاسم</label>
-            <input />
-          </div>
-          
-          {/* email input */}
-          <div className='custom-inputcontainer2'>
-            <label>بريدك الاليكتروني</label>
-            <input />
-          </div>
-          
-          {/* phone input */}
-          <div className='custom-inputcontainer2'>
-            <label>رقم الهاتف</label>
-            <input />
-          </div>
+          {
+            !auth.token ? (
+              <>
+                {/* name input */}
+                <div className='custom-inputcontainer2'>
+                  <label>الاسم</label>
+                  <input {...register('name')} />
+                  {errors.name && <p>{errors.name.message}</p>}
+                </div>
+                
+                {/* email input */}
+                <div className='custom-inputcontainer2'>
+                  <label>بريدك الاليكتروني</label>
+                  <input {...register('email')} />
+                  {errors.email && <p>{errors.email.message}</p>}
+                </div>
+                
+                {/* phone input */}
+                <div className='custom-inputcontainer2'>
+                  <label>رقم الهاتف</label>
+                  <input {...register('phone')} />
+                  {errors.phone && <p>{errors.phone.message}</p>}
+                </div>
+              </>
+            ) : null
+          }
           
           {/* msg input */}
           <div className='custom-inputcontainer2'>
             <label>رسالتك</label>
-            <textarea rows={10} />
+            <textarea {...register('msg')} rows={10} />
+            {errors.msg && <p>{errors.msg.message}</p>}
           </div>
 
 
@@ -48,31 +87,75 @@ const ContactPage = () => {
 
           <p className='font-bold text-lg'>طرق التواصل</p>
           
-          <div className='flex flex-col gap-6 mt-6 text-xs text-gray-500'>
+          <div className='flex flex-col gap-4 mt-6  text-gray-500'>
 
 
-            <p>نحن نحب أن نسمع منكم على خدمة العملاء لدينا، أو المنتجات، أو الموقع الإلكتروني أو أي موضوعات تريد مشاركتها معنا. سيكون موضع تقدير تعليقاتك واقتراحاتك. يرجى ملء النموذج أدناه.</p>
-          
-            <p className='flex items-center gap-2'>
-              <span className="material-symbols-outlined text-xl">home</span>
-              <span>35 ش افريقيا - امتداد مصطفي النحاس - المنطقة التاسعة - مدينة نصر</span>
-            </p>
-          
-            <p className='flex items-center gap-2'>
-              <span className="material-symbols-outlined text-xl">home</span>
-              <span>35 ش افريقيا - امتداد مصطفي النحاس - المنطقة التاسعة - مدينة نصر</span>
-            </p>
-          
-            <p className='flex items-center gap-2'>
-              <span className="material-symbols-outlined text-xl">home</span>
-              <span>35 ش افريقيا - امتداد مصطفي النحاس - المنطقة التاسعة - مدينة نصر</span>
-            </p>
-          
-            <p className='flex items-center gap-2'>
-              <span className="material-symbols-outlined text-xl">home</span>
-              <span>35 ش افريقيا - امتداد مصطفي النحاس - المنطقة التاسعة - مدينة نصر</span>
-            </p>
+            <p className='text-xs'>نحن نحب أن نسمع منكم على خدمة العملاء لدينا، أو المنتجات، أو الموقع الإلكتروني أو أي موضوعات تريد مشاركتها معنا. سيكون موضع تقدير تعليقاتك واقتراحاتك. يرجى ملء النموذج أدناه.</p>
 
+
+            {
+              state.stores?.map((e , index) => (
+                <p key={e.id} className='flex items-center gap-2'>
+                  <span className={`material-symbols-outlined text-xl`}>location_on</span>
+                  <span className={` ${e.primary ? 'font-bold' : ''}`}>{e.address}</span>
+                </p>
+              ))
+            }
+
+
+            {/* address if exists  */}
+            {
+              state.contact?.address?.length ? (
+                <p className='flex items-center gap-2'>
+                  <span className="material-symbols-outlined text-xl">location_on</span>
+                  <span>{state.contact?.address}</span>
+                </p>
+              ) : null
+            }
+
+
+            {/* email  */}
+            {
+              state.contact?.email?.length ? (
+                <a href={`mailto:${state.contact?.email}`} className='flex items-center gap-2'>
+                  <span className="material-symbols-outlined text-xl">mail</span>
+                  <span>{state.contact?.email}</span>
+                </a>
+              ) : null
+            }
+
+
+            {/* working hours  */}
+            {
+              state.contact?.work?.length ? (
+                <p className='flex items-center gap-2'>
+                  <span className="material-symbols-outlined text-xl">schedule</span>
+                  <span>{state.contact?.work}</span>
+                </p>
+              ) : null
+            }
+
+
+            {/* phone */}
+            {
+              state.contact?.phone?.length ? (
+                <a href={`tel:${state.contact?.phone}`} className='flex items-center gap-2'>
+                  <span className="material-symbols-outlined text-xl">phone</span>
+                  <span>{state.contact?.phone}</span>
+                </a>
+              ) : null
+            }
+
+
+            {/* whatsapp */}
+            {
+              state.contact?.whatsapp?.length ? (
+                <a href={`https://api.whatsapp.com/send/?phone=2${state.contact?.whatsapp}&text=مرحبا أرغب في التواصل معكم&type=phone_number&app_absent=0`} className='flex items-center gap-2'>
+                  <span>واتساب : </span>
+                  <span>{state.contact?.whatsapp}</span>
+                </a>
+              ) : null
+            }
 
           </div>
 

@@ -10,8 +10,7 @@ const FooterComp = () => {
     {
       title : "خدمة العملاء" ,
       links : [
-        {title : "سياسة الاستبدال و الاسترجاع" , url : "/exchange-policies"} ,
-        {title : "سياسة الشحن" , url : "/shipping-policies"} ,
+        {title : "سياسة الاستبدال و الاسترجاع" , url : "/policies"} ,
         {title : "الأسئلة الأكثر شيوعا" , url : "/faqs"} ,
         {title : "الدعم و المساعدة" , url : "/contact"} ,
         {title : "تواصل معنا" , url : "/contact"} ,
@@ -21,7 +20,7 @@ const FooterComp = () => {
       title : "روابط هامة" ,
       links : [
         {title : "الفروع التابعة" , url : "/contact"} ,
-        {title : "قصة التوحيد و النور" , url : "/about"} ,
+        {title : "معلومات عنا" , url : "/about"} ,
       ]
     },
     {
@@ -51,7 +50,7 @@ const FooterComp = () => {
             <CollabseSocialMediaComp/>
         </section>
 
-        <section className='bg-gray-800 w-full py-4 text-center text-xs'>التوحيد والنور © 2024. تطوير KMPN Agency</section>
+        <section className='bg-gray-800 w-full  text-center text-xs flex'><a className='py-4 w-full text-center' href='https://mobarmeg.vercel.app/' target='_blank'>{window.globalConfig?.APP_AR_NAME} © 2024. تطوير " Mobarmeg,المبرمج "</a></section>
     </div>
   )
 }
