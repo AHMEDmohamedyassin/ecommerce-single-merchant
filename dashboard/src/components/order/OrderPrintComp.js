@@ -78,11 +78,12 @@ const OrderPrintComp = () => {
             ) : null
           }
 
-        {/* sum  */}
+          {/* sum  */}
           <div className="text-right">
             <p className="text-xl font-bold">المجموع الكلي: {state.coupon?.value ? state.cart_total - state.coupon.value : state.cart_total} جنيه</p>
           </div>
 
+          <div className='w-full text-center mt-6'>{window.globalConfig?.APP_NAME}</div>
         </div>
 
     </div>

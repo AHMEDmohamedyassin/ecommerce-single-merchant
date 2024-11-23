@@ -10,4 +10,5 @@ return [
     "error in validation" => "خطأ في التحقق" ,
     "email is already verified" => "تم التحقق من الريد الإليكتروني من قبل" ,
     "setting is not registered" => "لم يتم تسجيل الإعدادات" ,
+    'order quantity of products is larger than available' => "الكمية المطلوبة أقل من المتاح بالنسبة لذلك المنتج ` :product ` "
 ];

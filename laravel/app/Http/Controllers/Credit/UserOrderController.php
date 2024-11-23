@@ -41,7 +41,7 @@ class UserOrderController extends Controller
             foreach($cart as $item){
 
                 if($item->quantity < $item->pivot->quantity)
-                    throw new CustomException("order quantity of products is larger than available" , 17);
+                    throw new CustomException("order quantity of products is larger than available" , 17 , ["product" => $item->collection->title]);
 
                 // sum total price of order
                 $cart_total += $item->price * $item->pivot->quantity;
@@ -75,12 +75,15 @@ class UserOrderController extends Controller
                 }
             }
 
+            // checking if cart total less than zero 
+            if($cart_total < 0)
+                $cart_total = 0;
 
             // creating order
             $order = request('user')->order()->create([
                 "coupon_id" => $coupon_id ,
-                "cart_total" => $cart_total < 0 ? 0 : $cart_total, 
-                "status" =>  request('pay_on_diliver') ? 'ready' : 'pending', 
+                "cart_total" => $cart_total, 
+                "status" =>  request('pay_on_diliver') || $cart_total <= 0 ? 'ready' : 'pending', 
                 "pay_on_diliver" => request('pay_on_diliver') ?? 0 , 
                 "shipping_address_id" => request('shipping_address_id')  
             ]);

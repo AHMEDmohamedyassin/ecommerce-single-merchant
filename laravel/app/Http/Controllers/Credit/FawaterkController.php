@@ -55,6 +55,7 @@ class FawaterkController {
             $cart_total = 0;
             $cart_items = [];
             $discount = 0;
+            $pieces = 0;
 
             // searching for order
             $order = Order::with('product.collection')->with('address')->where([
@@ -84,16 +85,25 @@ class FawaterkController {
                     "price" => $product->price
                 ];
 
+                $pieces = $pieces + $product->pivot->quantity;
+
                 if($product->quantity < $product->pivot->quantity)
-                    throw new CustomException("order quantity of products is larger than available" , 17);
+                    throw new CustomException("order quantity of products is larger than available" , 17 , ["product" => $product->collection->title]);
             }
 
             // calc discount and check if it is less than zero
             $discount = $cart_total - $order->cart_total;
             if($discount < 0) $discount = 0;
 
+
+            // handling details
+            $details = "عدد {$pieces} قطع إجمالي السعر {$cart_total}" ;
+            if($discount)
+                $details .= " , يوجد خصم {$discount} , الإجمالي بعد الخصم {$order->cart_total}";
+
+
             $body = [
-                "cartTotal"=> $cart_total,
+                "cartTotal"=> $order->cart_total,
                 "currency"=>"EGP",
                 "customer"=> [
                     "first_name"=> $user->name,
@@ -107,11 +117,18 @@ class FawaterkController {
                      "failUrl"=> $this->FailUrl,
                      "pendingUrl"=> $this->PendingUrl   
                 ],
-                "cartItems"=> $cart_items ,
-                "discountData" => [ 
-                    "type" => "literal" ,
-                    "value" => $discount
-                ]
+                // "cartItems"=> $cart_items ,
+                "cartItems"=> [
+                    [
+                        'name' => $details , 
+                        'quantity' => 1 ,
+                        'price' => $order->cart_total
+                    ]
+                ] ,
+                // "discountData" => [ 
+                //     "type" => "literal" ,
+                //     "value" => $discount
+                // ]
             ];
 
             $header = [

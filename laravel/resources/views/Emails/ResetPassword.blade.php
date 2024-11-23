@@ -23,8 +23,8 @@
         .text-gray-400{
             color: rgb(156 163 175);
         }
-        .mainTextYellow{
-            color : #c29958
+        .mainText{
+            color : #bababa
         }
         .my-10{
             margin: 2.5rem 0
@@ -81,6 +81,20 @@
         .text-gray-900{
             color: rgb(24 24 27);
         }
+        .check-button{
+            margin: 30px 0px;
+            background-color: #d9d9d9;
+            padding: 15px 40px;
+            border-radius: 5px;
+            box-shadow: 1px 1px 10px -3px #333;
+            border: solid 1px #999;
+            color: #333;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .check-button:hover{
+            box-shadow: 1px 1px 10px 1px #333;
+        }
     </style>
     <title>إعادة تعيين كملة المرور</title>
 </head>
@@ -89,11 +103,11 @@
 
         <h1 class="text-gray-400">إعادة تعيين كملة المرور</h1>
 
-        <a href="{{env('APP_URL')}}" class="mainTextYellow my-10 text-3xl font-bold">{{env('APP_NAME')}}</a>
+        <a href="{{env('APP_URL')}}" class="mainText my-10 text-3xl font-bold">{{env('APP_NAME')}}</a>
 
-        <p class="text-lg">اهلا بك يا <span class="font-bold mainTextYellow mx-2">{{$name}}</span></p>
+        <p class="text-lg">اهلا بك يا <span class="font-bold mainText mx-2">{{$name}}</span></p>
 
-        <a href="{{$url}}" class="mainBgYellow py-2 px-4 text-lg font-bold rounded-lg my-10 text-gray-900">اضغط هنا لإعادة تعيين كلمة المرور</a>
+        <a href="{{$url}}" class="check-button">اضغط هنا لإعادة تعيين كلمة المرور</a>
 
         <div class="flex flex-col justify-center items-center gap-y-4">
             <span class="">أو قم بنسخ الرابط أدناه و فتحه في المتصفح</span>

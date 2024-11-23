@@ -41,20 +41,31 @@ function App() {
   } ,[])
   return (
     <div className="bg-mainbg relative">
-        <BrowserRouter>
+        <BrowserRouter basename="/dashboard">
 
           {/* notifications container */}
           <NotifyContainer/>
 
-          {/* header component  */}
-          <HeaderComp/>
+          {
+            state.token ? (
+              <>
+                {/* header component  */}
+                <HeaderComp/>
 
-          {/* loading component */}
-          <LoadingComp/>
+                {/* loading component */}
+                <LoadingComp/>
+              </>
+            ) : null
+          }
 
           <div className="flex min-h-[100vb] pt-20 items-start">
+
             {/* side menu component */}
-            <SideMenuComp/>
+            {
+              state.token ? 
+                <SideMenuComp/>
+              :null
+            }
             
             <div className="w-full mx-4 overflow-hidden">
               {/* pages  */}

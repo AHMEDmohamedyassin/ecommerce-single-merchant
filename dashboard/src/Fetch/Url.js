@@ -8,6 +8,8 @@ export const ImageURL = `${APP_URL}${APIv}/image`
 
 // auth
 export const UserDataURL = '/auth/getdata';
+export const LoginURL = '/auth/login';
+export const LogoutURL = '/auth/logout';
 
 // permission 
 export const PermissionListURL = '/permission/list';

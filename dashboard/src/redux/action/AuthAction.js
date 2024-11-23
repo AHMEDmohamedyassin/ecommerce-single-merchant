@@ -1,5 +1,7 @@
+import { store } from '../store';
 import {fetching} from '../../Fetch/Fetch'
-import { UserDataURL} from '../../Fetch/Url';
+import { LoginURL, LogoutURL, UserDataURL} from '../../Fetch/Url';
+import { Setting_Msg } from './SettingAction';
 
 
 /**
@@ -29,5 +31,59 @@ export const Auth_GetuserdataAction = () => {
             type : "Auth_Status" ,
             data : 'n'
         })
+    }
+}
+
+
+
+
+
+/**
+ * login / register action
+ */
+export const Auth_LoginAction = (data) => {
+    return async (dispatch) => {
+
+        dispatch({
+            type:"Auth_Status",
+            data: "ll"
+        })
+
+        const req = await fetching(LoginURL , data)
+
+        if(!req.success)
+            return dispatch({type:'Auth_Status' , data:"n"})
+
+        localStorage.setItem('token' , req.res?.token)
+
+        Setting_Msg(2000)
+
+        dispatch({
+            type : "Auth_Login" ,
+            data :{
+                ... req.res,
+            }
+        });
+    }
+}
+
+
+/**
+ * logout action
+ */
+export const Auth_LogoutAction = () => {
+    return async (dispatch) => {
+        
+        const token = store.getState().AuthReducer?.token;
+
+        const req = await fetching(LogoutURL , {token} , "POST" , false);
+
+        if(req.success) Setting_Msg(2000)
+
+        localStorage.removeItem('token')
+
+        dispatch({
+            type : "Auth_Logout" 
+        });
     }
 }

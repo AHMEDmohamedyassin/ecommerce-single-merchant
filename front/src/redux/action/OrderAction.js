@@ -29,8 +29,8 @@ export const Order_CreateAction = () => {
             return dispatch({type:"Order_Status" , data : "n"})
     
 
-        // forwarding to payment gateway
-        if(!pay_on_diliver)
+        // forwarding to payment gateway if user selected to pay online and cart total is more than zero
+        if(!pay_on_diliver && req.res?.cart_total > 0)
             store.dispatch(Order_PayingForOrderAction(req.res.id))
 
         // refresh orders 

@@ -138,6 +138,10 @@ class CouponController extends Controller
             
             if(!$coupon)
                 throw new CustomException('coupon not found or expired' , 23);
+            
+            // check if customer reusing the used coupon 
+            if(request('coupon') && $coupon->is_used)
+                throw new CustomException('coupon not found or expired' , 23);
 
             $data = [
                 "value" => $coupon->value,
