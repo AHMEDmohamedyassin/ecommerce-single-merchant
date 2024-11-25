@@ -34,7 +34,7 @@ const FooterComp = () => {
   ]
 
   return (
-    <div className='w-full bg-black text-white mt-20'>
+    <div className=' w-full bg-black text-white mt-20'>
 
         {/* large screen links section */}
         <LargeScreenLinksComp links={links}/>

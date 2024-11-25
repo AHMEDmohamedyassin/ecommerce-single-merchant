@@ -40,7 +40,7 @@ const SideMenuComp = () => {
         },
         {
             href : "/category" , 
-            title : "الصلاحيات" ,
+            title : "الأقسام" ,
             icon : "category"
         },
         {

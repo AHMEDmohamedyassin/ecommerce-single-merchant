@@ -11,6 +11,7 @@ export const SettingReducer = (state = initial , action) => {
         case "Setting_Data":
             return {
                 ...state,
+                status : 'n',
                 ...action.data
             }
         case "Setting_Status":

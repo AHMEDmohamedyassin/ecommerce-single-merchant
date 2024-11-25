@@ -28,6 +28,7 @@ import CartPage from "pages/CartPage";
 import OrdersPage from "pages/Account/OrdersPage";
 import PoliciesPage from "pages/Static/PoliciesPage";
 import { Static_ReadAction } from "./redux/action/StaticAction";
+import NotFoundPage from "pages/NotFoundPage";
 
 function App() {
   const auth = useSelector(state=>state.AuthReducer)
@@ -45,7 +46,8 @@ function App() {
     dispatch(Static_ReadAction('policy'))
   } , [])
   return (
-    <div>
+    <div className="min-h-[100vb] flex flex-col">
+      <div className="flex-1">
 
           {/* notifications container */}
           <NotifyContainer/>
@@ -97,7 +99,10 @@ function App() {
             <Route path="/faqs" element={<FAQsPage/>}/>
             <Route path="/about" element={<AboutPage/>}/>
 
+            <Route path="/*" element={<NotFoundPage/>}/>
           </Routes>
+
+      </div>
 
           <FooterComp/>
     </div>

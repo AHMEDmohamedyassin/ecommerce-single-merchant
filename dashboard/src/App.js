@@ -31,6 +31,7 @@ import PolicyPage from "pages/static/PolicyPage";
 import FooterComp from "components/footer/FooterComp";
 import ReviewPage from "pages/ReviewPage";
 import IdentityPage from "pages/static/IdentityPage";
+import NotFoundPage from "pages/NotFoundPage";
 
 function App() {
   const state = useSelector(state => state.AuthReducer)
@@ -105,6 +106,8 @@ function App() {
                       <Route path="/contact" element={<ContactPage/>} />
                       <Route path="/policy" element={<PolicyPage/>} />
                       <Route path="/identity" element={<IdentityPage/>} />
+
+                      <Route path="/*" element={<NotFoundPage/>} />
                     </>
                   ) : <>
                     <Route path="/*" element={<SessionExpiredPage/>} />

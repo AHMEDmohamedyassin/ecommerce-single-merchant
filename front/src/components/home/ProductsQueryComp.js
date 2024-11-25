@@ -7,6 +7,7 @@ const ProductsQueryComp = ({list , title}) => {
     const state = useSelector(state => state.HomeReducer)
     const dispatch = useDispatch()
 
+
     useEffect(() => {
         dispatch(Home_OrderAction(list))
     } , [])
