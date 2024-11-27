@@ -4,6 +4,7 @@ import { Static_ContactSendAction, Static_ListStoresAction, Static_ReadAction } 
 import { ContactValidation } from 'validations/ContactValidation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { APP_URL } from 'Fetch/Url'
 
 const ContactPage = () => {
   const dispatch = useDispatch()
@@ -116,12 +117,12 @@ const ContactPage = () => {
 
             {/* email  */}
             {
-              state.contact?.email?.length ? (
-                <a href={`mailto:${state.contact?.email}`} className='flex items-center gap-2'>
+              state.contact?.email?.length ? state.contact.email.split(/\s+/).map((e , index) =>  (
+                <a key={index} href={`mailto:${e}`} className='flex items-center gap-2' target='_blank'>
                   <span className="material-symbols-outlined text-xl">mail</span>
-                  <span>{state.contact?.email}</span>
+                  <span>{e}</span>
                 </a>
-              ) : null
+              )) : null
             }
 
 
@@ -138,23 +139,34 @@ const ContactPage = () => {
 
             {/* phone */}
             {
-              state.contact?.phone?.length ? (
-                <a href={`tel:${state.contact?.phone}`} className='flex items-center gap-2'>
+              state.contact?.phone?.length ? state.contact.phone.split(/\s+/).map((e, index) =>  (
+                <a key={index} href={`tel:${e}`} className='flex items-center gap-2' target='_blank'>
                   <span className="material-symbols-outlined text-xl">phone</span>
-                  <span>{state.contact?.phone}</span>
+                  <span>{e}</span>
                 </a>
-              ) : null
+              )) : null
             }
 
 
             {/* whatsapp */}
             {
-              state.contact?.whatsapp?.length ? (
-                <a href={`https://api.whatsapp.com/send/?phone=2${state.contact?.whatsapp}&text=مرحبا أرغب في التواصل معكم&type=phone_number&app_absent=0`} className='flex items-center gap-2'>
-                  <span>واتساب : </span>
-                  <span>{state.contact?.whatsapp}</span>
+              state.contact?.whatsapp?.length ? state.contact.whatsapp.split(/\s+/).map((e , index) => (
+                <a key={index} href={`https://api.whatsapp.com/send/?phone=2${e}&text=مرحبا أرغب في التواصل معكم&type=phone_number&app_absent=0`} className='flex items-center gap-2' target='_blank'>
+                  <img className='aspect-square w-6 rounded-full' src={`${APP_URL}/images/whatsapp.png`} loading='lazy'/>
+                  <span>{e}</span>
                 </a>
-              ) : null
+              )) : null
+            }
+
+
+            {/* social media urls  */}
+            {
+              state.contact?.urls && Object.keys(state.contact.urls).map((e , index) => (
+                <a key={index} href={state.contact.urls[e] ? state.contact.urls[e] : ""} className='flex items-center gap-2' target='_blank'>
+                  <img className='aspect-square w-6 rounded-full' src={`${APP_URL}/images/${e}.png`} loading='lazy'/>
+                  <span>{state.contact.urls[e] ? state.contact.urls[e] : ""}</span>
+                </a>
+              ) ) 
             }
 
           </div>

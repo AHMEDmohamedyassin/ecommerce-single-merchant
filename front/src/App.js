@@ -42,8 +42,10 @@ function App() {
 
       if(location.pathname != '/favorite')
         dispatch(Favorite_ListAction(1,1))
-    })
-    dispatch(Static_ReadAction('policy'))
+    }).then(() => {
+      dispatch(Static_ReadAction('policy'))
+      dispatch(Static_ReadAction('contact'))
+    }) 
   } , [])
   return (
     <div className="min-h-[100vb] flex flex-col">

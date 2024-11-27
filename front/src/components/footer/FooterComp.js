@@ -41,12 +41,13 @@ const FooterComp = () => {
 
 
         {/* small screen links section */}
-        <section className='sm:hidden custom-container flex flex-col py-20 gap-10'>
+        <section className='sm:hidden custom-container flex flex-col lg:py-20 pt-20 pb-6 gap-10'>
             {
               links && links.length ? links.map((e , index) => (
                 <CollabseLinksComp key={index} data={e}/>
               )) : null
             }
+
             <CollabseSocialMediaComp/>
         </section>
 
