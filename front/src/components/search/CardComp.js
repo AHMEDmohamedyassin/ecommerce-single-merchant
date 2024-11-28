@@ -52,7 +52,7 @@ const CardComp = ({data}) => {
         </div>
 
         {/* main image */}
-        <Link to={`/product/${data.id}`} className='h-40'>
+        <Link to={`/product/${data.id}/${data.slug}`} className='h-40'>
             {
                 selectedProduct?.image ? 
                     <img className='custom-img-cover' loading='lazy' src={`${ProductImageURL}id=${data.id}&width=200&image=${selectedProduct?.image}`} />

@@ -1,0 +1,3 @@
+database  : menlyfte_ecommerce	
+user name : menlyfte_ecommerce
+user pass : hLxZM_pOJ~MZ

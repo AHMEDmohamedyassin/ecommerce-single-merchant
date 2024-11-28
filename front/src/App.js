@@ -69,7 +69,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage/>} />
             <Route path="/search" element={<SearchPage/>} />
-            <Route path="/product/:id" element={<ProductPage/>}/>
+            <Route path="/product/:id/:slug?" element={<ProductPage/>}/>
             <Route path="/favorite" element={<FavoritePage/>}/>
 
             {

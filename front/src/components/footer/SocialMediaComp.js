@@ -20,16 +20,12 @@ const SocialMediaComp = () => {
         <div className='flex flex-wrap gap-4 text-sm'>
             {
               contact.contact?.whatsapp?.split(/\s+/)?.map((e , index) => (
-                <>
                   <a key={index} className='' href={`https://api.whatsapp.com/send/?phone=2${e}&text=مرحبا أرغب في التواصل معكم&type=phone_number&app_absent=0`} target='_blank'>{e}</a>
-                </>
               ))
             }
             {
               contact.contact?.phone?.split(/\s+/)?.map((e , index) => (
-                <>
                   <a key={index} className='' href={`tel:${e}`} target='_blank'>{e}</a>
-                </>
               ))
             }
         </div>         
