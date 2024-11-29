@@ -25,7 +25,7 @@ const TableHeaderComp = () => {
         <p className='w-32 bg-mainbg' title='صورة'>صورة</p>
         <TableHeaderRowComp state={state} value={'title'} title={'العنوان'} w={80} handleOrder={handleOrder} />
         <TableHeaderRowComp state={state} value={'description'} title={'الوصف'} w={80} handleOrder={handleOrder} />
-        <TableHeaderRowComp state={state} value={'quantity'} title={'الكمية'} w={20} handleOrder={handleOrder} />
+        <p className='w-20 bg-mainbg' title='الكمية'>الكمية</p>
         <TableHeaderRowComp state={state} value={'ratting'} title={'التقييم'} w={20} handleOrder={handleOrder} />
         <TableHeaderRowComp state={state} value={'views'} title={'المشاهدات'} w={20} handleOrder={handleOrder} />
         <TableHeaderRowComp state={state} value={'reviews'} title={'المراجعات'} w={20} handleOrder={handleOrder} />

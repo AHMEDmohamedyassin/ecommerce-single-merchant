@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { Setting_Msg } from '../../redux/action/SettingAction'
 import ProductPiecesComp from 'components/product/ProductPiecesComp'
 import MainFromInputsComp from 'components/product/MainFromInputsComp'
+import { ProductList_SearchAction } from '../../redux/action/ProductListAction'
 
 const CreatePage = () => {
     const [selectedCategory , setSelectedCategory] = useState([])
@@ -53,6 +54,7 @@ const CreatePage = () => {
     useEffect(() => {
         if(state.status == 'sui'){
             dispatch({type : "Product_Reset"})
+            dispatch(ProductList_SearchAction({page:1}))        // refetching the list
             Setting_Msg(18000)   // تم إنشاء المنتج بنجاح
             navigate('/products')
         }

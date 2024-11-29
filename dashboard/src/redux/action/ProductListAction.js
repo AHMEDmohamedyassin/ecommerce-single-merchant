@@ -21,12 +21,14 @@ export const ProductList_SearchAction = (data) => {
             params = params.concat(key , "=" , data[key] , "&")
         }
 
-        dispatch({type :"ProductList_Status" , action : "ll"})      // loading listing
+        dispatch({type :"ProductList_Status" , data : "ll"})      // loading listing
 
         const req = await fetching(`${ProductSearchURL}${params}` , {} , "GET")
 
+
         if(!req.success)
-            dispatch({type :"ProductList_Status" , action : "n"})
+            return dispatch({type :"ProductList_Status" , data : "n"})
+
 
         dispatch({
             type : "ProductList_Data" ,

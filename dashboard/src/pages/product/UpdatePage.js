@@ -16,6 +16,7 @@ import ProductPieceUpdateComp from 'components/product/ProductPieceUpdateComp'
 import { z } from 'zod'
 import MainFromInputsComp from 'components/product/MainFromInputsComp'
 import ProductPieceAppendImage from 'components/product/ProductPieceAppendImage'
+import { ProductList_SearchAction } from '../../redux/action/ProductListAction'
 
 const UpdatePage = () => {
     const [selectedCategory , setSelectedCategory] = useState([]) // this for submitting form
@@ -92,6 +93,8 @@ const UpdatePage = () => {
             if(state.status == 'sui')
                 Setting_Msg(21000)   // تم تعديل المنتج بنجاح
             
+            dispatch(ProductList_SearchAction({page:1}))        // refetching the list
+
             navigate('/products')
         }
 
