@@ -167,4 +167,30 @@ class ImageController extends Controller
             return $this->ImageSetting();
         }
     }
+
+
+    /**
+     * clear image cache
+     */
+    public function ImageClearCache ($type) {
+        try{
+            request()->merge([
+                'type' => $type
+            ]);
+    
+            $filepath =  $this->SwitchImagePath();
+            $widths = [48,50,100,200,300,400,500,600,700,800];
+    
+            foreach($widths as $width){
+                $cache_key = "image_{$filepath}_".request('type')."_{$width}";
+    
+                // if cache exists get image from it
+                if(Cache::has($cache_key)){
+                    Cache::forget($cache_key);
+                }
+            }
+        }catch(\Exception $e){
+            return ;
+        }
+    }
 }

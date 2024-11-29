@@ -15,7 +15,7 @@ const CategoriesRibbonComp = () => {
         <section onMouseLeave={() => setTopCat(0)} className='max-lg:hidden bg-secondarybg relative'>
           <div className=' custom-container flex items-center gap-x-4 py-2'>
             {/* side menu icon */}
-            <div className='flex items-center -my-10 '>
+            <div className='flex items-center -my-1'>
               <span onClick={openSideMenu} className="material-symbols-outlined sm:text-3xl text-2xl hover:cursor-pointer">segment</span>
             </div>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Setting\ImageController;
 use App\Models\Collection;
 use App\Models\Product;
 use App\Traits\ResponseTrait;
@@ -18,7 +19,7 @@ class ProductImageController extends Controller
 
     /**
      * @error 8001
-     * upload image for product and relate color to image
+     * (upload image for product)<->(only_works) ( and relate color to image )<->( deprecated )
      * @Admin
      */
     public function UploadImageProduct () {
@@ -32,10 +33,10 @@ class ProductImageController extends Controller
             $collection = Collection::find(request('id'));
 
             // retreaving json file if exits
-            $json_path = '/products/' . $collection->id . '/json/json.json';
-            $json = [];
-            if(Storage::exists($json_path))
-                $json = json_decode(Storage::read($json_path) , true);
+            // $json_path = '/products/' . $collection->id . '/json/json.json';
+            // $json = [];
+            // if(Storage::exists($json_path))
+            //     $json = json_decode(Storage::read($json_path) , true);
 
 
             // uploading image if exists
@@ -48,17 +49,19 @@ class ProductImageController extends Controller
                 $img->storeAs('/products/' . $collection->id . '/images/' . $image_name);
                 
 
-                // images key in json file appending new image
-                if(isset($json['images']))
-                    $json['images'] = array_merge($json['images'] , [$image_name => request('color')]);
-                else $json['images'] = [$image_name => request('color')];
+                // // images key in json file appending new image
+                // if(isset($json['images']))
+                //     $json['images'] = array_merge($json['images'] , [$image_name => request('color')]);
+                // else $json['images'] = [$image_name => request('color')];
             }
 
 
-            // saving changes to json
-            Storage::put($json_path , json_encode($json));
+            // // saving changes to json
+            // Storage::put($json_path , json_encode($json));
 
-            return $this->SuccessResponse($json);
+            // return $this->SuccessResponse($json);
+
+            return $this->SuccessResponse();
         }catch(\Exception $e){
             return $this->ErrorResponse(8001 , $e->getCode() , $e->getMessage());
         }
@@ -84,21 +87,27 @@ class ProductImageController extends Controller
             $image_path = '/products/' . $collection->id . '/images/' . request('image');
             Storage::delete($image_path);
 
+            // update product that contains delete image
+            $collection->product()->where('image' , request('image'))->update(['image' => null]);
 
-            // retreaving json file if exits and updating it
-            $json_path = '/products/' . $collection->id . '/json/json.json';
-            if(!Storage::exists($json_path))
-                return $this->SuccessResponse();
+
+            // // // // // // // // //  retreaving json file if exits and updating it // // // // // // // // // 
+            // $json_path = '/products/' . $collection->id . '/json/json.json';
+            // if(!Storage::exists($json_path))
+            //     return $this->SuccessResponse();
         
-            $json = [];
-            $json = json_decode(Storage::read($json_path) , true);
+            // $json = [];
+            // $json = json_decode(Storage::read($json_path) , true);
 
-            if(isset($json['images']))
-                unset($json['images'][request('image')]);
-            else $json['images'] = [];
+            // if(isset($json['images']))
+            //     unset($json['images'][request('image')]);
+            // else $json['images'] = [];
 
-            // saving changes to json
-            Storage::put($json_path , json_encode($json));
+            // // saving changes to json
+            // Storage::put($json_path , json_encode($json));
+
+            // remove image from cache
+            (new ImageController)->ImageClearCache('product');
 
             return $this->SuccessResponse();
         }catch(\Exception $e) {

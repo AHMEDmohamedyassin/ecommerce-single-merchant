@@ -1,3 +1,4 @@
+import ImageWithLoaderComp from 'components/public/ImageWithLoaderComp'
 import { ProductImageURL } from 'Fetch/Url'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -55,9 +56,9 @@ const CardComp = ({data}) => {
         <Link to={`/product/${data.id}/${data.slug}`} className='h-40'>
             {
                 selectedProduct?.image ? 
-                    <img className='custom-img-cover' loading='lazy' src={`${ProductImageURL}id=${data.id}&width=200&image=${selectedProduct?.image}`} />
+                    <ImageWithLoaderComp parentClass={'w-full h-full'} src={`${ProductImageURL}id=${data.id}&width=200&image=${selectedProduct?.image}`} imageClass={'custom-img-cover'}/>
                     : 
-                    <img className='custom-img-cover' loading='lazy' src={`${ProductImageURL}id=${data.id}&width=200`} />
+                    <ImageWithLoaderComp parentClass={'w-full h-full'} src={`${ProductImageURL}id=${data.id}&width=200`} imageClass={'custom-img-cover'}/>
             }
         </Link>
 
@@ -73,13 +74,13 @@ const CardComp = ({data}) => {
             </div>
 
             {/* price and old price data  */}
-            <div className='flex gap-4 items-center'>
-                <div className='text-maincolor text-lg font-bold'>{selectedProduct?.price} جم</div>
+            <div className='flex gap-4 items-center flex-wrap'>
+                <div className='text-maincolor lg:text-lg font-bold'>{selectedProduct?.price} جم</div>
                 {
                     selectedProduct?.old_price ? (
                       <div className='relative w-fit'>
-                        <div className='absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 h-[2px] w-10 bg-gray-300 -rotate-45'></div>
-                        <h2 className=' font-extrabold text-gray-300'>{selectedProduct.old_price} جم</h2>
+                        <div className='absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 h-[2px] lg:w-10 w-5 bg-gray-300 -rotate-45'></div>
+                        <h2 className=' font-extrabold text-gray-300 max-lg:text-sm'>{selectedProduct.old_price} جم</h2>
                       </div>
                     ) : null
                 }
@@ -91,7 +92,7 @@ const CardComp = ({data}) => {
                     products?.map((e , index) => (
                         <img 
                             key={index}
-                            className={`${e.id == selectedProduct?.id ? "border-secondarycolor" : ""} rounded-full custom-border shadow-sm aspect-square lg:w-8 sm:w-6 w-4 hover:cursor-pointer`} 
+                            className={`${e.id == selectedProduct?.id ? "border-secondarycolor" : ""} rounded-full custom-border shadow-sm aspect-square lg:w-8 w-6 hover:cursor-pointer`} 
                             loading='lazy' 
                             onClick={() => handleSelectProduct(e)}
                             title={e.color}

@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom'
 import { Product_ReadAction } from '../redux/action/ProductAction'
 import { Favorite_CheckAction } from '../redux/action/FavoriteAction'
 import { ProductList_Categories } from '../redux/action/ProductListAction'
+import FullScreenGalleryComp from 'components/product/FullScreenGalleryComp'
 
 const ProductPage = () => {
   const state = useSelector(state => state.ProductReducer) 
@@ -34,6 +35,9 @@ const ProductPage = () => {
   } , [state])
   return (
     <div className='custom-container'>
+
+        {/* full Screen Galler  */}
+        <FullScreenGalleryComp/>
         
         {/* product path */}
         <PathComp/>

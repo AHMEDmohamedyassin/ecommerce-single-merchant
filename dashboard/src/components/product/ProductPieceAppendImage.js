@@ -2,6 +2,7 @@ import { ImageURL } from 'Fetch/Url'
 import React, { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { product_SubProductImageAppendAction } from '../../redux/action/ProductAction'
+import ImageWithLoaderComp from 'components/public/ImageWithLoaderComp'
 
 const ProductPieceAppendImage = () => {
     const state = useSelector(state => state.ProductReducer)
@@ -30,7 +31,7 @@ const ProductPieceAppendImage = () => {
                         {
                             state.product.find(e => e.id == state.update_image_id)?.image ? (
                                 <div className='custom-border border-x-0 border-t-0 pb-6 w-full'>
-                                    <img className='aspect-square h-32 shadow custom-border mx-auto' loading='lazy' src={`${ImageURL}?image=${state.product.find(e => e.id == state.update_image_id)?.image}&id=${state.id}&type=product&width=200`} />
+                                    <ImageWithLoaderComp src={`${ImageURL}?image=${state.product.find(e => e.id == state.update_image_id)?.image}&id=${state.id}&type=product&width=200`} imageClass={'aspect-square h-32 shadow custom-border mx-auto'}/>
                                 </div>
                             ) : null
                         }
@@ -38,7 +39,9 @@ const ProductPieceAppendImage = () => {
                         <div className='flex flex-wrap justify-between gap-4'>
                             {
                                 state.images?.map((e , index) => (
-                                    <img onClick={() => handleAppendImage(e)} key={index} className='aspect-square h-32 shadow custom-border opacity-80 hover:opacity-100 hover:cursor-pointer' loading='lazy' src={`${ImageURL}?id=${state.id}&image=${e}&width=200&type=product`} />
+                                    <div key={index} onClick={() => handleAppendImage(e)}>
+                                        <ImageWithLoaderComp src={`${ImageURL}?id=${state.id}&image=${e}&width=200&type=product`} imageClass={'aspect-square h-32 shadow custom-border opacity-80 hover:opacity-100 hover:cursor-pointer'}/>
+                                    </div>
                                 ))
                             }
                         </div>

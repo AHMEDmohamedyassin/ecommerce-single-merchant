@@ -95,18 +95,18 @@ const ContactPage = () => {
 
 
             {
-              state.stores?.map((e , index) => (
+              (state?.stores?.length && state?.stores?.map((e , index) => (
                 <p key={e.id} className='flex items-center gap-2'>
                   <span className={`material-symbols-outlined text-xl`}>location_on</span>
                   <span className={` ${e.primary ? 'font-bold' : ''}`}>{e.address}</span>
                 </p>
-              ))
+              )))
             }
 
 
             {/* address if exists  */}
             {
-              state.contact?.address?.length ? (
+              state?.contact?.address?.length ? (
                 <p className='flex items-center gap-2'>
                   <span className="material-symbols-outlined text-xl">location_on</span>
                   <span>{state.contact?.address}</span>
@@ -117,7 +117,7 @@ const ContactPage = () => {
 
             {/* email  */}
             {
-              state.contact?.email?.length ? state.contact.email.split(/\s+/).map((e , index) =>  (
+              state?.contact?.email?.length ? state.contact.email.split(/\s+/).map((e , index) =>  (
                 <a key={index} href={`mailto:${e}`} className='flex items-center gap-2' target='_blank'>
                   <span className="material-symbols-outlined text-xl">mail</span>
                   <span>{e}</span>
@@ -128,7 +128,7 @@ const ContactPage = () => {
 
             {/* working hours  */}
             {
-              state.contact?.work?.length ? (
+              state?.contact?.work?.length ? (
                 <p className='flex items-center gap-2'>
                   <span className="material-symbols-outlined text-xl">schedule</span>
                   <span>{state.contact?.work}</span>

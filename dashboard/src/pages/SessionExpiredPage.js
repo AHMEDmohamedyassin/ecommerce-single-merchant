@@ -66,7 +66,10 @@ const SessionExpiredPage = () => {
 
             {/* register link */}
             <a className='text-xs underline text-gray-500' href={`${APP_URL}/auth/register`}>عميل جديد ؟ إنشئ حساب</a>
+
         </form>
+          
+        <a className='custom-button mt-10 mx-auto' href='/'>الذهاب للصفحة الرئيسية</a>
     </div>  
   )
 }

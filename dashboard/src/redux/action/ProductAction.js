@@ -121,7 +121,6 @@ export const Product_ReadAction = (id) => {
 export const Product_DeleteImageAction = (image) => {
     return async dispatch => {
         const id = store.getState().ProductReducer?.id
-        let json = store.getState().ProductReducer?.json ?? {}
         let images = store.getState().ProductReducer?.images ?? []
 
         dispatch({type : "Product_Status" , data : "ldi"}) // loading delete image
@@ -144,6 +143,9 @@ export const Product_DeleteImageAction = (image) => {
                 images
             }
         })
+
+        // refetching product data 
+        store.dispatch(Product_ReadAction(id))
     }
 }
 
@@ -179,18 +181,19 @@ export const product_DeleteAction = () => {
 
 /**
  * udpate product 
+ * the hashed lines is for ($images) stored in json file which is deprecated
  */
 export const product_UpdateAction = (data) => {
     return async dispatch => {
         const id = store.getState().ProductReducer?.id
-        const images = store.getState().ProductReducer?.json?.images
+        // const images = store.getState().ProductReducer?.json?.images
 
         dispatch({type : "Product_Status" , data : "lu"}) // loading update product
 
         // appending old images with the data request 
         let storing_data = data
-        if(data?.json && images)
-            storing_data = {...storing_data , json : {...storing_data.json , images : {...images}}}
+        if(data?.json /* && images */)
+            storing_data = {...storing_data , json : {...storing_data.json /* , images : {...images} */ }}
 
 
         const req = await fetching(ProductUpdateURL , {...storing_data , id})

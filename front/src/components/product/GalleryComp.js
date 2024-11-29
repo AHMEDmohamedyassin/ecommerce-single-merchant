@@ -2,10 +2,16 @@ import { ProductImageURL } from 'Fetch/Url'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Product_ImageSelectAction } from '../../redux/action/ProductAction'
+import ImageWithLoaderComp from 'components/public/ImageWithLoaderComp'
 
 const GalleryComp = () => {
   const state = useSelector(state => state.ProductReducer)
   const dispatch = useDispatch()
+
+  // open full screen gallery
+  const handleFullScreengallery = () => {
+    dispatch({type :"Product_Data" , data : {full_screen_gallery : true}})
+  }
 
   // selecting image
   const handleImageSelect = selected_image => {
@@ -37,14 +43,14 @@ const GalleryComp = () => {
                 <div className='relative'>
 
                   {/* the image */}
-                  <img className=' object-contain lg:h-[500px] h-[300px] w-full custom-border' src={`${ProductImageURL}width=400&image=${state.selected_product?.image ?? (state.images.length ? state.images[0] : null) }&id=${state.id}`} loading='lazy' />
+                  <ImageWithLoaderComp src={`${ProductImageURL}width=400&image=${state.selected_product?.image ?? (state.images.length ? state.images[0] : null) }&id=${state.id}`} imageClass={' object-contain lg:h-[500px] h-[300px] w-full custom-border'}/>
 
                   {/* navigation arrows */}
                   <span onClick={() => handleImageSlide()} className="material-symbols-outlined absolute top-2/4 left-2 -translate-y-2/4 hover:cursor-pointer text-2xl">arrow_back_ios</span>
                   <span onClick={() => handleImageSlide(false)} className="material-symbols-outlined absolute top-2/4 right-2 -translate-y-2/4 hover:cursor-pointer text-2xl">arrow_forward_ios</span>
 
                   {/* expanding button  */}
-                  <button className='absolute left-2 bottom-2 flex items-center gap-2 text-[10px] custom-button py-0 px-2 '>
+                  <button onClick={handleFullScreengallery} className='absolute left-2 bottom-2 flex items-center gap-2 text-[10px] custom-button py-0 px-2 '>
                     <span className="material-symbols-outlined rotate-45 text-xl">open_with</span>
                     <span>اضغط للتكبير</span>
                   </button>

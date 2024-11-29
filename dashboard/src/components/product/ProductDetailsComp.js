@@ -19,7 +19,7 @@ const ProductDetailsComp = () => {
         </div>
         <div className='flex items-center gap-2 text-sm'>
             <p className='text-gray-500'>عدد المبيعات : </p>
-            <p>{String(state.paid_quantity).padStart(2 , '0')}</p>
+            <p>{String(state.paid_quantity ?? 0).padStart(2 , '0')}</p>
         </div>
     </div>
   )

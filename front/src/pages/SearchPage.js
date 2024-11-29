@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ProductList_List } from '../redux/action/ProductListAction'
 import { useSearchParams } from 'react-router-dom'
 import PaginationComp from 'components/search/PaginationComp'
+import SearchBarComp from 'components/header/SearchBarComp'
 
 const SearchPage = () => {
   const state = useSelector(state => state.ProductListReducer)
@@ -23,6 +24,10 @@ const SearchPage = () => {
   } , [searchParams])
   return (
     <div>
+
+        <div className='custom-container mb-10 lg:hidden'>
+          <SearchBarComp/>
+        </div>
 
         {/* side filtering menu  */}
         <SideFilterMenuComp/>

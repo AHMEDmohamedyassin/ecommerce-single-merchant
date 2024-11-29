@@ -3,11 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Collection;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Routing\Controller as BaseController;
-use App\Traits\EncryptionTrait;
-
 
 class Controller
 {
@@ -30,7 +25,7 @@ class Controller
                 'key_words' => str_replace(' ' , ' ,' , $collection->title . ' ' . $collection->description)
             ]);
         }catch(\Exception $e){
-            return $e;
+            return abort(404);
         }
     }
 

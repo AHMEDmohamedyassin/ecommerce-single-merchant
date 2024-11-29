@@ -7,6 +7,7 @@ const initial = {
     images : [],
     products : [],
     is_favorite : 0 ,
+    full_screen_gallery : false ,
 
     id: null,
     slug: null,
