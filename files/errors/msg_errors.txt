@@ -25,3 +25,5 @@
 25 => order have no products
 26 => no money pay for
 27 => cart is full
+28 => coupon not found or can not be updated
+29 => user has been blocked

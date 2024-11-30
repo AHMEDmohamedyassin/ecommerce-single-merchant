@@ -1,4 +1,3 @@
-import PermissionCardComp from 'components/permission/PermissionCardComp'
 import RoleCardComp from 'components/permission/RoleCardComp'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'

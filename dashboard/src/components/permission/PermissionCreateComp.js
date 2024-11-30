@@ -9,16 +9,17 @@ const PermissionCreateComp = () => {
     const dispatch = useDispatch()
 
     // from hook
-    const {register , handleSubmit , formState:{errors}} = useForm({mode:"onBlur" , resolver:zodResolver(RoleValidation)})
+    const {register , handleSubmit , formState:{errors} , reset } = useForm({mode:"onBlur" , resolver:zodResolver(RoleValidation)})
 
     // submit form
     const submitForm = data => {
         dispatch(Role_CreateAction(data))
+        reset()
     }
 
   return (
     <form onSubmit={handleSubmit(submitForm)} className='my-10 px-4 flex flex-col items-center'>
-        <p className='title'>إنشاء صلاحية</p>
+        <p className='title'>إنشاء دور</p>
 
         <div className='w-full flex max-lg:flex-col items-start gap-4'>
             <div className='custom-inputcontainer'>

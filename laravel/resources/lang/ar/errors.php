@@ -27,5 +27,7 @@ return [
     "order have no products" => "الطلب لا يحتوي علي منتجات" ,
     "no money pay for" => "غير مطالب بدفع نقود" ,
     "cart is full" => "العربة ممتلئة",
-    'order quantity of products is larger than available' => "الكمية المطلوبة أقل من المتاح بالنسبة لذلك المنتج ` :product ` "
+    'order quantity of products is larger than available' => "الكمية المطلوبة أقل من المتاح بالنسبة لذلك المنتج ` :product ` " ,
+    'coupon not found or can not be updated' => "القسيمة غير موجودة أو لا يمكن التعديل عليها" ,
+    'user has been blocked' => "المستخدم محظور" ,
 ];

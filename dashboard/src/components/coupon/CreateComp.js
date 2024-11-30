@@ -46,7 +46,7 @@ const CreateComp = () => {
             {errors.count && <p>{errors.count.message}</p>}
         </div>
 
-        <button className='custom-button2 w-fit max-sm:self-center'>تأكيد</button>
+        <button className='custom-button2 text-nowrap max-sm:self-center'>إضافة القسائم</button>
     </form>
   )
 }

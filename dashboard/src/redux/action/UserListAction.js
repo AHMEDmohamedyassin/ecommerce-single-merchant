@@ -8,10 +8,12 @@ import { Setting_Confirm, Setting_Msg } from "./SettingAction"
 /**
  * getting users for listing
  */
-export const UserList_ListAction = ({search , page}) => {
+export const UserList_ListAction = (obj = {}) => {
     return async dispatch => {
         const stored_data = store.getState().UserListReducer
-        
+        const search = obj.search
+        const page = obj.page 
+
         // handle search word not to be resetted on pagination
         let search_word = search
         if(search == undefined)

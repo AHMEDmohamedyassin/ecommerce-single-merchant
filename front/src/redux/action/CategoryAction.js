@@ -17,7 +17,7 @@ export const Category_ListAction = () => {
         return dispatch({
             type : "Category_Data" , 
             data : {
-                top_categories : req.res
+                top_categories : req.res ? Object.keys(req.res).map(e => ({title : e , categories: req.res[e]?.ids })) : []
             }
         })
     }

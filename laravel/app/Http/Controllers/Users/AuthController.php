@@ -51,7 +51,7 @@ class AuthController {
 
             // check if user has been blocked
             if($user->block()->where('expire_date' , '>=' , Carbon::now())->first())
-                throw new \Exception('user has been blocked' , 2);
+                throw new CustomException('user has been blocked' , 29);
 
             // adding token to response
             $user['token'] = $token;

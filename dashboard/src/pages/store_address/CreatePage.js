@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { StoreAddressCreateValidation } from '../../validation/StoreAddressValidation'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { StoreAddress_CreateAction } from '../../redux/action/StoreAddressAction'
+import { StoreAddress_CreateAction, StoreAddress_ListAction } from '../../redux/action/StoreAddressAction'
 
 const CreatePage = () => {
     const state = useSelector(state => state.StoreAddressReducer)
@@ -27,7 +27,8 @@ const CreatePage = () => {
     // navigate to addresses page after creation
     useEffect(() => {
         if(state.status == 'sc'){
-            dispatch({type :"StoreAddress_Status" , data:"n"})
+            // refresh stored data
+            dispatch(StoreAddress_ListAction(true))
             navigate('/store-address')
         }
 

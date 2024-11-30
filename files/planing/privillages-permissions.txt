@@ -73,3 +73,6 @@ user_update_address
 store_create
 store_update
 store_delete
+
+static_create
+logo_update

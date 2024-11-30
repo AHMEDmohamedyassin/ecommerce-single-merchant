@@ -76,7 +76,7 @@ class CouponController extends Controller
             ])->first();
 
             if(!$coupon)
-                throw new CustomException('coupon not found' , 12);
+                throw new CustomException('coupon not found or can not be updated' , 28);
 
             $coupon->delete();
 

@@ -6,12 +6,14 @@ use App\Traits\ResponseTrait;
 use App\Traits\PaginateTrait;
 use App\Traits\SlugTrait;
 use App\Models\Category;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class TopCategoryController{
     use ResponseTrait , PaginateTrait , SlugTrait;
     
     public $file_path = '/top_categories/json.json';
+    public $cache_title = 'ReadTopCategory_func';
 
     /**
      * @code : 2001
@@ -49,6 +51,9 @@ class TopCategoryController{
             // save new content to file
             Storage::put($this->file_path , json_encode($content));
 
+            // clear cache
+            Cache::forget($this->cache_title);
+
             return $this->SuccessResponse($content);
         }catch(\Exception $e){
             return $this->ErrorResponse(2001 , $e->getCode() , $e->getMessage());
@@ -84,6 +89,9 @@ class TopCategoryController{
 
             Storage::write($this->file_path , json_encode($content));
 
+            // clear cache
+            Cache::forget($this->cache_title);
+
             return $this->SuccessResponse($content);
         }catch(\Exception $e){
             return $this->ErrorResponse(2002 , $e->getCode() , $e->getMessage());
@@ -113,6 +121,9 @@ class TopCategoryController{
 
             Storage::write($this->file_path , json_encode($content));
 
+            // clear cache
+            Cache::forget($this->cache_title);
+
             return $this->SuccessResponse($content);
         }catch(\Exception $e){
             return $this->ErrorResponse(2003 , $e->getCode() , $e->getMessage());
@@ -131,27 +142,31 @@ class TopCategoryController{
             // check if file is exists or create new file if not exists
             if(!Storage::exists($this->file_path)) return $this->SuccessResponse();
 
-            // get content of file
-            $content = json_decode(Storage::read($this->file_path) , true);
+            $content_cached = Cache::remember($this->cache_title , now()->addHours(env('CACHE_SHORT_METHODS_HOURS' , 2)) , function () {
+                // get content of file
+                $content = json_decode(Storage::read($this->file_path) , true);
+        
+                $data = [];
+                $ids = [];
+        
+                foreach($content as $key => $val){
+                    $item = [];
+                    $item['title'] = $key;
+                    $item['categories'] = Category::select('id' , 'title')->whereIn('id' , $val['ids'])->get();
+                    $ids = array_merge($ids  , $val['ids']);
+                    $data[] = $item;
+                }
+        
+                $ids = array_values(array_unique($ids));
+                $data[] = [
+                    'title' => 'other' ,
+                    'categories' => Category::select('id' , 'title')->whereNotIn('id' , $ids)->get()
+                ];
 
-            $data = [];
-            $ids = [];
+                return $content;
+            });
 
-            foreach($content as $key => $val){
-                $item = [];
-                $item['title'] = $key;
-                $item['categories'] = Category::select('id' , 'title')->whereIn('id' , $val['ids'])->get();
-                $ids = array_merge($ids  , $val['ids']);
-                $data[] = $item;
-            }
-
-            $ids = array_values(array_unique($ids));
-            $data[] = [
-                'title' => 'other' ,
-                'categories' => Category::select('id' , 'title')->whereNotIn('id' , $ids)->get()
-            ];
-
-            return $this->SuccessResponse($data);
+            return $this->SuccessResponse($content_cached);
         }catch(\Exception $e){
             return $this->ErrorResponse(2004 , $e->getCode() , $e->getMessage());
         }

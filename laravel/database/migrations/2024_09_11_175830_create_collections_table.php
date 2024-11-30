@@ -23,6 +23,7 @@ return new class extends Migration
             $table->unsignedInteger('reviews')->default(0);
             $table->dateTime('publish_date')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -7,6 +7,7 @@ use App\Models\Permission;
 use App\Models\User;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class PermissionController extends Controller
 {
@@ -50,7 +51,9 @@ class PermissionController extends Controller
     public function ListPermission () {
         try{
 
-            $permissions = Permission::orderby('id' , 'desc')->get();
+            $permissions = Cache::remember('ListPermission_func' , now()->addHours(env('CACHE_LONG_METHODS_HOURS' , 10)) , function () {
+                return Permission::orderby('id' , 'desc')->get();
+            });
 
             return $this->SuccessResponse($permissions);
         }catch(\Exception $e){

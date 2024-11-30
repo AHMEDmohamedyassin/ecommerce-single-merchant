@@ -1,5 +1,5 @@
 import TopCategoryComp from 'components/Category/TopCategoryComp'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Category_ListAction, TopCategory_ListAction } from '../redux/action/CategoryAction'
 import CategoryCreateComp from 'components/Category/CategoryCreateComp'
@@ -14,6 +14,7 @@ const CategoryPage = () => {
     dispatch(Category_ListAction())
     dispatch(TopCategory_ListAction())
   } , [])
+
   return (
     <>
       {/* category and top categories forms  */}
@@ -35,9 +36,9 @@ const CategoryPage = () => {
       <div className='custom-dashcontainer'>
           <p className='title'>مجموعات الأقسام</p>
           {
-            state.top_categories?.map((e , index) => (
-              <TopCategoryComp key={index} data={e} />
-            ))
+            (state.top_categories?.length && state.top_categories?.map((e , index) => (
+              <TopCategoryComp key={e.title} data={e} />
+            )))
           }
 
           {
@@ -50,7 +51,7 @@ const CategoryPage = () => {
           <p className='title'> جميع الأقسام</p>
           <div className='grid lg:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-4'>
             {
-              state.categories.map((e , index) => (
+              state.categories?.map((e , index) => (
                 <CategoryComp key={e.id} data={e} />
               ))
             }

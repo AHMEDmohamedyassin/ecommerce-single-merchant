@@ -13,6 +13,7 @@ const TopCategoryCreateComp = () => {
         register,
         handleSubmit,
         formState: { errors },
+        reset
     } = useForm({
         mode : "onBlur" ,
         resolver: zodResolver(TopCategoryCreateValidation)
@@ -21,6 +22,7 @@ const TopCategoryCreateComp = () => {
     // submit for
     const submitForm = data => {
         dispatch(TopCategory_CreateAction(data))
+        reset()
     }
 
   return (

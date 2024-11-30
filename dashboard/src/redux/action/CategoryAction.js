@@ -51,7 +51,7 @@ export const TopCategory_ListAction = () => {
         dispatch({
             type : "Category_Data" ,
             data : {
-                top_categories : req.res
+                top_categories : req.res ? Object.keys(req.res).map(e => ({"title" : e , "categories" : req.res[e]?.ids })) : []
             }
         })
     }
@@ -152,7 +152,7 @@ export const TopCategory_CreateAction = (data) => {
         let top_categories = store.getState().CategoryReducer?.top_categories ?? []
 
         // check if top categories is exissts before
-        if(top_categories.find(e => e.title == data.title) ?? false)
+        if(top_categories?.find(e => e.title == data.title) ?? false)
             return Setting_Msg(14000)
 
         dispatch({type : "Category_Status" , data:"lctc"}) // loading create top categories
@@ -168,7 +168,7 @@ export const TopCategory_CreateAction = (data) => {
         // reset data
         dispatch({
             type : "Category_Data" , data: {
-                top_categories : [{title : data.title , categories:req.res[data.title]["ids"]} , ...top_categories]
+                top_categories : req.res ? Object.keys(req.res).map(e => ({"title" : e , "categories" : req.res[e]?.ids })) : []
             }
         })
     }
@@ -253,6 +253,8 @@ export const Category_DeleteImageAction = (id) => {
 
         if(!req.success)
             return dispatch({type : "Category_Status" , data:"n"})
+
+        dispatch({type : "Category_Status" , data:`sdci${id}`})
 
         // notification
         Setting_Msg(17000)

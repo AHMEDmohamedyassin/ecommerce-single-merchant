@@ -21,7 +21,7 @@ const CategoriesRibbonComp = () => {
 
             {
               categories?.top_categories?.map((e , index) => (
-                <div key={index}>
+                <div className={e.categories.length ? 'hidden' : ''} key={index}>
                   {
                     e.categories?.length ? (
 

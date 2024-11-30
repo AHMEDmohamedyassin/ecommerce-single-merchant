@@ -23,6 +23,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('quantity')->default(1);
             $table->unsignedInteger('paid_quantity')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -85,6 +85,9 @@ export const StoreAddress_UpdateAction = (data) => {
                 ...req.res
             }
         })
+
+        // refresh data
+        store.dispatch(StoreAddress_ListAction(true))
     }
 }
 
@@ -92,12 +95,16 @@ export const StoreAddress_UpdateAction = (data) => {
 /**
  * delete store address
  */
-export const StoreAddress_DeleteAction = () => {
+export const StoreAddress_DeleteAction = (id = null) => {
     return async dispatch => {
         // confirmation
         if(!Setting_Confirm(1000)) return 
 
-        const store_id = store.getState().StoreAddressReducer?.id ??  null
+        // getting id from parameter if not found in store
+        const store_id = (id ?? store.getState().StoreAddressReducer?.id ) ?? null
+        
+        // check if id available
+        if(!store_id) return 
 
         dispatch({type:"StoreAddress_Status" , data : "ld"})   // loading update store addresss
 
@@ -109,10 +116,12 @@ export const StoreAddress_DeleteAction = () => {
         // notification
         Setting_Msg(31000)
 
-        dispatch({
-            type : "StoreAddress_Status" , 
-            data : "sd"
-        })
+        if(id)
+            dispatch({type : "StoreAddress_Status" , data : "n"})
+        else dispatch({type : "StoreAddress_Status" , data : "sd"})
+
+        // refresh data
+        dispatch(StoreAddress_ListAction(true))
     }
 }
 
@@ -121,12 +130,12 @@ export const StoreAddress_DeleteAction = () => {
 /**
  * listing store address
  */
-export const StoreAddress_ListAction = () => {
+export const StoreAddress_ListAction = (force = false) => {
     return async dispatch => {
         const items = store.getState().StoreAddressReducer?.items ?? []
 
         // check if stores is previously fetched 
-        if(items.length) return 
+        if(items.length && !force) return 
 
         dispatch({type:"StoreAddress_Status" , data : "ll"})   // loading list store addresss
 

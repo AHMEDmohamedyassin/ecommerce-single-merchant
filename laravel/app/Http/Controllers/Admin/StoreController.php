@@ -8,11 +8,14 @@ use App\Traits\PaginateTrait;
 use App\Traits\ResponseTrait;
 use App\Traits\SlugTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class StoreController extends Controller
 {
     use ResponseTrait , PaginateTrait , SlugTrait;
+
+    public $cache_title = 'ListStore_func';
 
     /**
      * @error 18001
@@ -40,6 +43,9 @@ class StoreController extends Controller
 
                 $store['json'] = request('json');
             }
+
+            // clear cache
+            Cache::forget($this->cache_title);
 
             return $this->SuccessResponse($store);
         }catch(\Exception $e){
@@ -81,6 +87,9 @@ class StoreController extends Controller
             if(Storage::exists($path))
                 $store['json'] = json_decode(Storage::read($path));
 
+            // clear cache
+            Cache::forget($this->cache_title);
+
             return $this->SuccessResponse($store);
         }catch(\Exception $e){
             return $this->ErrorResponse(18002 , $e->getCode() , $e->getMessage());
@@ -107,6 +116,9 @@ class StoreController extends Controller
             if(Storage::directoryExists($path))
                 Storage::deleteDirectory($path);
 
+            // clear cache
+            Cache::forget($this->cache_title);
+
             return $this->SuccessResponse($store);
         }catch(\Exception $e){
             return $this->ErrorResponse(18003 , $e->getCode() , $e->getMessage());
@@ -122,17 +134,21 @@ class StoreController extends Controller
     public function ListStore () {
         try{
 
-            $stores = StoreAddress::orderby('primary' , 'desc')
-            ->orderby('id' , 'desc')->take(20)->get()             // limiting 20 results
-            ->each(function ($store) {
-                $path = "stores/{$store->id}/json.json";
-                if(Storage::exists($path))
-                    $store->json = json_decode(Storage::read($path));
-                return $store;
+            $cached_data = Cache::remember($this->cache_title , now()->addHours(env('CACHE_LONG_METHODS_HOURS' , 2)) , function () {
+                $stores = StoreAddress::orderby('primary' , 'desc')
+                ->orderby('id' , 'desc')->get()
+                ->each(function ($store) {
+                    $path = "stores/{$store->id}/json.json";
+                    if(Storage::exists($path))
+                        $store->json = json_decode(Storage::read($path));
+                    return $store;
+                });
+
+                return $stores;
             });
 
 
-            return $this->SuccessResponse($stores);
+            return $this->SuccessResponse($cached_data);
         }catch(\Exception $e){
             return $this->ErrorResponse(18004 , $e->getCode() , $e->getMessage());
         }

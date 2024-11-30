@@ -33,13 +33,13 @@ const TopCategoryComp = ({data}) => {
   return (
         <form onSubmit={handleSubmit(handleTopCategoryUpdate)}  className='flex flex-col custom-border border-x-0 '>
             {/* category title*/}
-            <button type='button' className='flex justify-between items-center gap-4 py-4'>
+            <div type='button' className='flex justify-between items-center gap-4 py-4'>
                 {/* category title */}
                 <button type='button' className='w-full font-semibold bg-transparent text-start' onClick={() => setShowCategories(!showCategories)}>{data?.title?.length && data.title != "other" ? data?.title : data.title == "other" ? "أقسام ليست ضمن مجموعة" : data?.slug }</button>
 
                 {/* button to show permissions of role */}
                 <span onClick={() => setShowCategories(!showCategories)}  style={{rotate:showCategories?"180deg" : "0deg"}} className="material-symbols-outlined hover:cursor-pointer">keyboard_arrow_down</span>
-            </button>
+            </div>
 
             {/* categories list */}
             {
@@ -52,7 +52,7 @@ const TopCategoryComp = ({data}) => {
                                     <div key={index} className='flex items-center gap-2'>
                                         {
                                             data.title != "other" ? (
-                                                <input {...register('ids')} value={e.id} type='checkbox' defaultChecked={data.categories.find(ele => ele.id == e.id) ?? false} />
+                                                <input {...register('ids')} value={e.id} type='checkbox' defaultChecked={data.categories.find(ele => ele == e.id) ?? false} />
                                             ) : null
                                         }
                                         <p>{e.title?.length? e.title : e.slug}</p>

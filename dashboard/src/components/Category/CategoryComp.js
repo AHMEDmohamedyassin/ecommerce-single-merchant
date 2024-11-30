@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { Category_DeleteAction, Category_DeleteImageAction, Category_UpdateAction } from '../../redux/action/CategoryAction'
@@ -11,6 +11,7 @@ const CategoryComp = ({data}) => {
     const [file , setFile] = useState(null)
     const [uploadedImageURL , setUploadedImageURL] = useState(null)
     const dispatch = useDispatch()
+    const state = useSelector(state => state.CategoryReducer)
 
     // default values of inputs
     const defaultValues = {
@@ -63,6 +64,13 @@ const CategoryComp = ({data}) => {
         setUploadedImageURL(null)
     }
 
+    // remove image after deleting
+    useEffect(() => {
+        if(state.status == `sdci${data.id}`){
+            setUploadedImageURL(`${ImageURL}?type=category&width=100`)
+            dispatch({type : "Category_Status" , data : "n"})
+        }
+    } , [state.status])
   return (
     <>
         <form onSubmit={handleSubmit(SubmitForm)} className='sm:w-40 w-32 custom-border rounded-lg flex flex-col items-center gap-y-2 p-2'>

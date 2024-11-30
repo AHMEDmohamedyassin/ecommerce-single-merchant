@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers\Filters;
 
+use App\Http\Controllers\Setting\ImageController;
 use App\Traits\ResponseTrait;
 use App\Traits\PaginateTrait;
 use App\Traits\SlugTrait;
 use App\Models\Category;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class CategoryController{
     use ResponseTrait , PaginateTrait , SlugTrait;
 
+    public $cache_title = "SearchCategory";
 
     public function storeCategoryImage ($category) {
         $image = request()->file('image');
@@ -19,6 +22,10 @@ class CategoryController{
 
         $image_name = 'image.'.$image->getClientOriginalExtension();
         $image->storeAs('/categories/'.$category->id.'/'.$image_name);
+
+        // clear image cache
+        request()->merge(['id' => $category->id]);
+        (new ImageController)->ImageClearCache('category');
     }
 
     /**
@@ -42,6 +49,9 @@ class CategoryController{
 
             // storing image
             $this->storeCategoryImage($category);
+            
+            // clear cache
+            Cache::forget($this->cache_title);
 
             return $this->SuccessResponse($category);
         }catch(\Exception $e){
@@ -74,6 +84,9 @@ class CategoryController{
             // storing image
             $this->storeCategoryImage($category);
 
+            // clear cache
+            Cache::forget($this->cache_title);
+
             return $this->SuccessResponse($category);
         }catch(\Exception $e){
             return $this->ErrorResponse(3002 , $e->getCode() , $e->getMessage());
@@ -94,6 +107,12 @@ class CategoryController{
 
             // delete image
             Storage::deleteDirectory('/categories/'.$category->id);
+
+            // clear cache
+            Cache::forget($this->cache_title);
+
+            // clear image cache
+            (new ImageController)->ImageClearCache('category');
 
             return $this->SuccessResponse($category);
         }catch(\Exception $e){
@@ -117,6 +136,9 @@ class CategoryController{
             Storage::deleteDirectory('/categories/'.$category->id);
 
             $category->delete();
+
+            // clear cache
+            Cache::forget($this->cache_title);
 
             return $this->SuccessResponse($category);
         }catch(\Exception $e){
@@ -161,14 +183,24 @@ class CategoryController{
             request()->validate([
                 'search' => 'max:255' ,
             ]);
+            
+            
+            // getting from cache all categories requried
+            if(!request()->has('search')){
+                $data = Cache::remember($this->cache_title , now()->addHours(env('CACHE_SHORT_METHODS_HOURS' , 2)) , function () {
+                    $data = Category::orderBy('id' , 'desc');
+                    // for returing same response view as search
+                    request()->merge(['perpage' => $data->count()]);
+                    return $this->paginate($data);
+                });
+                return $this->SuccessResponse($data);
+            }
+            
 
             $category = new Category();
+            $data = $category->where('slug' , 'LIKE' , '%'.$this->CreateSlug(request('search')).'%')->orderBy('id' , 'desc');
 
-            $category = $category->where('slug' , 'LIKE' , '%'.$this->CreateSlug(request('search')).'%')->orderBy('id' , 'desc');
-
-            $data = $this->paginate($category);
-
-            return $this->SuccessResponse($data);
+            return $this->SuccessResponse($this->paginate($data));
         }catch(\Exception $e){
             return $this->ErrorResponse(3006 , $e->getCode() , $e->getMessage());
         }

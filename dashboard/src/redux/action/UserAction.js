@@ -1,7 +1,8 @@
-import { UserAddAddressURL, UserCreateURL, UserDeleteAddressURL, UserDetailURL, UserReadURL, UserResetPassURL, UserUpdateURL } from "Fetch/Url"
+import { UserAddAddressURL, UserCreateURL, UserDeleteAddressURL, UserDeleteURL, UserDetailURL, UserReadURL, UserResetPassURL, UserUpdateURL } from "Fetch/Url"
 import { fetching } from "../../Fetch/Fetch"
 import { Setting_Confirm, Setting_Msg } from "./SettingAction"
 import { store } from "../../redux/store"
+import { UserList_ListAction } from "./UserListAction"
 
 
 
@@ -28,6 +29,9 @@ export const User_CreateAction = (data) => {
                 status : "sc"          // success create user
             }
         })
+
+        // refresh stored data
+        dispatch(UserList_ListAction())
     }
 }
 
@@ -42,6 +46,9 @@ export const User_ReadAction = (id) => {
         // prevent refetch user data if it is already stored
         if(id == existed_id)
             return ;
+
+        // reset user data 
+        dispatch({type : "User_Reset"})
 
         dispatch({type : "User_Status" , data : "lr"}) // loading user read data
 
@@ -104,7 +111,7 @@ export const User_DeleteAction = id => {
 
         dispatch({type : "User_Status" , data : "ld"}) // loading user delete
 
-        const req = await fetching(UserUpdateURL , {id})
+        const req = await fetching(UserDeleteURL , {id})
 
         if(!req.success)
             return dispatch({type : "User_Status" , data : "n"})
@@ -118,6 +125,9 @@ export const User_DeleteAction = id => {
                 status : 'sd' ,      // success delete status 
             }
         })
+
+        // refresh stored data
+        dispatch(UserList_ListAction())
     }
 }
 
@@ -201,7 +211,7 @@ export const User_AddAdressAction = (data) => {
         Setting_Msg(7000)
 
         // updating stored address if exists
-        address_items = [...address_items , {...data , ...data.json , id}]
+        address_items = [...address_items , {...data , ...data.json}]
 
         dispatch({
             type : "User_Data" , 
