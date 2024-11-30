@@ -33,7 +33,11 @@ const CardComp = ({data}) => {
             {/* price  */}
             <div className='border-inherit lg:border-l-[1px] flex flex-col gap-2 lg:items-center justify-center font-semibold text-sm'>
                 <div>{data.price} جنيه</div>
-                <div className='text-gray-300 relative max-lg:hidden'>{data.old_price} جنيه <div className='w-10 h-[1px] bg-gray-500 absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 rotate-12'></div></div>
+                {
+                  data.old_price ? 
+                    <div className='text-gray-300 relative max-lg:hidden'>{data.old_price} جنيه <div className='w-10 h-[1px] bg-gray-500 absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 rotate-12'></div></div>
+                  : null
+                }
             </div>
 
             {/* counter */}

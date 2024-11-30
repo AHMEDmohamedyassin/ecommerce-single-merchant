@@ -178,6 +178,39 @@ class CouponController extends Controller
 
 
     /**
+     * @error 12006
+     * public read coupon
+     */
+    public function PublicReadCoupon() {
+        try{
+            request()->validate([
+                'coupon' => 'required|max:255'
+            ]);
+
+            $coupon = new Coupon();
+
+            $coupon = $coupon->where('coupon_hash' , hash('sha256', request('coupon')) )
+                                    ->where('user_id' , null)
+                                    ->where('expire_date' , '>' , Carbon::now())->first();
+
+            if(!$coupon)
+                throw new CustomException('coupon not found or expired' , 23);
+            
+
+            $data = [
+                "value" => $coupon->value,
+                "coupon" => $this->decrypt($coupon->coupon_encrypt , env('ENCRYPTION_PASSWORD'))
+            ];
+
+
+            return $this->SuccessResponse($data);
+        }catch(\Exception $e){
+            return $this->ErrorResponse(12006 , $e->getCode() , $e->getMessage());
+        }
+    }
+
+
+    /**
      * using coupon
      * routless method
      * @var the_cop : coupon , @var user_id user id if available

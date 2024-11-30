@@ -131,6 +131,8 @@ Route::post('/coupon/delete' , [CouponController::class , 'DeleteCoupon'])->midd
 Route::post('/coupon/paid' , [CouponController::class , 'PaidStatusCoupon'])->middleware("AdminMiddleware:coupon_paid_status"); #admin
 Route::post('/coupon/read' , [CouponController::class , 'ReadCoupon'])->middleware("AdminMiddleware:coupon_read");       #admin
 Route::get('/coupon/list' , [CouponController::class , 'ListCoupon'])->middleware("AdminMiddleware:coupon_list");      #admin
+Route::post('/coupon/read/public' , [CouponController::class , 'PublicReadCoupon']);
+
 
 
 // Order Controller 13,000

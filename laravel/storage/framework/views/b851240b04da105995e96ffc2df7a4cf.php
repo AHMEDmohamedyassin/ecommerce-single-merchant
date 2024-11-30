@@ -21,6 +21,9 @@
 <?php unset($__componentOriginal372ba07e15bcac5413dbbd3b17942c12); ?>
 <?php endif; ?>
 
+    <meta name="description" content="<?php echo e($description); ?>" />
+    <meta name="keywords" content="<?php echo e($keywords); ?>" />
+
     <?php if (isset($component)) { $__componentOriginalb9b51a1a4669affc9cad2fb34cebbfd1 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalb9b51a1a4669affc9cad2fb34cebbfd1 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.CDNComponent','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
@@ -66,6 +69,13 @@
   
   </head>
   <body>
+
+    <div style='height: 0rem; width: 0px;overflow:hidden'>
+      <?php 
+        echo $html;
+      ?>
+    </div>
+
     <?php if (isset($component)) { $__componentOriginal5c8133adad7001e239c525258d15c41a = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal5c8133adad7001e239c525258d15c41a = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.BodyComponent','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
@@ -85,6 +95,12 @@
 <?php $component = $__componentOriginal5c8133adad7001e239c525258d15c41a; ?>
 <?php unset($__componentOriginal5c8133adad7001e239c525258d15c41a); ?>
 <?php endif; ?>
+
+    <script type="application/ld+json">
+      <?php
+        echo $script;
+      ?>
+    </script>
   </body>
 </html>
 <?php /**PATH C:\Users\Ahmed\Desktop\ecommerce\laravel\resources\views/Home.blade.php ENDPATH**/ ?>

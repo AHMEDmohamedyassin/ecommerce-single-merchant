@@ -52,7 +52,7 @@ const TopCategoryComp = ({data}) => {
                                     <div key={index} className='flex items-center gap-2'>
                                         {
                                             data.title != "other" ? (
-                                                <input {...register('ids')} value={e.id} type='checkbox' defaultChecked={data.categories.find(ele => ele == e.id) ?? false} />
+                                                <input {...register('ids')} value={e.id} type='checkbox' defaultChecked={data.categories.find(ele => ele.id == e.id) ?? false} />
                                             ) : null
                                         }
                                         <p>{e.title?.length? e.title : e.slug}</p>

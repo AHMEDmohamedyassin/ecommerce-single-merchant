@@ -17,13 +17,13 @@ const CartSummaryComp = () => {
         {/* old_price sum  */}
         <div className='grid lg:grid-cols-2 grid-cols-3 border-inherit border-b-[1px]'>
           <div className='max-lg:col-span-2 border-inherit border-e-[1px] p-2 text-sm'>المجموع قبل الخصم</div>
-          <div className='max-lg:text-center p-2 font-bold text-gray-500 bg-secondarybg'>{state.items.reduce((acc , curr) => acc + curr.old_price * curr.pivot.quantity , 0)}</div>
+          <div className='max-lg:text-center p-2 font-bold text-gray-500 bg-secondarybg'>{state.items.reduce((acc , curr) => acc + (curr.old_price && curr.old_price > 0 ? curr.old_price : curr.price) * curr.pivot.quantity , 0)}</div>
         </div>
 
         {/* discount sum  */}
         <div className='grid lg:grid-cols-2 grid-cols-3 border-inherit border-b-[1px]'>
           <div className='max-lg:col-span-2 border-inherit border-e-[1px] p-2 text-sm'>إجمالي الخصم</div>
-          <div className='max-lg:text-center p-2 font-bold text-red-500 bg-secondarybg'> - {Math.abs(state.items.reduce((acc , curr) => acc + (curr.old_price - curr.price)  * curr.pivot.quantity , 0) || 0)}</div>
+          <div className='max-lg:text-center p-2 font-bold text-red-500 bg-secondarybg'> - {Math.abs(state.items.reduce((acc , curr) => acc + ( /**get price incase of old price is not found or zero */ (curr.old_price && curr.old_price > 0 ? curr.old_price : curr.price) - curr.price)  * curr.pivot.quantity , 0) || 0)}</div>
         </div>
 
         {/* coupon discount  */}

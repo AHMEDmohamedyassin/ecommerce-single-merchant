@@ -22,6 +22,7 @@ return new class extends Migration
             $table->unsignedFloat('old_price')->default(0);
             $table->unsignedSmallInteger('quantity')->default(1);
             $table->unsignedInteger('paid_quantity')->default(0);
+            $table->string('image')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

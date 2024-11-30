@@ -94,12 +94,57 @@ const ContactPage = () => {
             <p className='text-xs'>نحن نحب أن نسمع منكم على خدمة العملاء لدينا، أو المنتجات، أو الموقع الإلكتروني أو أي موضوعات تريد مشاركتها معنا. سيكون موضع تقدير تعليقاتك واقتراحاتك. يرجى ملء النموذج أدناه.</p>
 
 
+            {/* each store details */}
             {
               (state?.stores?.length && state?.stores?.map((e , index) => (
-                <p key={e.id} className='flex items-center gap-2'>
-                  <span className={`material-symbols-outlined text-xl`}>location_on</span>
-                  <span className={` ${e.primary ? 'font-bold' : ''}`}>{e.address}</span>
-                </p>
+                <div key={e.id}>
+                  <div className='flex items-center gap-2'>
+                    <span className={`material-symbols-outlined text-xl`}>location_on</span>
+                    <span className={` ${e.primary ? 'font-bold' : ''}`}>{e.address}</span>
+                  </div>
+                  <ul className='ps-8'>
+                    {/* store phone  */}
+                    {
+                      e?.json?.phone ? (
+                        <a href={`tel:${e.json.phone}`} className='flex items-center gap-2' target='_blank'>
+                          <span className="material-symbols-outlined text-xl">phone</span>
+                          <span>{e.json.phone}</span>
+                        </a>
+                      ):null
+                    }
+
+
+                    {/* whatsapp */}
+                    {
+                      (e.json?.whatsapp && e.json.whatsapp.split(/\s+/).map((ele , index) => (
+                        <a key={index} href={`https://api.whatsapp.com/send/?phone=2${ele}&text=مرحبا أرغب في التواصل معكم&type=phone_number&app_absent=0`} className='flex items-center gap-2' target='_blank'>
+                          <img className='aspect-square w-6 rounded-full' src={`${APP_URL}/images/whatsapp.png`} loading='lazy'/>
+                          <span>{ele}</span>
+                        </a>
+                      )))
+                    }
+
+                    {/* email  */}
+                    {
+                      e.json?.email ? e.json.email.split(/\s+/).map((ele , index) =>  (
+                        <a key={index} href={`mailto:${ele}`} className='flex items-center gap-2' target='_blank'>
+                          <span className="material-symbols-outlined text-xl">mail</span>
+                          <span>{ele}</span>
+                        </a>
+                      )) : null
+                    }
+
+                    {/* working hours  */}
+                    {
+                      e.json?.work ? (
+                        <p className='flex items-center gap-2'>
+                          <span className="material-symbols-outlined text-xl">schedule</span>
+                          <span>{e.json.work}</span>
+                        </p>
+                      ) : null
+                    }
+                  </ul>
+                </div>
               )))
             }
 

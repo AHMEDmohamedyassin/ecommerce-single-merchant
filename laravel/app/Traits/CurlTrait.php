@@ -37,7 +37,10 @@ Trait CurlTrait{
             curl_close($curl);
     
             if($response){
-                return ['success' => true , 'res' => json_decode($response)];
+                // removing html from text before deocding
+                $response = substr($response, 0, strpos($response, '<!DOCTYPE html>'));
+                
+                return ['success' => true , 'res' => json_decode($response) , 'theres' => $response];
             }else
                 return ['success' => false , 'error' => 'no response'];
 

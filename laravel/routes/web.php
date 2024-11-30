@@ -4,13 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
 
 
-// dashboard page 
-Route::get('/{path?}', function () {
-    return view('Home');
-})->where('path', '^(?!dashboard(/.*)?$)(?!product/\d+$).*');
+// all website pages 
+Route::get('/{path?}', [Controller::class , 'HomePage'])
+->where('path', '^(?!dashboard(/.*)?$)(?!product/\d+(/.*)$).*');
 
 
-// the website pages 
+// the dashboard 
 Route::get('/dashboard/{path?}', function () {
     return view('Dash');
 })->where('path' , '^.*');

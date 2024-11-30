@@ -70,7 +70,7 @@ class TopCategoryController{
         try{
             request()->validate([
                 'title' => 'required' , 
-                'ids' => 'required|array' , 
+                'ids' => 'nullable|array' , 
                 'ids.*' => 'exists:categories,id' 
             ]);
 
@@ -163,7 +163,7 @@ class TopCategoryController{
                     'categories' => Category::select('id' , 'title')->whereNotIn('id' , $ids)->get()
                 ];
 
-                return $content;
+                return $data;
             });
 
             return $this->SuccessResponse($content_cached);

@@ -135,7 +135,6 @@ class FawaterkController {
                 'Content-Type: application/json',
                 'Authorization: Bearer '.$this->Api_key,
             ];
-            
 
             $curl = $this->Crul_Request($this->Url , $header , $body);
 

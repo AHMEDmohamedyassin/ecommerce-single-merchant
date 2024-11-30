@@ -52,7 +52,7 @@ const AddressesPage = () => {
                 )
               }
               {
-                !state.items.length ? <p className=' text-center text-red-500'>لا يوجد عناوين قم بإضافة عنوان </p> : null 
+                !state.items.length ? <p className=' text-center text-red-500 text-sm'>لا يوجد عناوين قم بإضافة عنوان </p> : null 
               }
             </div>
         

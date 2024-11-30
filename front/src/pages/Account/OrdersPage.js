@@ -24,9 +24,9 @@ const OrdersPage = () => {
         {/* content */}
         <section className='flex flex-col gap-4 lg:col-span-3'>
             {
-              state.items.map(e => (
+              state.items?.length ? state.items.map(e => (
                 <OrderCardComp key={e.id} data={e}/>
-              ))
+              )) : <p className='text-red-500 text-sm text-center my-10'>لم يتم تقديم أي طلبات</p>
             }
 
         </section>

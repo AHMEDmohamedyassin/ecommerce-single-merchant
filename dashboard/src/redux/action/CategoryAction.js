@@ -51,7 +51,7 @@ export const TopCategory_ListAction = () => {
         dispatch({
             type : "Category_Data" ,
             data : {
-                top_categories : req.res ? Object.keys(req.res).map(e => ({"title" : e , "categories" : req.res[e]?.ids })) : []
+                top_categories : req.res
             }
         })
     }

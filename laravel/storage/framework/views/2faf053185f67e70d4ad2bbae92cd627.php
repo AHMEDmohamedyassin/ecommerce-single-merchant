@@ -65,25 +65,7 @@
   
   </head>
   <body>
-    <?php if (isset($component)) { $__componentOriginal5c8133adad7001e239c525258d15c41a = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal5c8133adad7001e239c525258d15c41a = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.BodyComponent','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
-<?php $component->withName('BodyComponent'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
-<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
-<?php endif; ?>
-<?php $component->withAttributes([]); ?> <?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal5c8133adad7001e239c525258d15c41a)): ?>
-<?php $attributes = $__attributesOriginal5c8133adad7001e239c525258d15c41a; ?>
-<?php unset($__attributesOriginal5c8133adad7001e239c525258d15c41a); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal5c8133adad7001e239c525258d15c41a)): ?>
-<?php $component = $__componentOriginal5c8133adad7001e239c525258d15c41a; ?>
-<?php unset($__componentOriginal5c8133adad7001e239c525258d15c41a); ?>
-<?php endif; ?>
+    
   </body>
 </html>
 <?php /**PATH C:\Users\Ahmed\Desktop\ecommerce\laravel\resources\views/errors/minimal.blade.php ENDPATH**/ ?>

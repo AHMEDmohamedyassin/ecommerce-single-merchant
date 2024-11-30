@@ -29,6 +29,7 @@ import OrdersPage from "pages/Account/OrdersPage";
 import PoliciesPage from "pages/Static/PoliciesPage";
 import { Static_ReadAction } from "./redux/action/StaticAction";
 import NotFoundPage from "pages/NotFoundPage";
+import PaymentStatusPage from "pages/PaymentStatusPage";
 
 function App() {
   const auth = useSelector(state=>state.AuthReducer)
@@ -100,6 +101,11 @@ function App() {
             <Route path="/contact" element={<ContactPage/>}/>
             <Route path="/faqs" element={<FAQsPage/>}/>
             <Route path="/about" element={<AboutPage/>}/>
+
+            {/* payment status pages  */}
+            <Route path="/payment/success" element={<PaymentStatusPage/>} />
+            <Route path="/payment/fail" element={<PaymentStatusPage/>} />
+            <Route path="/payment/pending" element={<PaymentStatusPage/>} />
 
             <Route path="/*" element={<NotFoundPage/>}/>
           </Routes>
