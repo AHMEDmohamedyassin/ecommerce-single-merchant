@@ -25,18 +25,6 @@ const OrderCardComp = ({data}) => {
                     <div className='p-2 text-sm'>{data.cart_total} <span className='px-4 text-gray-500'>جنيه</span></div>
                 </div>
                 
-                {/* order status and paying button  */}
-                <div className='w-full grid grid-cols-2  border-inherit border-b-[1px]'>
-                    <div className='p-2 text-sm text-gray-500 border-inherit border-e-[1px]'>حالة الطلب</div>
-                    <div className='p-2 text-sm flex justify-between items-center'>
-                      <span className={`${data.status == "success" ? "text-green-500" : "" } ${data.status?.includes('cancel') ? "text-red-500" : "" }`}>{data.ar_status}</span>
-                      {
-                        data.status == "pending" ? 
-                          <button onClick={handlePaying} className='custom-button2 mx-4 bg-secondarycolor hover:bg-maincolor py-1'>ادفع الان</button>
-                        :null
-                      }
-                    </div>
-                </div>
                 
                 {/* order shipping address */}
                 <div className='w-full grid grid-cols-2  border-inherit border-b-[1px]'>
@@ -44,6 +32,19 @@ const OrderCardComp = ({data}) => {
                     <div className='p-2 text-sm'>{data.shipping_address?.address}</div>
                 </div>
 
+                {/* order status and paying button  */}
+                <div className='w-full grid grid-cols-2  border-inherit border-b-[1px]'>
+                    <div className='p-2 text-sm text-gray-500 border-inherit border-e-[1px]'>حالة الطلب</div>
+                    <div className='p-2 text-sm flex max-lg:flex-wrap lg:justify-between lg:items-center gap-2'>
+                      <span className={`${data.status == "success" ? "text-green-500" : "" } ${data.status?.includes('cancel') ? "text-red-500" : "" }`}>{data.ar_status}</span>
+                      {
+                        data.status == "pending" ? 
+                          <button onClick={handlePaying} className='custom-button2 lg:mx-4 bg-secondarycolor hover:bg-maincolor py-1'>ادفع الان</button>
+                        :null
+                      }
+                    </div>
+                </div>
+                
             </div>
   )
 }

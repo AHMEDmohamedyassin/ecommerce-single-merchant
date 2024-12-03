@@ -14,7 +14,7 @@ const CardComp = ({data}) => {
 
   return (
     <div className='grid grid-cols-7 max-lg:grid-cols-3 border-inherit lg:border-r-[1px] border-b-[1px]'>
-        <div className='border-inherit lg:border-l-[1px] p-3 flex justify-center items-center'>
+        <div className='border-inherit lg:border-l-[1px] lg:p-3 flex justify-center items-center'>
             {
               data.image ? 
               <img className='border-inherit border-[1px] shadow-sm h-36 object-cover' loading='lazy' src={`${ProductImageURL}id=${data.collection?.id}&image=${data.image}&width=200`} /> :

@@ -16,7 +16,7 @@ const CartPage = () => {
       <div className='w-full flex flex-col border-y-[1px] border-gray-300 lg:shadow'>
 
         {/* table title of cart  */}
-        <div className='grid grid-cols-7'>
+        <div className='hidden lg:grid grid-cols-7'>
           <div className='text-center py-3 border-inherit border-l-[1px]  bg-secondarybg'>صورة</div>
           <div className='text-center py-3 border-inherit border-l-[1px]  bg-secondarybg col-span-2'>العنوان</div>
           <div className='text-center py-3 border-inherit border-l-[1px]  bg-secondarybg '>سعر الوحدة</div>

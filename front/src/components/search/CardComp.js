@@ -67,14 +67,14 @@ const CardComp = ({data}) => {
 
             <div className=' flex-1 flex flex-col gap-1'>
                 <div className='flex items-center gap-2'>
-                    <p className=' text-nowrap'>{selectedProduct?.color} - </p>
-                    <p className='line-clamp-1 text-sm'>{selectedProduct?.sizes?.join(' , ')}</p>
+                    <p className=' text-nowrap text-sm'>{selectedProduct?.color} - </p>
+                    <p className='line-clamp-1 lg:text-sm text-xs'>{selectedProduct?.sizes?.join(' , ')}</p>
                 </div>
                 <Link to={`/product/${data.id}`} className='line-clamp-2 text-sm font-semibold'>{data.title}</Link>
             </div>
 
             {/* price and old price data  */}
-            <div className='flex gap-4 items-center flex-wrap'>
+            <div className='flex gap-x-4 items-center flex-wrap'>
                 <div className='text-maincolor lg:text-lg font-bold'>{selectedProduct?.price} جم</div>
                 {
                     selectedProduct?.old_price ? (

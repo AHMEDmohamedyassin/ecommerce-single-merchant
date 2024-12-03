@@ -2,15 +2,21 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Cart_AddingAction } from '../../redux/action/CartAction';
 import { Favorite_SyncAction } from '../../redux/action/FavoriteAction';
+import { useNavigate } from 'react-router-dom';
 
 const ButtonsComp = () => {
   const state = useSelector(state => state.ProductReducer)
   const cart = useSelector(state => state.CartReducer)
+  const auth = useSelector(state => state.AuthReducer)
   const dispatch = useDispatch()
   const [selectedQuantity , setSelectedQuantity] = useState(0)     // quantity placed in cart from selected product
+  const navigate = useNavigate()
 
   // adding item to cart
   const addToCart = () => {
+    if(!auth.token)
+      return navigate(`/auth/login?redirect=/product/${state.id}/${state.slug}`);
+
     dispatch(Cart_AddingAction(state.selected_product?.id))
     dispatch({type:"Cart_Data" , data : {side_cart : true}})      // opening side cart on adding product
   } 
@@ -52,10 +58,16 @@ const ButtonsComp = () => {
         {/* buying button */}
         {
           state.selected_product?.quantity ? (
-            <button className='max-sm:order-3 flex items-center justify-center gap-2 col-span-4 bg-black text-white py-1 text-xs font-semibold rounded-lg custom-border hover:bg-secondarycolor'>
-              <span className="material-symbols-outlined text-xl">shopping_cart</span>
-              <span>اشتري الان</span>
-            </button>
+            <>
+              {
+                state.token ? 
+                  <button className='max-sm:order-3 flex items-center justify-center gap-2 col-span-4 bg-black text-white py-1 text-xs font-semibold rounded-lg custom-border hover:bg-secondarycolor'>
+                    <span className="material-symbols-outlined text-xl">shopping_cart</span>
+                    <span>اشتري الان</span>
+                  </button>
+                :null
+              }
+            </>
           ) : <span className='bg-gray-300 text-white py-3 text-xs font-semibold rounded-lg custom-border  text-center '>غير متوفر</span>
         }
 
