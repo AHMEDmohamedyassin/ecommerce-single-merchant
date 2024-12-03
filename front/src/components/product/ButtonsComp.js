@@ -56,20 +56,18 @@ const ButtonsComp = () => {
         
 
         {/* buying button */}
-        {
-          state.selected_product?.quantity ? (
-            <>
-              {
-                state.token ? 
-                  <button className='max-sm:order-3 flex items-center justify-center gap-2 col-span-4 bg-black text-white py-1 text-xs font-semibold rounded-lg custom-border hover:bg-secondarycolor'>
-                    <span className="material-symbols-outlined text-xl">shopping_cart</span>
-                    <span>اشتري الان</span>
-                  </button>
-                :null
-              }
-            </>
-          ) : <span className='bg-gray-300 text-white py-3 text-xs font-semibold rounded-lg custom-border  text-center '>غير متوفر</span>
-        }
+        <>
+          {
+            auth.token ? 
+            state.selected_product?.quantity ? (
+              <button className='max-sm:order-3 flex items-center justify-center gap-2 col-span-4 bg-black text-white py-1 text-xs font-semibold rounded-lg custom-border hover:bg-secondarycolor'>
+                <span className="material-symbols-outlined text-xl">shopping_cart</span>
+                <span>اشتري الان</span>
+              </button>
+            ) : <span className='bg-gray-300 text-white py-3 text-xs font-semibold rounded-lg custom-border  text-center '>غير متوفر</span>
+            :null
+          }
+        </>
 
       </div>
     </>
