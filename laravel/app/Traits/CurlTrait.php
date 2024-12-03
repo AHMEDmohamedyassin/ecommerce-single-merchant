@@ -39,7 +39,7 @@ Trait CurlTrait{
             if($response){
                 // removing html from text before deocding
                 if(str_contains( $response, '<!DOCTYPE html>' ))
-                    response = substr($response, 0, strpos($response, '<!DOCTYPE html>'));
+                    $response = substr($response, 0, strpos($response, '<!DOCTYPE html>'));
                 
                 return ['success' => true , 'res' => json_decode($response) , 'theres' => $response];
             }else
