@@ -26,12 +26,21 @@ export const Auth_LoginAction = (data) => {
 
         Setting_Msg(2000)
 
+        // store data to auth reducer
         dispatch({
             type : "Auth_Login" ,
             data :{
                 ... req.res,
             }
         });
+
+        // store data to settings reducer
+        dispatch({
+            type : "Setting_Data" , 
+            data : {
+                redirect : data.redirect
+            }
+        })
 
         // refresh favorites of user
         store.dispatch(Favorite_ListAction(1,1))

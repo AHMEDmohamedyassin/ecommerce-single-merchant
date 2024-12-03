@@ -50,10 +50,10 @@ const FullScreenGalleryComp = () => {
                     {/* main image with navigation  */}
                     <div className='relative w-full flex-1 flex justify-center items-center'>
                         {/* navigation arrows */}
-                        <div className='absolute top-2/4 left-2 -translate-y-2/4 hover:cursor-pointer text-4xl bg-gray-400 border-[1px] border-white  flex items-center justify-center w-10 aspect-square rounded-full hover:text-white' onClick={() => handleImageSlide()}>
+                        <div className='z-20 absolute top-2/4 left-2 -translate-y-2/4 hover:cursor-pointer lg:text-4xl text-2xl bg-gray-400 border-[1px] border-white  flex items-center justify-center lg:w-10 w-8 aspect-square rounded-full hover:text-white' onClick={() => handleImageSlide()}>
                             <span className="material-symbols-outlined translate-x-1">arrow_back_ios</span>
                         </div>
-                        <div className='absolute top-2/4 right-2 -translate-y-2/4 hover:cursor-pointer text-4xl bg-gray-400 border-[1px] border-white  flex items-center justify-center w-10 aspect-square rounded-full hover:text-white' onClick={() => handleImageSlide(false)}>
+                        <div className='z-20 absolute top-2/4 right-2 -translate-y-2/4 hover:cursor-pointer lg:text-4xl text-2xl bg-gray-400 border-[1px] border-white  flex items-center justify-center lg:w-10 w-8 aspect-square rounded-full hover:text-white' onClick={() => handleImageSlide(false)}>
                             <span className="material-symbols-outlined ">arrow_forward_ios</span>
                         </div>
                         
@@ -62,10 +62,10 @@ const FullScreenGalleryComp = () => {
                     </div>
 
                     {/* thumbnail images  */}
-                    <div id='scrollContainer' className='max-w-full flex items-center overflow-x-auto scrollbar-hidden lg:scrollbar-hidden'>
+                    <div id='scrollContainer' className='max-w-full flex items-center justify-center overflow-x-auto scrollbar-hidden lg:scrollbar-hidden'>
                     {
                         state.images?.map((e , index) => (
-                        <img id={e}  key={index} onClick={() => handleImageSelect(e)} className={`border-gray-200 custom-border aspect-square max-lg:w-[10%] w-[5%] ${!state.selected_product?.image && !index || state.selected_product?.image == e ? "border-secondarycolor" : "opacity-60"} hover:opacity-100 hover:cursor-pointer`} loading='lazy' src={`${ProductImageURL}width=200&image=${e}&id=${state.id}`} />
+                        <img id={e}  key={index} onClick={() => handleImageSelect(e)} className={`border-gray-200 custom-border aspect-square max-sm:w-[30%] max-lg:w-[20%] w-[10%] xl:w-[5%] ${!state.selected_product?.image && !index || state.selected_product?.image == e ? "border-secondarycolor" : "opacity-60"} hover:opacity-100 hover:cursor-pointer`} loading='lazy' src={`${ProductImageURL}width=200&image=${e}&id=${state.id}`} />
                         ))
                     }
                     </div>

@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { RegisterValidation } from '../../validations/RegisterValidation';
 import { Auth_RegisterAction } from "../../redux/action/AuthAction";
 
@@ -10,6 +10,8 @@ const RegisterPage = () => {
     const state = useSelector(state => state.AuthReducer)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const location = useLocation()
+    const queryParams = new URLSearchParams(location.search)
 
     // hook form
     const {
@@ -33,7 +35,9 @@ const RegisterPage = () => {
                 type:"Auth_Status",
                 data: "n" 
             })
-            navigate('/auth/login')
+            if(queryParams.get('redirect'))
+                navigate(`/auth/login?redirect=${queryParams.get('redirect')}`)
+            else navigate(`/auth/login`)
         }
       } , [state.status])
   return (
@@ -87,8 +91,8 @@ const RegisterPage = () => {
                 state.status == "lr" ? "جاري التحميل"  : "تسجيل حساب"
             }</button>
 
-            {/* register link */}
-            <Link className='text-xs underline text-gray-500' to={'/auth/login'}>هل لديك حساب ؟ تسجيل الدخول</Link>
+            {/* login link */}
+            <Link className='text-xs underline text-gray-500' to={queryParams.get('redirect') ? `/auth/login?redirect=${queryParams.get('redirect')}` : '/auth/login'}>هل لديك حساب ؟ تسجيل الدخول</Link>
         </form>
 
     </div>

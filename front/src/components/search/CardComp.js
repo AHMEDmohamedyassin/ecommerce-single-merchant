@@ -53,7 +53,7 @@ const CardComp = ({data}) => {
         </div>
 
         {/* main image */}
-        <Link to={`/product/${data.id}/${data.slug}`} className='h-40'>
+        <Link to={`/product/${data.id}/${encodeURIComponent(data.slug)}`} className='h-40'>
             {
                 selectedProduct?.image ? 
                     <ImageWithLoaderComp parentClass={'w-full h-full'} src={`${ProductImageURL}id=${data.id}&width=200&image=${selectedProduct?.image}`} imageClass={'custom-img-cover'}/>
@@ -70,7 +70,7 @@ const CardComp = ({data}) => {
                     <p className=' text-nowrap text-sm'>{selectedProduct?.color} - </p>
                     <p className='line-clamp-1 lg:text-sm text-xs'>{selectedProduct?.sizes?.join(' , ')}</p>
                 </div>
-                <Link to={`/product/${data.id}`} className='line-clamp-2 text-sm font-semibold'>{data.title}</Link>
+                <Link to={`/product/${data.id}/${encodeURIComponent(data.slug)}`} className='line-clamp-2 text-sm font-semibold'>{data.title}</Link>
             </div>
 
             {/* price and old price data  */}

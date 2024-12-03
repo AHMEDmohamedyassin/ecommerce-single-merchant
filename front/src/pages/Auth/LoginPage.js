@@ -28,7 +28,7 @@ const LoginPage = () => {
 
     // submit handler 
     const SubmitForm = (data) => {
-      dispatch(Auth_LoginAction(data))
+        dispatch(Auth_LoginAction({...data , redirect : queryParams.get('redirect') ?? null }))
     }
 
   return (
@@ -85,7 +85,7 @@ const LoginPage = () => {
             </button>
 
             {/* register link */}
-            <Link className='text-xs underline text-gray-500' to={'/auth/register'}>عميل جديد ؟ إنشئ حساب</Link>
+            <Link className='text-xs underline text-gray-500' to={queryParams.get('redirect') ? `/auth/register?redirect=${queryParams.get('redirect')}` : '/auth/register'}>عميل جديد ؟ إنشئ حساب</Link>
         </form>
 
     </div>

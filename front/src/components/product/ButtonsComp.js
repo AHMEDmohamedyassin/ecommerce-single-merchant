@@ -15,7 +15,7 @@ const ButtonsComp = () => {
   // adding item to cart
   const addToCart = () => {
     if(!auth.token)
-      return navigate(`/auth/login?redirect=/product/${state.id}/${state.slug}`);
+      return navigate(`/auth/login?redirect=/product/${state.id}/${encodeURIComponent(state.slug)}`);
 
     dispatch(Cart_AddingAction(state.selected_product?.id))
     dispatch({type:"Cart_Data" , data : {side_cart : true}})      // opening side cart on adding product

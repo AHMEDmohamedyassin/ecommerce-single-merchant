@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, redirect, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import HomePage from "pages/HomePage";
 import HeaderComp from "components/header/HeaderComp";
 import { NotifyContainer } from "components/public/NotificationComp";
@@ -33,8 +33,10 @@ import PaymentStatusPage from "pages/PaymentStatusPage";
 
 function App() {
   const auth = useSelector(state=>state.AuthReducer)
+  const setting = useSelector(state => state.SettingReducer)
   const dispatch = useDispatch()
   const location = useLocation()
+  const navigate = useNavigate()
 
   useEffect(() => {
     dispatch(Auth_GetuserdataAction()).then(() => {
@@ -48,6 +50,14 @@ function App() {
       dispatch(Static_ReadAction('contact'))
     }) 
   } , [])
+
+  // redirect to required navigation
+  useEffect(() => {
+    if(setting.redirect){
+      navigate(setting.redirect)
+      dispatch({type:"Setting_Data" , data : {redirect : null}})
+    }
+  } , [setting.redirect])
   return (
     <div className="min-h-[100vb] flex flex-col">
       <div className="flex-1">

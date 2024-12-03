@@ -50,7 +50,7 @@ const GalleryComp = () => {
                   <span onClick={() => handleImageSlide(false)} className="material-symbols-outlined absolute top-2/4 right-2 -translate-y-2/4 hover:cursor-pointer text-2xl">arrow_forward_ios</span>
 
                   {/* expanding button  */}
-                  <button onClick={handleFullScreengallery} className='absolute left-2 bottom-2 flex items-center gap-2 text-[10px] custom-button py-0 px-2 '>
+                  <button onClick={handleFullScreengallery} className='bg-secondarybg absolute left-2 bottom-2 flex items-center gap-2 text-[10px] custom-button py-0 px-2 '>
                     <span className="material-symbols-outlined rotate-45 text-xl">open_with</span>
                     <span>اضغط للتكبير</span>
                   </button>
