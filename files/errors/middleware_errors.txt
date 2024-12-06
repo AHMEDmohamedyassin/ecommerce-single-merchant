@@ -1,3 +1,4 @@
 1000 => TokenRequiredMiddleware
 2000 => BlockCheckMiddleware
 3000 => EmailVerifyMiddleware
+4000 => TokenOptionalMiddelware

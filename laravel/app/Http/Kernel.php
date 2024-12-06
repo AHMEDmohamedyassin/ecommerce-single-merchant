@@ -53,6 +53,7 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $middlewareAliases = [
+        'TokenOptionalMiddleware' => \App\Http\Middleware\TokenOptionalMiddleware::class,
         'TokenRequiredMiddleware' => \App\Http\Middleware\TokenRequiredMiddleware::class,
         'BlockCheckMiddleware' => \App\Http\Middleware\BlockCheckMiddleware::class,
         'EmailVerifyMiddleware' => \App\Http\Middleware\EmailVerifyMiddleware::class,

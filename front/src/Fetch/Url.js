@@ -30,6 +30,10 @@ export const ProductReadURL = '/product/read'
 export const ProductSearchURL = '/product/search'
 export const ProductWithIdsURL = '/product/ids'
 
+// review
+export const ProductReviewsURL = '/review/product/list'
+export const ReviewCreateURL = '/review/create'
+
 
 // cart 
 export const CartAddURL = '/cart/add'

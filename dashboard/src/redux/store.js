@@ -14,6 +14,7 @@ import { OrderReducer } from './reducer/OrderReducer';
 import { OrderListReducer } from './reducer/OrderListReducer';
 import { StaticReducer } from './reducer/StaticReducer';
 import { ReviewReducer } from './reducer/ReviewReducer';
+import { ProductSubListReducer } from './reducer/ProductSubReducer';
 
 const rootReducer = combineReducers({
     AuthReducer ,
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
     OrderListReducer ,
     StaticReducer ,
     ReviewReducer ,
+    ProductSubListReducer ,
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

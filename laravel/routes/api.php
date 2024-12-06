@@ -84,11 +84,12 @@ Route::post('/product/create' , [ProductController::class , 'CreateProduct'])->m
 Route::post('/product/update' , [ProductController::class , 'UpdateProduct'])->middleware("AdminMiddleware:product_update");  #admin
 Route::post('/product/delete' , [ProductController::class , 'DeleteProduct'])->middleware("AdminMiddleware:product_delete");  #admin
 Route::get('/product/search' , [ProductController::class , 'SearchProduct']);
-Route::get('/product/read' , [ProductController::class , 'ReadProduct']);
+Route::get('/product/read' , [ProductController::class , 'ReadProduct'])->middleware('TokenOptionalMiddleware');   #public
 Route::get('/product/serial' , [ProductController::class , 'SerialReadProduct'])->middleware("AdminMiddleware:product_serial"); #admin
 Route::post('/product/sub/update' , [ProductController::class , 'UpdateSubProduct'])->middleware("AdminMiddleware:product_update"); #admin
 Route::post('/product/sub/delete' , [ProductController::class , 'DeleteSubProduct'])->middleware("AdminMiddleware:product_delete"); #admin
 Route::get('/product/ids' , [ProductController::class , 'WithIdsProduct']);
+Route::get('/product/sub/list' , [ProductController::class , 'ListSubProduct'])->middleware("AdminMiddleware:sub_product_list");  #admin
 
 
 // Product Image Controller 8000

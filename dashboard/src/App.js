@@ -32,6 +32,7 @@ import FooterComp from "components/footer/FooterComp";
 import ReviewPage from "pages/ReviewPage";
 import IdentityPage from "pages/static/IdentityPage";
 import NotFoundPage from "pages/NotFoundPage";
+import SubProductListPage from "pages/product/SubProductListPage";
 
 function App() {
   const state = useSelector(state => state.AuthReducer)
@@ -78,6 +79,7 @@ function App() {
                       <Route path="/" element={<DashboardPage/>} />
                       
                       <Route path="/products" element={<ListPage/>} />
+                      <Route path="/products/sub" element={<SubProductListPage/>} />
                       <Route path="/product/create" element={<CreatePage/>} />
                       <Route path="/product/update/:id" element={<UpdatePage/>} />
 

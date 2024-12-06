@@ -11,6 +11,8 @@ import { Product_ReadAction } from '../redux/action/ProductAction'
 import { Favorite_CheckAction } from '../redux/action/FavoriteAction'
 import { ProductList_Categories } from '../redux/action/ProductListAction'
 import FullScreenGalleryComp from 'components/product/FullScreenGalleryComp'
+import ReviewsListComp from 'components/product/ReviewsListComp'
+import ReviewFormComp from 'components/product/ReviewFormComp'
 
 const ProductPage = () => {
   const state = useSelector(state => state.ProductReducer) 
@@ -70,6 +72,12 @@ const ProductPage = () => {
             ) : null
           }
         </section>
+
+
+        {/* review from  */}
+        <ReviewFormComp/>
+        {/* reviews list  */}
+        <ReviewsListComp/>
 
 
         {/* related products */}

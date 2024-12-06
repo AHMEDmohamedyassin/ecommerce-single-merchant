@@ -214,6 +214,7 @@ class ProductController extends Controller
     /**
      * @error 7005
      * Read all product data
+     * method check if the collection is reviewable or not according to user paid for product or not and user can make only one review per colleciton
      */
     public function ReadProduct () {
         try{
@@ -222,6 +223,8 @@ class ProductController extends Controller
             ]);
 
             $collection = Collection::find(request('id'));
+            $reviewable = false ;
+            $is_favorite = false ;
 
             $collection->update([
                 'views' => $collection->views + 1
@@ -247,9 +250,40 @@ class ProductController extends Controller
                 // appending images to response
                 $collection['images'] = $all_files_name;
             }
+
+
+
+            // check if user is signed in and if he can review the product and if he placed product in favorite before
+            if(request('user')){
+                // check if user placed product in favorite list or not
+                $is_favorite = request('user')->favorite->select('id')->where('id' , request('id'))->first() ? true : false;
+                
+                // check if product is reviwable by user 
+                $old_review = request('user')->review()->where('collection_id' , request('id'))->exists();     // check if user have reviewed collection before
+                if(!$old_review){        // check if user paid for the product if he does not reviewed it before
+                    $is_paid = request('user')
+                    ->order()
+                    ->where('status', 'success')
+                    ->whereHas('product' , function ($query) {
+                        $query->where('collection_id', request('id'));  
+                    })
+                    ->with(['product' => function ($query) {
+                        $query->where('collection_id', request('id')); 
+                    }])
+                    ->select('id' , 'user_id' , 'status')
+                    ->exists();
+
+                    if($is_paid)
+                        $reviewable = true;
+                }
+            }
             
 
-            return $this->SuccessResponse($collection->load('category')->load('product'));
+            $data = $collection->load('category')->load('product');
+            $data['reviewable'] = $reviewable;
+            $data['is_favorite'] = $is_favorite;
+
+            return $this->SuccessResponse($data);
         }catch(\Exception $e){
             return $this->ErrorResponse(7005 , $e->getCode() , $e->getMessage());
         }
@@ -368,7 +402,29 @@ class ProductController extends Controller
 
             return $this->SuccessResponse($this->paginate($collections));
         }catch(\Exception $e){
-            return $this->ErrorResponse(7008 , $e->getCode() , $e->getMessage());
+            return $this->ErrorResponse(7009 , $e->getCode() , $e->getMessage());
+        }
+    }
+
+
+    /**
+     * @error 7010
+     * listing sub products with order of price , old price , quantity , created at
+     */
+    public function ListSubProduct () {
+
+        try {
+            request()->validate([
+                'orderby' => 'in:id,price,old_price,quantity,paid_quantity,size,color,updated_at|nullable' , 
+                'order' => 'in:asc,desc',
+            ]);
+
+
+            $product = Product::with('collection')->orderby(request('orderby' , 'id') , request('order' , 'desc'));
+
+            return $this->SuccessResponse($this->paginate($product));
+        }catch(\Exception $e){
+            return $this->ErrorResponse(7010 , $e->getCode() , $e->getMessage());
         }
     }
 }

@@ -36,6 +36,7 @@ product_delete
 product_serial
 product_image_upload
 product_image_delete
+sub_product_list
 
 review_list
 review_publish

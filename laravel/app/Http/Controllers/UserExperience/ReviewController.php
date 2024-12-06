@@ -139,7 +139,10 @@ class ReviewController extends Controller
 
             $reviews = Collection::find(request("id"))
                         ->review()->where('public' , 1)
-                        ->orderby('reviews.id' , 'desc');
+                        ->orderby('reviews.id' , 'desc')
+                        ->with(['user' => function ($e){
+                            $e->select('name' , 'id');
+                        }]);
 
             return $this->SuccessResponse($this->paginate($reviews));
         }catch(\Exception $e){

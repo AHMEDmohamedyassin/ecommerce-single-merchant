@@ -45,6 +45,7 @@ export const ProductUploadImageURL = '/product/image/upload';
 export const ProductDeleteImageURL = '/product/image/delete';
 export const ProductUpdateSubURL = '/product/sub/update'
 export const ProductDeleteSubURL = '/product/sub/delete'
+export const ProductListSubURL = '/product/sub/list'
 
 
 // user 

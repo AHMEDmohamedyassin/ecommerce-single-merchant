@@ -31,6 +31,44 @@ const DetailsComp = () => {
                 
                 {/* description */}
                 <p className='text-xs text-gray-500'>{state.description}</p>
+
+                {/* reviews  */}
+                {
+                  state.reviews ? (
+                    <div className='flex items-center gap-2'>
+                      {/* stars  */}
+                      <div className='flex items-center justify-start'>
+                        {
+                          Array(Math.floor(state.ratting ?? 0)).fill(0).map((star , index) => (
+                            <span key={index} className="material-symbols-outlined fill text-yellow-500">star</span>
+                          ))
+                        }
+                        {
+                          state.ratting && state.ratting % Math.floor(state.ratting) ? (
+                            <span class="material-symbols-outlined fill text-yellow-500">star_half</span>
+                          ) : null
+                        }
+                        {
+                          Array(state.ratting ? Math.floor(5 - state.ratting) : 5).fill(0).map((star , index) => (
+                            <span key={index} className="material-symbols-outlined text-gray-500">star</span>
+                          ))
+                        }
+                      </div>
+                      
+                      {/* reviews count  */}
+                      <p className=''>{state.reviews}</p>
+                    </div>
+                  ) : null
+                }
+
+
+
+
+                {/* views  */}
+                <div className='flex items-center gap-2'>
+                  <div className='text-sm '>عدد المشاهدات : </div>
+                  <div>{state.views ?? 1}</div>
+                </div>
                 
                 {/* price */}
                 <div className='flex items-center gap-4'>

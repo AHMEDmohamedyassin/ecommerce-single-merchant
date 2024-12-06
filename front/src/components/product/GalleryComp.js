@@ -46,9 +46,14 @@ const GalleryComp = () => {
                   <ImageWithLoaderComp src={`${ProductImageURL}width=400&image=${state.selected_product?.image ?? (state.images.length ? state.images[0] : null) }&id=${state.id}`} imageClass={' object-contain lg:h-[500px] h-[300px] w-full custom-border'}/>
 
                   {/* navigation arrows */}
-                  <span onClick={() => handleImageSlide()} className="material-symbols-outlined absolute top-2/4 left-2 -translate-y-2/4 hover:cursor-pointer text-2xl">arrow_back_ios</span>
-                  <span onClick={() => handleImageSlide(false)} className="material-symbols-outlined absolute top-2/4 right-2 -translate-y-2/4 hover:cursor-pointer text-2xl">arrow_forward_ios</span>
-
+                  {/* <span onClick={() => handleImageSlide()} className="material-symbols-outlined absolute top-2/4 left-2 -translate-y-2/4 hover:cursor-pointer text-2xl">arrow_back_ios</span> */}
+                  <div className='z-20 absolute top-2/4 left-2 -translate-y-2/4 hover:cursor-pointer lg:text-4xl text-2xl bg-gray-400 border-[1px] hover:border-white  flex items-center justify-center lg:w-10 w-8 aspect-square rounded-full hover:text-white' onClick={() => handleImageSlide()}>
+                      <span className="material-symbols-outlined translate-x-1">arrow_back_ios</span>
+                  </div>
+                  <div className='z-20 absolute top-2/4 right-2 -translate-y-2/4 hover:cursor-pointer lg:text-4xl text-2xl bg-gray-400 border-[1px] hover:border-white  flex items-center justify-center lg:w-10 w-8 aspect-square rounded-full hover:text-white' onClick={() => handleImageSlide(false)}>
+                      <span className="material-symbols-outlined ">arrow_forward_ios</span>
+                  </div>
+                  
                   {/* expanding button  */}
                   <button onClick={handleFullScreengallery} className='bg-secondarybg absolute left-2 bottom-2 flex items-center gap-2 text-[10px] custom-button py-0 px-2 '>
                     <span className="material-symbols-outlined rotate-45 text-xl">open_with</span>

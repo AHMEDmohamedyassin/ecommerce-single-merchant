@@ -11,6 +11,7 @@ import { FavoriteReducer } from './reducer/FavoriteReducer';
 import { OrderReducer } from './reducer/OrderReducer';
 import { HomeReducer } from './reducer/HomeReducer';
 import { StaticReducer } from './reducer/StaticReducer';
+import { ReviewReducer } from './reducer/ReviewReducer';
 
 const rootReducer = combineReducers({
     AuthReducer ,
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
     FavoriteReducer ,
     OrderReducer , 
     HomeReducer ,
-    StaticReducer
+    StaticReducer , 
+    ReviewReducer 
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
