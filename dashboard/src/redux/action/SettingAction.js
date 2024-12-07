@@ -95,6 +95,9 @@ export const Setting_UpdateAction = (data) => {
         // items updating
         items = items.map(e => e.id == data.id ? {...e , ...data} : e)
 
+        // success message 
+        Setting_Msg(6000)
+
         dispatch({
             type : "Setting_Data" , 
             data : {

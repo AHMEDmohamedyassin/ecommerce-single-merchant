@@ -42,7 +42,17 @@ const DashboardPage = () => {
       <div className='grid xl:grid-cols-5 sm:grid-cols-3 grid-cols-2 gap-10 mb-8'>
 
         {
-          state.statistics?.map((e , index) => <CardComp key={index} value={e.value} title={statistic_translation[e.slug]?.title} icon={statistic_translation[e.slug]?.icon} />)
+          state.statistics?.map((e , index) => {
+            return statistic_translation[e.slug] ? 
+              <CardComp 
+                key={index} 
+                value={e.value} 
+                title={statistic_translation[e.slug]?.title} 
+                icon={statistic_translation[e.slug]?.icon} 
+              />
+            :null
+          }
+          )
         }
 
       </div>

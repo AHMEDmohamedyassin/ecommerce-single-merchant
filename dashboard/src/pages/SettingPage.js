@@ -12,7 +12,6 @@ const SettingPage = () => {
         const from = new FormData(form.target)
         let value = from.get('value')
 
-        console.log(value)
         dispatch(Setting_UpdateAction({id , value}))
     }
 
@@ -26,15 +25,36 @@ const SettingPage = () => {
 
         <div className='flex flex-col gap-4'>
             {
-                state.items?.map((e,index) => (
-                    <form onSubmit={ele => handleUpdate(ele , e.id)} key={index} className='custom-inputcontainer'>
-                        <label>{e.title}</label>
-                        <div className='flex items-end gap-4'>
-                            <input maxLength={255} type='number' name='value' defaultValue={e.value} />
-                            <button className='custom-button2'>تأكيد</button>
-                        </div>
-                    </form>
-                ))
+                state.items?.map((e,index) => {
+                    if(['auto_public_review' , 'allow_coupon' , 'allow_paymentgateway' , 'allow_cachier'].includes(e.slug))
+                        return (
+                            <>
+                                <form onSubmit={ele => handleUpdate(ele , e.id)} key={index} className='custom-inputcontainer'>
+                                    <label>{e.title}</label>
+                                    <div className='flex items-end gap-16'>
+                                        <div>
+                                            <label>نعم</label>
+                                            <input type='radio' name='value' value={1} defaultChecked={e.value == 1} />
+                                        </div>
+                                        <div>
+                                            <label>لا</label>
+                                            <input type='radio' name='value' value={0} defaultChecked={e.value == 0} />
+                                        </div>
+                                        <button className='custom-button2 mx-2'>تأكيد</button>
+                                    </div>
+                                </form>
+                            </>
+                        )
+                    else return (
+                        <form onSubmit={ele => handleUpdate(ele , e.id)} key={index} className='custom-inputcontainer'>
+                            <label>{e.title}</label>
+                            <div className='flex items-end gap-4'>
+                                <input maxLength={255} type='number' name='value' defaultValue={e.value} />
+                                <button className='custom-button2'>تأكيد</button>
+                            </div>
+                        </form>
+                    )
+                })
             }
         </div>
     </div>

@@ -44,11 +44,10 @@ function App() {
   return (
     <div className="bg-mainbg relative">
         <BrowserRouter basename="/dashboard">
-
+          
           {/* notifications container */}
           <NotifyContainer/>
-
-
+          
           {
             state.token ? (
               <>

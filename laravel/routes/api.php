@@ -127,13 +127,14 @@ Route::post('/review/admin/publish' , [ReviewController::class , 'AdminPublishRe
 Route::post('/review/admin/delete' , [ReviewController::class , 'AdminDeleteReview'])->middleware("AdminMiddleware:review_delete");      #admin
 
 // Coupon Controller 12,000
-Route::post('/coupon/create' , [CouponController::class , 'CreateCoupon'])->middleware("AdminMiddleware:coupon_create"); #admin  
-Route::post('/coupon/delete' , [CouponController::class , 'DeleteCoupon'])->middleware("AdminMiddleware:coupon_delete"); #admin
-Route::post('/coupon/paid' , [CouponController::class , 'PaidStatusCoupon'])->middleware("AdminMiddleware:coupon_paid_status"); #admin
-Route::post('/coupon/read' , [CouponController::class , 'ReadCoupon'])->middleware("AdminMiddleware:coupon_read");       #admin
-Route::get('/coupon/list' , [CouponController::class , 'ListCoupon'])->middleware("AdminMiddleware:coupon_list");      #admin
-Route::post('/coupon/read/public' , [CouponController::class , 'PublicReadCoupon']);
-
+Route::middleware('CouponAvailabilityMiddleware')->group(function () {
+    Route::post('/coupon/create' , [CouponController::class , 'CreateCoupon'])->middleware("AdminMiddleware:coupon_create"); #admin  
+    Route::post('/coupon/delete' , [CouponController::class , 'DeleteCoupon'])->middleware("AdminMiddleware:coupon_delete"); #admin
+    Route::post('/coupon/paid' , [CouponController::class , 'PaidStatusCoupon'])->middleware("AdminMiddleware:coupon_paid_status"); #admin
+    Route::post('/coupon/read' , [CouponController::class , 'ReadCoupon'])->middleware("AdminMiddleware:coupon_read");       #admin
+    Route::get('/coupon/list' , [CouponController::class , 'ListCoupon'])->middleware("AdminMiddleware:coupon_list");      #admin
+    Route::post('/coupon/read/public' , [CouponController::class , 'PublicReadCoupon']);
+});
 
 
 // Order Controller 13,000

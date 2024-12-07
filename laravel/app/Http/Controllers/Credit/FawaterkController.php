@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Credit;
 
 use App\Events\OrderReadyEvent;
 use App\Exceptions\CustomException;
+use App\Http\Controllers\Setting\SettingController;
 use App\Models\Order;
 use App\Models\Transaction;
 use App\Models\User;
@@ -28,9 +29,10 @@ class FawaterkController {
     public $FailUrl = "/payment/fail";
     public $PendingUrl = "/payment/pending";
 
+    // constructor
     public function __construct(){
-        $this->Api_key = "d0227d4db6196bdb5465a50a22c773f5ba7a6c6813ac733dba";
-        $this->Url = "https://staging.fawaterk.com/api/v2/createInvoiceLink";
+        $this->Api_key = env('FAWATERK_API_KEY'); 
+        $this->Url = env('FAWATERK_URL');
 
         $domain = env('APP_URL');
 
@@ -50,6 +52,10 @@ class FawaterkController {
             request()->validate([
                 'id' => 'required|exists:orders,id'
             ]);
+            
+            // check if payment gateway is allowed 
+            if(!(new SettingController)->valueSetting('allow_paymentgateway'))
+                throw new CustomException('payment gateway not allowed' , 30);
 
             $user = request('user');
             $cart_total = 0;

@@ -27,6 +27,10 @@ class AdminOrderController extends Controller
      */
     public function CreateOrder(){
         try{
+            // check if cachier option is allowed
+            if(!(new SettingController)->valueSetting('allow_cachier'))
+                throw new CustomException('cachier not allowed' , 32);
+
             $req = request()->validate([
                 "user_id" => "nullable|exists:users,id" , 
                 "shipping_address_id" => "nullable|exists:addresses,id" , 

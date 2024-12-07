@@ -71,6 +71,7 @@ export const fetching = async (url , data = {} , method = "POST" , error = true 
     
         return {success : false , res};
     }catch($e){
+        notify($e.msg)
         return {success : false , res:{}};
     }
 }

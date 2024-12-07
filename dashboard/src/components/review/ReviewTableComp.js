@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Review_DeleteAction, Review_PulishAction } from '../../redux/action/ReviewAction'
 import { formattingDateForUpdate } from 'validation/Validation'
+import { Link } from 'react-router-dom'
 
 const ReviewTableComp = () => {
     const state = useSelector(state => state.ReviewReducer)
@@ -44,7 +45,7 @@ const ReviewTableComp = () => {
                                     }
                                 </p>
                                 <p onClick={() => handlePublishToggle(e.id)} className='w-40 justify-center hover:cursor-pointer hover:text-maincolor'>{e.public ? "عام" : "مخفي"}</p>
-                                <p className='w-80'>{e.user?.name}</p>
+                                <Link to={`/user/update/${e.user?.id}`} className='w-80'><p>{e.user?.name}</p></Link>
                                 <p className='w-80'>{e.product?.title}</p>
                                 <p className='w-40 justify-center'>{formattingDateForUpdate(e.updated_at)}</p>
                                 <p className='w-40 justify-center'>{formattingDateForUpdate(e.created_at)}</p>

@@ -11,6 +11,7 @@ const StaticPagesNavComp = () => {
             <Link to={'/contact'} className='custom-button'>تواصل معنا</Link>
             <Link to={'/faq'} className='custom-button'>الأسئلة الأكثر شيوعا</Link>
             <Link to={'/policy'} className='custom-button'>السياسات</Link>
+            <Link to={'/setting'} className='custom-button'>الإعدادات</Link>
         </div>
     </div>
   )

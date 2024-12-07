@@ -8,7 +8,7 @@ export const notify = (msg) => {
 
 
 export const NotifyContainer = () => {
-    const mainYellow = "#c29958"
+    const MainColor = "#e81c3f"
     return (
         <div className="w-full">
             <ToastContainer 
@@ -23,10 +23,10 @@ export const NotifyContainer = () => {
                 transition= {window.innerWidth < 1000 ? Zoom : Bounce}
                 closeButton = {false}
                 progressStyle= {{ 
-                    background: window.innerWidth < 1000 ? 'white' : mainYellow
+                    background: window.innerWidth < 1000 ? 'white' : MainColor
                 }}
                 toastStyle={{
-                    background:window.innerWidth < 1000 ? mainYellow : '' , 
+                    background:window.innerWidth < 1000 ? MainColor : '' , 
                     color : window.innerWidth < 1000 ? 'white' : '',
                     width:window.innerWidth < 1000 ? "90%" : "100%" ,
                     marginLeft : "auto" ,

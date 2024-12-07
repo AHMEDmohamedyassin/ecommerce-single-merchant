@@ -27,3 +27,6 @@
 27 => cart is full
 28 => coupon not found or can not be updated
 29 => user has been blocked
+30 => payment gateway not allowed
+31 => coupons not allowed
+32 => cachier not allowed

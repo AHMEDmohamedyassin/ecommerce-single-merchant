@@ -53,7 +53,7 @@ const TableRowComp = ({ data}) => {
             {
               showPieces && data.product?.map((e , index) => (
                 <tr key={index} className='custom-tablerow'>
-                  <p className='w-40'>قطعة رقم : {index}</p>
+                  <p className='w-40'>قطعة رقم : {index + 1}</p>
                   <p className={`w-40`}>اللون : {e.color}</p>
                   <p className={`w-40`}>المقاس : {e.size}</p>
                   <p className={`w-40`}>السعر : {e.price}</p>

@@ -16,7 +16,12 @@ const SideMenuComp = () => {
         {
             href : "/products" , 
             title : "المنتجات" ,
-            icon : "category"
+            icon : "Laundry"
+        },
+        {
+            href : "/products/sub" , 
+            title : "القطع" ,
+            icon : "Stacks"
         },
         {
             href : "/users" , 
