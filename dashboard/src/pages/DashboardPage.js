@@ -32,7 +32,7 @@ const DashboardPage = () => {
   }
 
   useEffect(() => {
-    dispatch(Setting_ListAction(0))
+    dispatch(Setting_ListAction())
   } , [])
   return (
     <div className='custom-dashcontainer'>
@@ -42,7 +42,7 @@ const DashboardPage = () => {
       <div className='grid xl:grid-cols-5 sm:grid-cols-3 grid-cols-2 gap-10 mb-8'>
 
         {
-          state.statistics?.map((e , index) => {
+          state.items?.map((e , index) => {
             return statistic_translation[e.slug] ? 
               <CardComp 
                 key={index} 

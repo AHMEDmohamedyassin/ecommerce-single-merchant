@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 const CartSummaryComp = () => {
     const state = useSelector(state => state.CartReducer)
     const total = (state.items.reduce((acc , curr) => acc + curr.price  * curr.pivot.quantity , 0) || 0) - (state.coupon_value || 0 )
-
+    
   return (
       <div className='border-gray-300 border-[1px] border-b-0 shadow '>
 

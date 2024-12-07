@@ -30,4 +30,7 @@ return [
     'order quantity of products is larger than available' => "الكمية المطلوبة أقل من المتاح بالنسبة لذلك المنتج ` :product ` " ,
     'coupon not found or can not be updated' => "القسيمة غير موجودة أو لا يمكن التعديل عليها" ,
     'user has been blocked' => "المستخدم محظور" ,
+    'payment gateway not allowed' => 'الدفع الإليكتروني غير متاح' ,
+    'coupons not allowed'=> 'القسائم غير متاحة' ,
+    'cachier not allowed'=> 'الكاشير غير متاح' 
 ];

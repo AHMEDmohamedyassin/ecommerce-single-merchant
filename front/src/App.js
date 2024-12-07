@@ -30,6 +30,7 @@ import PoliciesPage from "pages/Static/PoliciesPage";
 import { Static_ReadAction } from "./redux/action/StaticAction";
 import NotFoundPage from "pages/NotFoundPage";
 import PaymentStatusPage from "pages/PaymentStatusPage";
+import { Setting_readAction } from "./redux/action/SettingAction";
 
 function App() {
   const auth = useSelector(state=>state.AuthReducer)
@@ -48,6 +49,7 @@ function App() {
     }).then(() => {
       dispatch(Static_ReadAction('policy'))
       dispatch(Static_ReadAction('contact'))
+      dispatch(Setting_readAction())
     }) 
   } , [])
 

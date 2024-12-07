@@ -25,7 +25,7 @@ const SettingPage = () => {
 
         <div className='flex flex-col gap-4'>
             {
-                state.items?.map((e,index) => {
+                state.items?.sort((a , b) => b.updatable - a.updatable)?.map((e,index) => {
                     if(['auto_public_review' , 'allow_coupon' , 'allow_paymentgateway' , 'allow_cachier'].includes(e.slug))
                         return (
                             <>
@@ -34,13 +34,17 @@ const SettingPage = () => {
                                     <div className='flex items-end gap-16'>
                                         <div>
                                             <label>نعم</label>
-                                            <input type='radio' name='value' value={1} defaultChecked={e.value == 1} />
+                                            <input disabled={!e.updatable} type='radio' name='value' value={1} defaultChecked={e.value == 1} />
                                         </div>
                                         <div>
                                             <label>لا</label>
-                                            <input type='radio' name='value' value={0} defaultChecked={e.value == 0} />
+                                            <input  disabled={!e.updatable} type='radio' name='value' value={0} defaultChecked={e.value == 0} />
                                         </div>
-                                        <button className='custom-button2 mx-2'>تأكيد</button>
+                                        {
+                                            e.updatable ? 
+                                                <button className='custom-button2 mx-2'>تأكيد</button>
+                                            :null
+                                        }
                                     </div>
                                 </form>
                             </>
@@ -49,8 +53,12 @@ const SettingPage = () => {
                         <form onSubmit={ele => handleUpdate(ele , e.id)} key={index} className='custom-inputcontainer'>
                             <label>{e.title}</label>
                             <div className='flex items-end gap-4'>
-                                <input maxLength={255} type='number' name='value' defaultValue={e.value} />
-                                <button className='custom-button2'>تأكيد</button>
+                                <input disabled={!e.updatable} maxLength={255} type='number' name='value' defaultValue={e.value} />
+                                {
+                                    e.updatable ? 
+                                        <button className='custom-button2'>تأكيد</button>
+                                    :null
+                                }
                             </div>
                         </form>
                     )

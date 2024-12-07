@@ -102,14 +102,15 @@ class SettingController extends Controller
         try{
 
             request()->validate([
-                'type' => "nullable|boolean"
+                'private' => 'nullable|boolean'
             ]);
             
-            $settings = Setting::where([
-                'updatable' => request('type' , 1)
-            ])->get();
+            $settings = Setting::query();
 
-            return $this->SuccessResponse($settings);
+            if(!request('private' , 0))
+                $settings->where('private' , request('private' , 0));
+
+            return $this->SuccessResponse($settings->get());
         }catch(\Exception $e){
             return $this->ErrorResponse(19002 , $e->getCode() , $e->getMessage());
         }

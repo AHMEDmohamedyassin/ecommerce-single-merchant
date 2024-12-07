@@ -1,7 +1,8 @@
 const initial = {
     page_loading : false,
     side_menu : false ,
-    redirect : null 
+    redirect : null ,
+    items : []
 }
 
 export const SettingReducer = (state = initial , action) => {

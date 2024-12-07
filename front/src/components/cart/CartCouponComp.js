@@ -4,6 +4,7 @@ import { Cart_CouponCheckAction } from '../../redux/action/CartAction'
 
 const CartCouponComp = () => {
     const state = useSelector(state => state.CartReducer)
+    const setting = useSelector(state => state.SettingReducer)
     const dispatch = useDispatch()
     const [coupon , setCoupon] = useState(null)
 
@@ -12,6 +13,7 @@ const CartCouponComp = () => {
         dispatch(Cart_CouponCheckAction(coupon))
     }
 
+    if(setting.items.find(e => e.slug == 'allow_coupon')?.value == 1) 
   return (
     <div className='flex items-end gap-4 '>
         <div className='custom-inputcontainer flex-1'>
@@ -25,6 +27,7 @@ const CartCouponComp = () => {
         <button onClick={couponCheck} className='custom-button2'>تأكيد القسيمة</button>
     </div>
   )
+  else return <></>
 }
 
 export default CartCouponComp

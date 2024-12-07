@@ -69,3 +69,6 @@ export const StoreListURL = '/store/list'
 
 // contact
 export const ContactCreateURL = '/contact/create'
+
+// setting
+export const SettingReadURL = '/setting/list'

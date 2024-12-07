@@ -15,9 +15,9 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         DB::table('permissions')->insert([
-            ["title" => "" , "slug" => "top_category_create"] ,
-            ["title" => "" , "slug" => "top_category_append"] ,
-            ["title" => "" , "slug" => "top_category_delete"] ,
+            ["title" => "إنشاء مجموعة أقسام" , "slug" => "top_category_create"] ,
+            ["title" => "إضافة أقسام للمجموعة" , "slug" => "top_category_append"] ,
+            ["title" => "حذف مجموعة الأقسام" , "slug" => "top_category_delete"] ,
             ["title" => "إنشاء فئة" , "slug" => "category_create"] ,
             ["title" => "تعديل فئة" , "slug" => "category_update"] ,
             ["title" => "حذف صورة الفئة" , "slug" => "category_delete_image"] ,
@@ -69,6 +69,8 @@ class PermissionSeeder extends Seeder
             ["title" => "حذف الفرع" , "slug" => "store_delete"] ,            
             ["title" => "إنشاء محتوي صفحات البيانات" , "slug" => "static_create"] ,            
             ["title" => "تعديل الشعار" , "slug" => "logo_update"] ,            
+            ["title" => "تعديل الإعدادات" , "slug" => "setting_update"] ,            
+            ["title" => "مشاهدة الإعدادات" , "slug" => "setting_list"] ,            
         ]);
     }
 }

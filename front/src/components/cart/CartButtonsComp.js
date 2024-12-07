@@ -6,6 +6,7 @@ import { Order_CreateAction } from '../../redux/action/OrderAction'
 
 const CartButtonsComp = () => {
     const state = useSelector(state => state.OrderReducer)
+    const setting = useSelector(state => state.SettingReducer)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [pay_on_diliver , setPay_on_diliver] = useState(false)
@@ -40,13 +41,17 @@ const CartButtonsComp = () => {
 
         <div className='flex gap-x-10 gap-y-2 flex-wrap'>
 
-          <div className='flex items-center gap-2'>
-            <input type='radio' name='paymentmethod' onChange={e => setPay_on_diliver(false)} defaultChecked className='aspect-square w-6'></input>
-            <label>الدفع أون لاين</label>
-          </div>
+          {
+            setting.items.find(e => e.slug == 'allow_paymentgateway')?.value == 1 ? 
+              <div className='flex items-center gap-2'>
+                <input type='radio' name='paymentmethod' onChange={e => setPay_on_diliver(false)} className='aspect-square w-6'></input>
+                <label>الدفع أون لاين</label>
+              </div>
+            :null
+          }
 
           <div className='flex items-center gap-2'>
-            <input type='radio' name='paymentmethod' onChange={e => setPay_on_diliver(true)} className='aspect-square w-6'></input>
+            <input type='radio' name='paymentmethod' onChange={e => setPay_on_diliver(true)} defaultChecked className='aspect-square w-6'></input>
             <label>الدفع عند الإستلام</label>
           </div>
 
