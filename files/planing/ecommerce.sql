@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 02, 2024 at 11:53 PM
+-- Generation Time: Dec 07, 2024 at 02:41 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -81,14 +81,6 @@ CREATE TABLE `categories` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `categories`
---
-
-INSERT INTO `categories` (`id`, `slug`, `title`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'category 1', 'category 1', 'category 1', NULL, NULL),
-(2, 'category 2', 'category 2', 'category 2', NULL, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -101,20 +93,15 @@ CREATE TABLE `collections` (
   `serial` varchar(255) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
+  `average_price` double(8,2) UNSIGNED NOT NULL DEFAULT 0.00,
   `ratting` double(8,2) UNSIGNED NOT NULL DEFAULT 0.00,
   `views` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `reviews` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `publish_date` datetime DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `collections`
---
-
-INSERT INTO `collections` (`id`, `slug`, `serial`, `title`, `description`, `ratting`, `views`, `reviews`, `publish_date`, `created_at`, `updated_at`) VALUES
-(1, '5-the-product-title-new-the-description', '5', 'the product title new', 'the description', 0.00, 0, 0, '2002-03-28 12:04:00', '2024-10-02 18:48:17', '2024-10-02 18:48:17');
 
 -- --------------------------------------------------------
 
@@ -275,6 +262,67 @@ CREATE TABLE `permissions` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `permissions`
+--
+
+INSERT INTO `permissions` (`id`, `title`, `slug`, `description`, `created_at`, `updated_at`) VALUES
+(1, 'إنشاء مجموعة أقسام', 'top_category_create', NULL, NULL, NULL),
+(2, 'إضافة أقسام للمجموعة', 'top_category_append', NULL, NULL, NULL),
+(3, 'حذف مجموعة الأقسام', 'top_category_delete', NULL, NULL, NULL),
+(4, 'إنشاء فئة', 'category_create', NULL, NULL, NULL),
+(5, 'تعديل فئة', 'category_update', NULL, NULL, NULL),
+(6, 'حذف صورة الفئة', 'category_delete_image', NULL, NULL, NULL),
+(7, 'حذف الفئة', 'category_delete', NULL, NULL, NULL),
+(8, 'إضافة صلاحية للمستخدمين', 'permission_attach_user', NULL, NULL, NULL),
+(9, 'قائمة الصلاحيات', 'permission_list', NULL, NULL, NULL),
+(10, 'إنشاء الدور', 'role_create', NULL, NULL, NULL),
+(11, ' حذف الدور', 'role_delete', NULL, NULL, NULL),
+(12, ' تعديل الدور', 'role_update', NULL, NULL, NULL),
+(13, ' قائمة الأدوار', 'role_list', NULL, NULL, NULL),
+(14, ' مشاهدة الدور', 'role_read', NULL, NULL, NULL),
+(15, 'إضافة دور للمستخدمين', 'role_attach_user', NULL, NULL, NULL),
+(16, 'إنشاء منتج', 'product_create', NULL, NULL, NULL),
+(17, 'تعديل منتج', 'product_update', NULL, NULL, NULL),
+(18, 'حذف منتج', 'product_delete', NULL, NULL, NULL),
+(19, 'بحث عن المنتج باستخدام الرمز', 'product_serial', NULL, NULL, NULL),
+(20, 'عرض القطع', 'sub_product_list', NULL, NULL, NULL),
+(21, 'رفع صورة منتج', 'product_image_upload', NULL, NULL, NULL),
+(22, 'حذف صورة منتج', 'product_image_delete', NULL, NULL, NULL),
+(23, 'قائمة المراجعات', 'review_list', NULL, NULL, NULL),
+(24, 'نشر المراجعات', 'review_publish', NULL, NULL, NULL),
+(25, 'حذف المراجعات', 'review_delete', NULL, NULL, NULL),
+(26, 'إنشاء قسيمة', 'coupon_create', NULL, NULL, NULL),
+(27, 'حذف قسيمة', 'coupon_delete', NULL, NULL, NULL),
+(28, 'تعديل حالة بيع القسيمة', 'coupon_paid_status', NULL, NULL, NULL),
+(29, 'قراءة القسيمة', 'coupon_read', NULL, NULL, NULL),
+(30, 'قائمة القسائم', 'coupon_list', NULL, NULL, NULL),
+(31, 'إنشاء طلب', 'order_create', NULL, NULL, NULL),
+(32, 'تعديل حالة الطلب', 'order_update_status', NULL, NULL, NULL),
+(33, 'قراءة الطلب', 'order_read', NULL, NULL, NULL),
+(34, 'قائمة الطلبات', 'order_list', NULL, NULL, NULL),
+(35, 'قائمة التواصل', 'contact_list', NULL, NULL, NULL),
+(36, 'حظر مستخدم', 'block_create', NULL, NULL, NULL),
+(37, 'إزالة الحظر من المستخدم', 'block_disable', NULL, NULL, NULL),
+(38, 'إزالة جميع الحظر من المستخدم', 'block_user_disable', NULL, NULL, NULL),
+(39, 'قائمة الحظر', 'block_list', NULL, NULL, NULL),
+(40, 'إنشاء مستخدم', 'user_create', NULL, NULL, NULL),
+(41, 'تعديل بيانات المستخدم', 'user_update', NULL, NULL, NULL),
+(42, 'إعادة تهيئة كلمة مرور المستخدم', 'user_reset_password', NULL, NULL, NULL),
+(43, 'حذف المستخدم', 'user_delete', NULL, NULL, NULL),
+(44, 'قائمة المستخدمون', 'user_list', NULL, NULL, NULL),
+(45, 'قراءة بيانات المستخدم', 'user_read', NULL, NULL, NULL),
+(46, 'تفاصيل بيانات المستخدم', 'user_detail', NULL, NULL, NULL),
+(47, 'إضافة عنوان  للمستخدم', 'user_add_address', NULL, NULL, NULL),
+(48, 'حذف عنوان المستخدم', 'user_delete_address', NULL, NULL, NULL),
+(49, 'تعديلل عنوان المستخدم', 'user_update_address', NULL, NULL, NULL),
+(50, 'إنشاء فرع', 'store_create', NULL, NULL, NULL),
+(51, 'تعديل بيانات الفرع', 'store_update', NULL, NULL, NULL),
+(52, 'حذف الفرع', 'store_delete', NULL, NULL, NULL),
+(53, 'إنشاء محتوي صفحات البيانات', 'static_create', NULL, NULL, NULL),
+(54, 'تعديل الشعار', 'logo_update', NULL, NULL, NULL),
+(55, 'تعديل الإعدادات', 'setting_update', NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -309,17 +357,11 @@ CREATE TABLE `products` (
   `old_price` double(8,2) UNSIGNED NOT NULL DEFAULT 0.00,
   `quantity` smallint(5) UNSIGNED NOT NULL DEFAULT 1,
   `paid_quantity` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `image` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `products`
---
-
-INSERT INTO `products` (`id`, `collection_id`, `size`, `color`, `price`, `old_price`, `quantity`, `paid_quantity`, `created_at`, `updated_at`) VALUES
-(1, 1, 'xl', 'red', 100.00, 50.00, 10, 0, '2024-10-02 18:48:17', '2024-10-02 18:48:17'),
-(2, 1, 'xl', 'blue', 100.00, 50.00, 11, 0, '2024-10-02 18:48:17', '2024-10-02 18:48:17');
 
 -- --------------------------------------------------------
 
@@ -334,13 +376,6 @@ CREATE TABLE `product_category` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `product_category`
---
-
-INSERT INTO `product_category` (`id`, `collection_id`, `category_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -446,8 +481,19 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `title`, `en_title`, `slug`, `value`, `private`, `updatable`, `created_at`, `updated_at`) VALUES
-(1, NULL, NULL, 'user_count', '1', 1, 0, '2024-10-02 18:47:32', '2024-10-02 18:47:32'),
-(2, NULL, NULL, 'products_count', '1', 1, 0, '2024-10-02 18:48:17', '2024-10-02 18:48:17');
+(1, 'عدد المستخدمين', NULL, 'user_count', '1', 1, 0, NULL, '2024-12-07 11:28:55'),
+(2, 'عدد الزيارات', NULL, 'visits_count', '1', 0, 0, NULL, '2024-12-07 11:23:43'),
+(3, 'الطلبات', NULL, 'orders_count', '0', 1, 0, NULL, NULL),
+(4, 'المنتجات', NULL, 'products_count', '0', 1, 0, NULL, NULL),
+(5, 'المراجعات', NULL, 'reviews_count', '0', 1, 0, NULL, NULL),
+(6, 'أكبر عدد من العناوين لكل مستخدم', NULL, 'max_user_addresses', '3', 1, 1, NULL, NULL),
+(7, 'نشر تقييم المنتج بدون مراجعة', NULL, 'auto_public_review', '0', 1, 1, NULL, NULL),
+(8, 'أكبر قيمة للقسيمة', NULL, 'coupon_max_value', '1000', 1, 1, NULL, NULL),
+(9, 'أكبر عدد أيام صلاحية للقسيمة', NULL, 'coupon_valid_days', '30', 1, 1, NULL, NULL),
+(10, 'عدد أيام الحظر الإفتراضية', NULL, 'block_expire_days', '30', 1, 1, NULL, NULL),
+(11, 'القسائم', NULL, 'allow_coupon', '30', 0, 0, NULL, NULL),
+(12, 'دفع إليكتروني', NULL, 'allow_paymentgateway', '30', 0, 0, NULL, NULL),
+(13, 'الكاشير', NULL, 'allow_cachier', '30', 0, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -512,7 +558,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `slug`, `name`, `email`, `phone`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '01066404523-ahmed-ahmed@gmail.com', 'ahmed', 'ahmed@gmail.com', '01066404523', NULL, '$2y$12$BjLpEuOhsOhGUFnRVx2x0.wA3vP.C.mIcXBgPLSeoeqPACa8xdPju', NULL, '2024-10-02 18:47:32', '2024-10-02 18:47:32');
+(1, '01066504023-احمد-محمد-ياسني-ahmedmohamed982025@outlook.com', 'أحمد محمد ياسني', 'ahmedmohamed982025@outlook.com', '01066404523', NULL, '$2y$12$ixKUcoBB.tZyM8yhfU0s7.NRAZKv6chXRvcry8dgDAeYaT5wgHYEu', NULL, '2024-12-07 11:28:55', '2024-12-07 11:28:55');
 
 -- --------------------------------------------------------
 
@@ -766,13 +812,13 @@ ALTER TABLE `carts`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `collections`
 --
 ALTER TABLE `collections`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `contacts`
@@ -820,7 +866,7 @@ ALTER TABLE `password_reset_tokens`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -832,13 +878,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `product_category`
 --
 ALTER TABLE `product_category`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `product_order`
@@ -868,7 +914,7 @@ ALTER TABLE `role_permission`
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `store_addresses`
@@ -946,10 +992,10 @@ ALTER TABLE `favorites`
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_billing_address_id_foreign` FOREIGN KEY (`billing_address_id`) REFERENCES `store_addresses` (`id`),
+  ADD CONSTRAINT `orders_billing_address_id_foreign` FOREIGN KEY (`billing_address_id`) REFERENCES `store_addresses` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `orders_coupon_id_foreign` FOREIGN KEY (`coupon_id`) REFERENCES `coupons` (`id`),
-  ADD CONSTRAINT `orders_shipping_address_id_foreign` FOREIGN KEY (`shipping_address_id`) REFERENCES `addresses` (`id`),
-  ADD CONSTRAINT `orders_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `orders_shipping_address_id_foreign` FOREIGN KEY (`shipping_address_id`) REFERENCES `addresses` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `orders_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `products`

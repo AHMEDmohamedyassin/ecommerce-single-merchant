@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Product_ImageSelectAction } from '../../redux/action/ProductAction'
 import LoadingComp from 'components/public/LoadingComp'
 import ImageWithLoaderComp from 'components/public/ImageWithLoaderComp'
+import { useSwipeable } from 'react-swipeable'
+import { isMobile } from 'react-device-detect'
 
 const FullScreenGalleryComp = () => {
     const state = useSelector(state => state.ProductReducer)
@@ -35,6 +37,12 @@ const FullScreenGalleryComp = () => {
   
       dispatch(Product_ImageSelectAction(selected_image))
     }
+
+  // detect sliding touch 
+  const handlers = useSwipeable({
+    onSwipedLeft: () => handleImageSlide(false),
+    onSwipedRight: () => handleImageSlide(true),
+  });
   return (
     <>
         {
@@ -48,14 +56,21 @@ const FullScreenGalleryComp = () => {
                     </div>
 
                     {/* main image with navigation  */}
-                    <div className='relative w-full flex-1 flex justify-center items-center'>
+                    <div {...handlers} className='relative w-full flex-1 flex justify-center items-center'>
+                        
                         {/* navigation arrows */}
-                        <div className='z-20 absolute top-2/4 left-2 -translate-y-2/4 hover:cursor-pointer lg:text-4xl text-2xl bg-gray-400 border-[1px] border-white  flex items-center justify-center lg:w-10 w-8 aspect-square rounded-full hover:text-white' onClick={() => handleImageSlide()}>
-                            <span className="material-symbols-outlined translate-x-1">arrow_back_ios</span>
-                        </div>
-                        <div className='z-20 absolute top-2/4 right-2 -translate-y-2/4 hover:cursor-pointer lg:text-4xl text-2xl bg-gray-400 border-[1px] border-white  flex items-center justify-center lg:w-10 w-8 aspect-square rounded-full hover:text-white' onClick={() => handleImageSlide(false)}>
-                            <span className="material-symbols-outlined ">arrow_forward_ios</span>
-                        </div>
+                        {
+                          !isMobile ? (
+                            <>
+                              <div className='z-20 absolute top-2/4 left-2 -translate-y-2/4 hover:cursor-pointer lg:text-4xl text-2xl bg-gray-400 border-[1px] border-white  flex items-center justify-center lg:w-10 w-8 aspect-square rounded-full hover:text-white' onClick={() => handleImageSlide()}>
+                                  <span className="material-symbols-outlined translate-x-1">arrow_back_ios</span>
+                              </div>
+                              <div className='z-20 absolute top-2/4 right-2 -translate-y-2/4 hover:cursor-pointer lg:text-4xl text-2xl bg-gray-400 border-[1px] border-white  flex items-center justify-center lg:w-10 w-8 aspect-square rounded-full hover:text-white' onClick={() => handleImageSlide(false)}>
+                                  <span className="material-symbols-outlined ">arrow_forward_ios</span>
+                              </div>
+                            </>
+                          ) : null
+                        }
                         
                         {/* big image */}
                         <ImageWithLoaderComp imageClass={'max-w-full max-h-full'} spinnerClass={'bg-white rounded-full shadow-xl shadow-black'} src={`${ProductImageURL}width=800&image=${state.selected_product?.image ?? (state.images.length ? state.images[0] : null) }&id=${state.id}`}/>

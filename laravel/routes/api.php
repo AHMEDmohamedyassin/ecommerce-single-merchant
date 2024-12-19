@@ -14,6 +14,7 @@ use App\Http\Controllers\Permissions\PermissionController;
 use App\Http\Controllers\Permissions\RoleController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Product\ProductImageController;
+use App\Http\Controllers\Services\WhatsappController;
 use App\Http\Controllers\Setting\ImageController;
 use App\Http\Controllers\Setting\SettingController;
 use App\Http\Controllers\UserExperience\CartController;
@@ -187,7 +188,8 @@ Route::get('/store/read' , [StoreController::class , 'ReadStore']);
 
 // Setting Controller 19,000
 Route::post('/setting/update' , [SettingController::class , 'UpdateSetting'])->middleware("AdminMiddleware:setting_update");  #admin
-Route::get('/setting/list' , [SettingController::class , 'ListSetting'])->middleware("AdminMiddleware:setting_list");       #admin
+Route::get('/setting/list' , [SettingController::class , 'ListSetting']);
+Route::post('/setting/cache' , [SettingController::class , 'CacheClearSetting'])->middleware("AdminMiddleware:setting_cache");  #admin 
 
 
 // Fawaterk Controller 20,000
@@ -206,3 +208,7 @@ Route::get('/image' , [ImageController::class , 'ImageSetting'])->name('image_ur
 Route::post('/static/create' , [StaticController::class , 'CreateStatic'])->middleware("AdminMiddleware:static_create");  #admin
 Route::get('/static/read' , [StaticController::class , 'ReadStatic']);
 Route::post('/static/logo/update' , [StaticController::class , 'LogoUpdate'])->middleware("AdminMiddleware:logo_update");  #admin
+
+
+// services/whatsapp controller 23,000
+// Route::post('/service/whatsapp/send' , [WhatsappController::class , 'SendMsgWhatsapp']);

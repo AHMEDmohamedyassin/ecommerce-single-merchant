@@ -3,7 +3,9 @@ import { LargeSpinnerComp } from './SpinnerComp'
 
 const ImageWithLoaderComp = ({parentClass , imageClass , src , spinnerClass}) => {
     const [hideLoader , setHideLoader] = useState(false)
-    useEffect(() => setHideLoader(false) , [src])
+    useEffect(() => {
+        setHideLoader(false)
+    } , [src])
   return (
     <div className={`relative ${parentClass?? ""}`}>
         {
@@ -13,7 +15,7 @@ const ImageWithLoaderComp = ({parentClass , imageClass , src , spinnerClass}) =>
                 </div>
             ) : null
         }
-        <img onLoad={() => setHideLoader(true)} className={imageClass} src={src} loading='lazy'/>
+        <img onLoad={() => setHideLoader(true)} onError={() => setHideLoader(true)} className={imageClass} src={src} loading='lazy'/>
     </div>
   )
 }

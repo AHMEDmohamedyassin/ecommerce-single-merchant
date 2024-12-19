@@ -8,6 +8,7 @@ use App\Models\Setting;
 use App\Traits\PaginateTrait;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class SettingController extends Controller
 {
@@ -71,7 +72,7 @@ class SettingController extends Controller
         try{
             request()->validate([
                 'id' => 'required|exists:settings,id' ,
-                'value' => 'required|max:255|numeric|min:0'
+                'value' => 'required'
             ]);
             
             // check if setting is updatable
@@ -113,6 +114,33 @@ class SettingController extends Controller
             return $this->SuccessResponse($settings->get());
         }catch(\Exception $e){
             return $this->ErrorResponse(19002 , $e->getCode() , $e->getMessage());
+        }
+    }
+
+
+    /**
+     * @error 19,003
+     */
+    public function CacheClearSetting () {
+        try{
+            // Clear application cache
+            Artisan::call('cache:clear');
+            
+            // Clear route cache
+            Artisan::call('route:clear');
+            
+            // Clear config cache
+            Artisan::call('config:clear');
+            
+            // Clear view cache
+            Artisan::call('view:clear');
+
+            // Clear compiled classes and optimize cache
+            Artisan::call('optimize:clear');
+
+            return $this->SuccessResponse();
+        }catch(\Exception $e){
+            return $this->ErrorResponse(19003 , $e->getCode() , $e->getMessage());
         }
     }
 }

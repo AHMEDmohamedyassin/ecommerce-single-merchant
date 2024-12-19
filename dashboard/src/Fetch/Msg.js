@@ -111,4 +111,7 @@ export const msgs = {
     36000 : {            
         "ar" : 'تم تغيير الشعار'
     },
+    37000 : {            
+        "ar" : 'cache reset successfully'
+    },
 }

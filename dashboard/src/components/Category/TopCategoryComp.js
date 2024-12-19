@@ -1,37 +1,25 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import React, { useState } from 'react'
-import { useForm } from 'react-hook-form';
+import React, {  useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { CategoryUpdateValidation } from '../../validation/CategoryValidation';
 import { TopCategory_AppendAction, TopCategory_DeleteAction } from '../../redux/action/CategoryAction';
 
 const TopCategoryComp = ({data}) => {
     const state = useSelector(state => state.CategoryReducer)
     const dispatch = useDispatch()
     const [showCategories , setShowCategories] = useState(false)
-
-    // form hook
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm({
-        mode : "onBlur" ,
-        resolver: zodResolver(CategoryUpdateValidation)
-    });
+    const [ids , setIds] = useState([])
 
     // update top categories handeling
-    const handleTopCategoryUpdate = (form_data) => {
-        dispatch(TopCategory_AppendAction({...form_data , title : data.title}))
+    const handleTopCategoryUpdate = () => {
+        
+        dispatch(TopCategory_AppendAction({ids , title : data.title}))
     }
 
     // delete role
     const deleteHandle = () => {
         dispatch(TopCategory_DeleteAction(data.title))
     }
-
   return (
-        <form onSubmit={handleSubmit(handleTopCategoryUpdate)}  className='flex flex-col custom-border border-x-0 '>
+        <div  className='flex flex-col custom-border border-x-0 '>
             {/* category title*/}
             <div type='button' className='flex justify-between items-center gap-4 py-4'>
                 {/* category title */}
@@ -52,7 +40,7 @@ const TopCategoryComp = ({data}) => {
                                     <div key={index} className='flex items-center gap-2'>
                                         {
                                             data.title != "other" ? (
-                                                <input {...register('ids')} value={e.id} type='checkbox' defaultChecked={data.categories.find(ele => ele.id == e.id) ?? false} />
+                                                <input onChange={input => input.target.checked ? (setIds(ids => [...ids , e.id])) : (setIds(ids => ids.filter(id => id != e.id)))} type='checkbox' defaultChecked={data.categories.find(ele => ele.id == e.id) ?? false} />
                                             ) : null
                                         }
                                         <p>{e.title?.length? e.title : e.slug}</p>
@@ -65,7 +53,7 @@ const TopCategoryComp = ({data}) => {
                         {
                             data.title != "other" ? (
                                 <div className='flex justify-between items-center flex-wrap gap-x-4 gap-y-2'>
-                                    <button type='submit' className='custom-button2'>تأكيد</button>
+                                    <button onClick={handleTopCategoryUpdate} className='custom-button2'>تأكيد</button>
                                     <button onClick={deleteHandle} type='button' className='custom-button2 '>حذف مجموعة الأقسام</button>
                                 </div>
                             ) : null
@@ -73,7 +61,7 @@ const TopCategoryComp = ({data}) => {
                     </div>
                 ) : null
             }
-        </form>
+        </div>
   )
 }
 

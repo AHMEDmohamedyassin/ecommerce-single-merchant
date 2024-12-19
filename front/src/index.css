@@ -2,13 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root{
     --bg-main-color : #f5f9f9;
-    --maincolor : #e81c3f ;
+    --maincolor : #ffc933 ;
     --secondarybg : #fff ;
     --mainbg : #f5f9f9 ;
-    --secondarycolor : #34b36b
+    --secondarycolor : #449f93 
 }
 
 *{

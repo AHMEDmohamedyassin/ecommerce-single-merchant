@@ -3,7 +3,7 @@ import { store } from "../store"
 import { msgs } from "Fetch/Msg"
 import { Confirm_Msg } from "Fetch/Confirm_Msg"
 import { fetching } from "../../Fetch/Fetch"
-import { SettingListURL, SettingUpdateURL } from "Fetch/Url"
+import { SettingCacheURL, SettingListURL, SettingUpdateURL } from "Fetch/Url"
 
 /**
  * pop up messages
@@ -96,5 +96,25 @@ export const Setting_UpdateAction = (data) => {
                 items
             }
         })
+    }
+}
+
+
+
+// reset cache 
+export const Setting_CacheResetAction = () => {
+    return async dispatch => {
+
+        // confirmation 
+        if(!Setting_Confirm(2000)) return
+
+        dispatch({type : "Setting_Status" , data : "lc"})         // loading update
+
+        const req = await fetching(SettingCacheURL)
+
+        if(req.success) 
+            Setting_Msg(37000)
+        
+        dispatch({type : "Setting_Status" , data : "n"})
     }
 }

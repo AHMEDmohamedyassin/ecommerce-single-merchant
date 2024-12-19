@@ -31,6 +31,7 @@ import { Static_ReadAction } from "./redux/action/StaticAction";
 import NotFoundPage from "pages/NotFoundPage";
 import PaymentStatusPage from "pages/PaymentStatusPage";
 import { Setting_readAction } from "./redux/action/SettingAction";
+import ScrollOnNavigationComp from "components/public/ScrollOnNavigationComp";
 
 function App() {
   const auth = useSelector(state=>state.AuthReducer)
@@ -61,11 +62,14 @@ function App() {
     }
   } , [setting.redirect])
   return (
-    <div className="min-h-[100vb] flex flex-col">
+    <div className="min-h-[100vb] flex flex-col bg-mainbg">
       <div className="flex-1">
 
           {/* notifications container */}
           <NotifyContainer/>
+
+          {/* scroll on navigation  */}
+          <ScrollOnNavigationComp/>
 
           {/* app header */}
           <HeaderComp/>

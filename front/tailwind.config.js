@@ -3,10 +3,10 @@ module.exports = {
   theme: {
     extend: {
       colors:{
-        "maincolor" : "#e81c3f" ,
+        "maincolor" : "#ffc933" ,
         "secondarybg" : "#fff" , 
         "mainbg" : "#f5f9f9" ,
-        "secondarycolor" : "#34b36b"
+        "secondarycolor" : "#449f93"
       }
     },
   },
@@ -14,3 +14,10 @@ module.exports = {
     require('@tailwindcss/line-clamp'), // Add the line-clamp plugin
   ],
 }
+
+// colors:{
+//   "maincolor" : "#ffc933" ,
+//   "secondarybg" : "#fff" , 
+//   "mainbg" : "#f5f9f9" ,
+//   "secondarycolor" : "#449f93"
+// }

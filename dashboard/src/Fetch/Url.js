@@ -88,6 +88,7 @@ export const OrderStatusURL = '/order/update/status'
 // setting
 export const SettingListURL = '/setting/list'
 export const SettingUpdateURL = '/setting/update'
+export const SettingCacheURL = '/setting/cache'
 
 
 // blocks 

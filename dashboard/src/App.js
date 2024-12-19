@@ -33,6 +33,7 @@ import ReviewPage from "pages/ReviewPage";
 import IdentityPage from "pages/static/IdentityPage";
 import NotFoundPage from "pages/NotFoundPage";
 import SubProductListPage from "pages/product/SubProductListPage";
+import ScrollOnNavigationComp from "components/public/ScrollOnNavigationComp";
 
 function App() {
   const state = useSelector(state => state.AuthReducer)
@@ -47,6 +48,9 @@ function App() {
           
           {/* notifications container */}
           <NotifyContainer/>
+
+          {/* scroll on navigation  */}
+          <ScrollOnNavigationComp/>
           
           {
             state.token ? (

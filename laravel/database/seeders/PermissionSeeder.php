@@ -70,7 +70,7 @@ class PermissionSeeder extends Seeder
             ["title" => "إنشاء محتوي صفحات البيانات" , "slug" => "static_create"] ,            
             ["title" => "تعديل الشعار" , "slug" => "logo_update"] ,            
             ["title" => "تعديل الإعدادات" , "slug" => "setting_update"] ,            
-            ["title" => "مشاهدة الإعدادات" , "slug" => "setting_list"] ,            
+            ["title" => "reset cache" , "slug" => "setting_cache"] ,            
         ]);
     }
 }

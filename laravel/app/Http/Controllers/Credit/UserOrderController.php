@@ -6,10 +6,12 @@ use App\Events\OrderCancelEvent;
 use App\Exceptions\CustomException;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Setting\SettingController;
+use App\Jobs\OrderAdminNotification;
 use App\Traits\PaginateTrait;
 use App\Traits\ResponseTrait;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class UserOrderController extends Controller
@@ -24,10 +26,17 @@ class UserOrderController extends Controller
     public function UserCreateOrder () {
         try{
             request()->validate([
-                "shipping_address_id" => "nullable|exists:addresses,id|numeric" ,
+                "shipping_address_id" => "required|exists:addresses,id|numeric" ,
                 "pay_on_diliver" => "boolean|nullable" ,
                 "coupon" => "nullable|string"
             ]);
+
+            // check if the online payment is allowed
+            if(!(new SettingController)->valueSetting('allow_paymentgateway')){
+                request()->merge([
+                    'pay_on_diliver' => true
+                ]);
+            }
 
             // getting products in cart to add it to order
             $cart = request('user')->cart;
@@ -96,6 +105,9 @@ class UserOrderController extends Controller
 
             // update orders count
             SettingController::updateCreateSetting(SettingController::$orders_count);
+
+            // create job of notification
+            OrderAdminNotification::dispatch($order);
 
             return $this->SuccessResponse($order);
         }catch(\Exception $e){

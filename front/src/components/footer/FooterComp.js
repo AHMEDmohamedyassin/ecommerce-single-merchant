@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import LargeScreenLinksComp from './LargeScreenLinksComp'
 import CollabseLinksComp from './CollabseLinksComp'
 import CollabseSocialMediaComp from './CollabseSocialMediaComp'
+import { useSelector } from 'react-redux'
 
 const FooterComp = () => {
+  const state = useSelector(state => state.CategoryReducer)
 
   const links = [
     {
@@ -25,11 +27,7 @@ const FooterComp = () => {
     },
     {
       title : "التصنيفات الأساسية" ,
-      links : [
-        {title : "ملابس" , url : ""} ,
-        {title : "المطبخ" , url : ""} ,
-        {title : "شنط" , url : ""} ,
-      ]
+      links : state.top_categories?.flatMap(top => top.categories?.map(cat => ({title : cat.title , url : `/search?categories=${cat.id}`})) || [] ) || []
     }
   ]
 

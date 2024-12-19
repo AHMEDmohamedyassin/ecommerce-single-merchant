@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
 
-
 // all website pages 
 Route::get('/{path?}', [Controller::class , 'HomePage'])
 ->where('path', '^(?!dashboard(/.*)?$)(?!product/\d+(/.*)$).*');

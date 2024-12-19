@@ -23,7 +23,7 @@ const SettingPage = () => {
     <div className='custom-dashcontainer'>
         <p className='title'>الإعدادات</p>
 
-        <div className='flex flex-col gap-4'>
+        <div className='flex flex-col gap-4 w-full'>
             {
                 state.items?.sort((a , b) => b.updatable - a.updatable)?.map((e,index) => {
                     if(['auto_public_review' , 'allow_coupon' , 'allow_paymentgateway' , 'allow_cachier'].includes(e.slug))
@@ -43,6 +43,22 @@ const SettingPage = () => {
                                         {
                                             e.updatable ? 
                                                 <button className='custom-button2 mx-2'>تأكيد</button>
+                                            :null
+                                        }
+                                    </div>
+                                </form>
+                            </>
+                        )
+                    else if(['ORDER_EMAIL_NOTIFICATION'].includes(e.slug))
+                        return (
+                            <>
+                                <form onSubmit={ele => handleUpdate(ele , e.id)} key={index} className='custom-inputcontainer w-full'>
+                                    <label>{e.title}</label>
+                                    <div className='flex items-end gap-4 w-full'>
+                                        <input disabled={!e.updatable} maxLength={255} name='value' defaultValue={e.value} />
+                                        {
+                                            e.updatable ? 
+                                                <button className='custom-button2'>تأكيد</button>
                                             :null
                                         }
                                     </div>

@@ -9,7 +9,7 @@ const CartButtonsComp = () => {
     const setting = useSelector(state => state.SettingReducer)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const [pay_on_diliver , setPay_on_diliver] = useState(false)
+    const [pay_on_diliver , setPay_on_diliver] = useState(true)
 
     // reset cart 
     const handleCartReset = () => {
