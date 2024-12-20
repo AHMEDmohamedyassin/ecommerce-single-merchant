@@ -4,6 +4,8 @@ import PrefInfoComp from './PrefInfoComp'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Setting_SideMenuAction } from '../../../redux/action/SettingAction'
+import { AnimatePresence, motion } from "motion/react"
+import { useSwipeable } from 'react-swipeable'
 
 const SideMenuComp = () => {
     const state = useSelector(state => state.SettingReducer)
@@ -45,13 +47,36 @@ const SideMenuComp = () => {
     useEffect(() => {
       setLinks([...defaultLinks , ...categories.top_categories?.map(e => ({title : e.title == "other" ? "أقسام أخري" : `أقسام ${e.title}` , links : e.categories?.map(ele => ({title : ele.title , url : `/search?categories=${ele.id}`}))}) )])
     } , [categories])
+
+        
+    // menus open with sliding 
+    const handlers = useSwipeable({
+      onSwipedLeft: () => {
+        dispatch(Setting_SideMenuAction(true))
+      },
+    });
+    const handlers2 = useSwipeable({
+      onSwipedRight: () => {
+        dispatch(Setting_SideMenuAction(false))
+      },
+    });
+
   return (
     <>
+    <div {...handlers} className=' fixed top-0 right-0 h-full w-8'></div>
+    <AnimatePresence>
       {
         state.side_menu ? (
-
-          <div ref={menuContainer} onClick={handleCloseMenu} className='max-h-full w-full h-full bg-white/50 fixed top-0 left-0 z-40'> 
-              <div className='custom-side-menu right-0 max-h-full custom-border shadow-2xl shadow-black/50 flex-col flex'>  
+          <div ref={menuContainer} onClick={handleCloseMenu}  className='max-h-full w-full h-full bg-white/50 fixed top-0 left-0 z-40'
+          > 
+              <motion.div 
+              {...handlers2}
+                initial={{x:'100%'}}
+                exit={{x:'100%'}}
+                animate={{ x: 0 }}
+                transition={{ duration: 0.2 , ease: "linear"}}
+                className='custom-side-menu max-h-full custom-border shadow-2xl shadow-black/50 flex-col flex'
+              >  
 
                   {/* sections choose */}
                   {/* <div className='h-14 flex shadow text-sm'>
@@ -96,10 +121,11 @@ const SideMenuComp = () => {
                   </div>
 
 
-              </div>
+              </motion.div>
           </div>
         ) : null 
       }
+    </AnimatePresence>
     </>
   )
 }

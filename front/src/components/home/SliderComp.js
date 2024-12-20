@@ -40,14 +40,21 @@ const SliderComp = () => {
     });
     
 
+    // initiate 
     useEffect(() => {
-        
-        setIds(state.latest?.map(e => e.id))
+        setIds((state.latest?.map(e => e.id) || []).slice(0 , 10))
 
         setSelected_collection(e => {
             return state.latest.length? state.latest[0] : {}
         })
     } , [state.latest])
+
+    // schedual sliding
+    useEffect(() => {
+        const interval = setInterval(handleNext , 5000)
+        
+        return () => clearInterval(interval) 
+    } , [handleNext])
   return (
     <div {...handlers} className='custom-container select-none'>
 
@@ -83,9 +90,9 @@ const SliderComp = () => {
                 <div className='absolute bottom-2 left-2/4 -translate-x-2/4 flex gap-2'>
                     {
                         state.latest?.length && Object.keys(selected_collection).length ? 
-                            state.latest.map(e => (
+                            (state.latest.map(e => (
                                 <p onClick={() => setSelected_collection(e)} key={e.id} className={`w-3 aspect-square rounded-full ${e.id == selected_collection.id ? "bg-maincolor" : "bg-maincolor/50"} hover:cursor-pointer`}></p>
-                            )) 
+                            )) || []).slice(0,10) 
                         : null
                     }
                 </div>

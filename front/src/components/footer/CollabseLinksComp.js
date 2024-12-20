@@ -1,3 +1,4 @@
+import { AnimatePresence , motion} from 'motion/react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -14,17 +15,26 @@ const CollabseLinksComp = ({data}) => {
                 <span className="material-symbols-outlined  text-white p-2 py-2">add</span>
               }
             </div>
-            {
-              details ? (
-                <ul className='text-xs text-white p-4 flex flex-col gap-4'>
-                  {
-                    data.links && data.links.length ? data.links.map((e , index) => (
-                      <Link key={index} to={e.url}>{e.title}</Link>
-                    )) : null
-                  }
-                </ul>
-              ) : null
-            }
+
+            <AnimatePresence>
+              {
+                details ? (
+                  <motion.ul 
+                    initial={{opacity:0}}
+                    exit={{opacity:0}}
+                    animate={{ opacity : '100%' }}
+                    transition={{ duration: 0.2 , ease: "linear"}}
+                    className='text-xs text-white p-4 flex flex-col gap-4'
+                  >
+                    {
+                      data.links && data.links.length ? data.links.map((e , index) => (
+                        <Link key={index} to={e.url}>{e.title}</Link>
+                      )) : null
+                    }
+                  </motion.ul>
+                ) : null
+              }
+            </AnimatePresence>
           </div>
   )
 }

@@ -20,7 +20,6 @@ import LoadingComp from "components/public/LoadingComp";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Auth_GetuserdataAction, Auth_VisitAction } from "./redux/action/AuthAction";
-import { Cart_Initiate } from "./redux/action/CartAction";
 import { Category_ListAction } from "./redux/action/CategoryAction";
 import FavoritePage from "pages/FavoritePage";
 import { Favorite_ListAction } from "./redux/action/FavoriteAction";
@@ -61,9 +60,11 @@ function App() {
       dispatch({type:"Setting_Data" , data : {redirect : null}})
     }
   } , [setting.redirect])
+
   return (
     <div className="min-h-[100vb] flex flex-col bg-mainbg">
       <div className="flex-1">
+
 
           {/* notifications container */}
           <NotifyContainer/>

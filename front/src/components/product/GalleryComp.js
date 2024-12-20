@@ -40,9 +40,14 @@ const GalleryComp = () => {
 
   // detect sliding touch 
   const handlers = useSwipeable({
-    onSwipedLeft: () => handleImageSlide(false),
-    onSwipedRight: () => handleImageSlide(true),
+    onSwipedLeft: () => {
+      handleImageSlide(false)
+    },
+    onSwipedRight: () => {
+      handleImageSlide(true)
+    },
   });
+
   return (
         <>
           {

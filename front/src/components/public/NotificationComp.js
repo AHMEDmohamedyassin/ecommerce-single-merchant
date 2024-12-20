@@ -8,7 +8,7 @@ export const notify = (msg) => {
 
 
 export const NotifyContainer = () => {
-    const MainColor = "#e81c3f"
+    const MainColor = "#ffc933"
     return (
         <div className="w-full">
             <ToastContainer 

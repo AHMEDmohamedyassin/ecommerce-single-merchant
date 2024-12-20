@@ -1,3 +1,4 @@
+import { AnimatePresence , motion} from 'motion/react'
 import React, { useState } from 'react'
 
 const CollabsedDetailsComp = ({title , data}) => {
@@ -13,12 +14,20 @@ const CollabsedDetailsComp = ({title , data}) => {
                     <span className="material-symbols-outlined bg-black text-white p-2 py-2">add</span>
               }
             </div>
-
-            {
-                details ? (
-                    <div className='text-sm text-gray-500 text-justify p-4'>{data ?? <p >لا توجد</p>}</div>
-                ) : null
-            }
+            
+            <AnimatePresence>
+                {
+                    details ? (
+                        <motion.div 
+                          initial={{opacity:0}}
+                          exit={{opacity:0}}
+                          animate={{ opacity : '100%' }}
+                          transition={{ duration: 0.2 , ease: "linear"}}
+                          className='text-sm text-gray-500 text-justify p-4'
+                        >{data ?? <p >لا توجد</p>}</motion.div>
+                    ) : null
+                }
+            </AnimatePresence>
           </div>
   )
 }
