@@ -74,7 +74,7 @@ const HeaderComp = () => {
 
           {/* logo */}
           <Link to={'/'} className='flex items-center justify-center'>
-            <img className={`${smallHeader ? '' : 'lg:w-48'} w-28`} src={`${ImageURL}type=setting&width=400`} />
+            <img className={`${smallHeader ? 'h-[60px]' : 'lg:h-[90px]'} h-[50px] w-auto -my-80`} src={`${ImageURL}type=setting&width=400`} />
           </Link>
         
           {/* search bar */}
