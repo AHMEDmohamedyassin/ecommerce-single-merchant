@@ -9,6 +9,7 @@ use App\Traits\PaginateTrait;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
 
 class SettingController extends Controller
 {
@@ -137,6 +138,8 @@ class SettingController extends Controller
 
             // Clear compiled classes and optimize cache
             Artisan::call('optimize:clear');
+            
+            Cache::flush();
 
             return $this->SuccessResponse();
         }catch(\Exception $e){
