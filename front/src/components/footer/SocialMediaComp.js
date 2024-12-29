@@ -13,7 +13,7 @@ const SocialMediaComp = () => {
         <div className='flex flex-wrap gap-4'>
             {
               contact.contact?.urls && Object.keys(contact.contact.urls).map((e , index) => (
-                <a key={index} className='w-10 rounded-full aspect-square overflow-hidden' href={contact.contact.urls[e] ?? ""} target='_blank'><img loading='lazy' src={`${APP_URL}/images/${e}.png`}/></a>
+                <a key={index} className={`${contact.contact.urls[e] ? "" : "hidden"} w-10 rounded-full aspect-square overflow-hidden`} href={contact.contact.urls[e] ?? ""} target='_blank'><img loading='lazy' src={`${APP_URL}/images/${e}.png`}/></a>
               ))
             }
         </div>         

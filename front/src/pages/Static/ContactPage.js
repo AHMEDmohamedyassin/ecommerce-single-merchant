@@ -207,7 +207,7 @@ const ContactPage = () => {
             {/* social media urls  */}
             {
               state.contact?.urls && Object.keys(state.contact.urls).map((e , index) => (
-                <a key={index} href={state.contact.urls[e] ? state.contact.urls[e] : ""} className='flex items-center gap-2' target='_blank'>
+                <a key={index} href={state.contact.urls[e] ? state.contact.urls[e] : ""} className={`${state.contact.urls[e] ?'flex' : 'hidden'} items-center gap-2`} target='_blank'>
                   <img className='aspect-square w-6 rounded-full' src={`${APP_URL}/images/${e}.png`} loading='lazy'/>
                   <span>{state.contact.urls[e] ? state.contact.urls[e] : ""}</span>
                 </a>

@@ -73,7 +73,7 @@ const FullScreenGalleryComp = () => {
                         }
                         
                         {/* big image */}
-                        <ImageWithLoaderComp imageClass={'max-w-full max-h-full'} spinnerClass={'bg-white rounded-full shadow-xl shadow-black'} src={`${ProductImageURL}width=800&image=${state.selected_product?.image ?? (state.images.length ? state.images[0] : null) }&id=${state.id}`}/>
+                        <ImageWithLoaderComp parentClass={'w-full h-full'} imageClass={'w-full h-full object-contain'} spinnerClass={'bg-white rounded-full shadow-xl shadow-black'} src={`${ProductImageURL}width=800&image=${state.selected_product?.image ?? (state.images.length ? state.images[0] : null) }&id=${state.id}`}/>
                     </div>
 
                     {/* thumbnail images  */}
