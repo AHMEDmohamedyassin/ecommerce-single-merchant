@@ -56,7 +56,7 @@ const FullScreenGalleryComp = () => {
                     </div>
 
                     {/* main image with navigation  */}
-                    <div {...handlers} className='relative w-full flex-1 flex justify-center items-center'>
+                    <div {...handlers} className=' overflow-hidden relative w-full flex-1 flex justify-center items-center'>
                         
                         {/* navigation arrows */}
                         {
