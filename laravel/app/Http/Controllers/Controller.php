@@ -51,6 +51,7 @@ class Controller
                 $keywords = "";
                 $html = "<ul>";
                 $script = "{";
+                $index = 0;
     
                 foreach($files as $file){
                     $path = '/static/' . $file . '/json.json';
@@ -72,7 +73,8 @@ class Controller
                             $description .= $object->title . " : " . $object->value . " , ";
                             $keywords = str_replace(' ' , ' ,' , $object->value);
                             $html .= "<li><h2>".$object->title."</h2><h3>".$object->value."</h3></li>";
-                            $script .= '"'.$object->title.'":' . '"'.$object->value.'" ,';
+                            $script .= '"about.'.$index.'":' . '"'.$object->value.'" ,';
+                            $index++;
                         }
                     }
                 }
@@ -84,7 +86,8 @@ class Controller
                             $description .= $key . " : " . $value . " , ";
                             $keywords .= $value . " ,";
                             $html .= "<li><h2>".$key."</h2><h3>".$value."</h3></li>";
-                            $script .= '"'.$key.'":' . '"'.$value.'" ,';
+                            $script .= '"about.'.$index.'":' . '"'.$value.'" ,';
+                            $index++;
                         }
                         else if(is_object($value))
                             foreach((array)$value as $subKey => $subValue)
@@ -92,7 +95,8 @@ class Controller
                                     $description .= $subKey . " : " . $subValue . " , ";
                                     $keywords .= $subValue . " ,";
                                     $html .= "<li><h2>".$subKey."</h2><h3>".$subValue."</h3></li>";
-                                    $script .= '"'.$subKey.'":' . '"'.$subValue.'" ,';
+                                    $script .= '"about.'.$index.'":' . '"'.$subValue.'" ,';
+                                    $index++;
                                 }
                     }
                 }
