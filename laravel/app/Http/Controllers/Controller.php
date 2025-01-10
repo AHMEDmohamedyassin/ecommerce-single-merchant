@@ -101,6 +101,8 @@ class Controller
                     }
                 }
 
+                $script = substr($script, 0, -1);  // remove the last ,
+
                 return [
                     'static' => $static ,
                     'description' => $description,
