@@ -51,7 +51,7 @@ class Controller
                 $keywords = "";
                 $html = "<ul>";
                 $script = "{";
-                $index = 0;
+                $index = 0;    // using index inside script as arabic lang make errors with seo
     
                 foreach($files as $file){
                     $path = '/static/' . $file . '/json.json';
